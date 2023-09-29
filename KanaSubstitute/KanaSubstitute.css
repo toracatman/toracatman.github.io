@@ -1,15 +1,8 @@
-@font-face {
-	font-family: "myfont";
-	src: url("https://dl.dropboxusercontent.com/s/xzn8u0kw7ijx1hf/mkanaplus.woff2") format("woff2"),
-	     url("https://dl.dropboxusercontent.com/s/rw36pc4auo3ee1j/mkanaplus.woff") format("woff");
-	font-display: swap;
-}
 html {
 	font-size: 62.5%;
 }
 body {
 	font-size: 1.6rem;
-	font-family: "myfont";
 }
 table {
 	width: 100%;
