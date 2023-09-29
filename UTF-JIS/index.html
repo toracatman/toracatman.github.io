@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>UTF-JIS</title>
+	<style>
+		@font-face {
+			font-family: "myfont";
+			src: url("https://dl.dropboxusercontent.com/s/xzn8u0kw7ijx1hf/mkanaplus.woff2") format("woff2"),
+			     url("https://dl.dropboxusercontent.com/s/rw36pc4auo3ee1j/mkanaplus.woff") format("woff");
+			font-display: swap;
+		}
+		html {
+			font-size: 62.5%;
+		}
+		body {
+			font-size: 1.6rem;
+		}
+		div {
+			display: inline-block;
+		}
+		textarea {
+			font-family: "myfont", monospace;
+			font-size: 1.8rem;
+			width: 88rem;
+			height: 40rem;
+		}
+	</style>
+	<script src="utf-jis.js"></script>
+</head>
+<body>
+	<p>UTF-JISの テストです。</p>
+	<form name="form1">
+		<div>
+			文字列<br>
+			<textarea name="textarea1">本当は，シフトJISから UTF-8へ 移行できれば いいのですが，
+できない 場合は，シフトJISを 拡張して，Unicode文字を 扱える 文字コード(仮称: UTF-JIS)を 使ってみては どうでしょう？　　　　　　　　
+か゚き゚く゚け゚こ゚カ゚キ゚ク゚ケ゚コ゚セ゚ツ゚ト゚ㇷ゚　
+˥˦˧˨˩a˥˩a˩˥　　　　　　　
+æ̀ǽὰάɔ̀ɔ́ʌ̀ʌ́ə̀ə́ɚ̀ɚ́　　　
+「𛀁」も 扱えますよ。　 　</textarea>
+		</div>
+		<div>
+			UTF-JIS バイト列<br>
+			<textarea name="textarea2"></textarea>
+		</div>
+		<p>
+			<input type="button" value="エンコード" onclick="encodeJIS()">
+			<input type="button" value="デコード" onclick="decodeJIS()">
+		</p>
+		<p>
+			改行コード<br>
+			<label><input type="radio" name="radio1" value="crlf" checked>CRLF</label>
+			<label><input type="radio" name="radio1" value="cr">CR</label>
+			<label><input type="radio" name="radio1" value="lf">LF</label>
+		</p>
+		<p>
+			<input type="text" name="text1">バイトごとに改行
+		</p>
+	</form>
+
+	<p><a href="jis_x_0213.html">JIS X 0213表</a></p>
+
+	<script>
+		function getChar1(p) {
+			if (p <= 0x1F || p == 0x7F) return String.fromCodePoint(p);
+			return jis1[p];
+		}
+		function getChar(m, k, t) {
+			if (!checkJIS(m, k, t)) return "不正な面区点番号です。";
+			return jis[m - 1][k - 1][t - 1];
+		}
+
+		function findChar(c) {
+			var p = c.codePointAt();
+			if (p <= 0x1F || p == 0x7F) {
+				return p;
+			}
+			p = jis1.indexOf(c);
+			if (p !== -1) {
+				return p;
+			}
+			for (var i = 0; i < jis.length; i++) {
+				for (var j = 0; j < jis[i].length; j++) {
+					var k = jis[i][j].indexOf(c);
+					if (k !== -1) {
+						return [i + 1, j + 1, k + 1];
+					}
+				}
+			}
+			return false;
+		}
+
+		function getByte(m, k, t) {
+			if (!checkJIS(m, k, t)) return "不正な面区点番号です。";
+
+			var s1;
+			var s2;
+
+			if (m == 1) {
+				if (k <= 62) {
+					s1 = (k + 257) / 2 | 0;
+				}
+				else {
+					s1 = (k + 385) / 2 | 0;
+				}
+			}
+			else {
+				if (k <= 15) {
+					s1 = ((k + 479) / 2 | 0) - (k / 8 | 0) * 3;
+				}
+				else {
+					s1 = (k + 411) / 2 | 0;
+				}
+			}
+
+			if (k & 1) {
+				if (t <= 63) {
+					s2 = t + 63;
+				}
+				else {
+					s2 = t + 64;
+				}
+			}
+			else {
+				s2 = t + 158;
+			}
+
+			return s1.toString(16).toUpperCase() + " " + s2.toString(16).toUpperCase();
+		}
+
+		function checkJIS(m, k, t) {
+			if (m < 1 || m > 2) return false;
+			if (k < 1 || k > 94) return false;
+			if (t < 1 || t > 94) return false;
+			return true;
+		}
+
+		function encodeJIS() {
+			var s = "";
+			for (var i = 0; i < document.form1.textarea1.value.length; i++) {
+				var c = document.form1.textarea1.value.substring(i, i + 2);
+				var p = c.codePointAt();
+				var p2 = c.codePointAt(1);
+
+				//声調記号、サロゲートペア
+				if (c == "˩˥" || c == "˥˩" || p > 65535) {
+					i++;
+				}
+
+				//半濁点
+				else if (p2 == 0x309A) {
+					var c1 = c.charAt(0);
+					var cc = "かきくけこカキクケコセツトㇷ";
+					if (cc.indexOf(c1) !== -1) {
+						i++;
+					}
+					else {
+						c = c1;
+					}
+				}
+
+				//グレイヴ、アキュート
+				else if (p2 == 0x0300 || p2 == 0x0301) {
+					var c1 = c.charAt(0);
+					var cc = "ɔʌəɚ";
+					if (cc.indexOf(c1) !== -1) {
+						i++;
+					}
+					else if (p2 == 0x0300 && c1 == "æ") {
+						i++;
+					}
+					else {
+						c = c1;
+					}
+				}
+				else {
+					c = c.charAt(0);
+				}
+				var mkt = findChar(c);
+				var b;
+				var t = typeof mkt;
+				if (t === 'number') {
+					if (mkt == 0x0A) {
+						switch (document.form1.radio1.value) {
+						case "crlf":
+							b = "0D 0A";
+							break;
+						case "cr":
+							b = "0D";
+							break;
+						case "lf":
+							b = "0A";
+							break;
+						}
+					}
+					else {
+						b = mkt.toString(16).toUpperCase().padStart(2, "0");
+					}
+				}
+				else if (t === 'object') {
+					b = getByte(mkt[0], mkt[1], mkt[2]);
+				}
+				else {
+					var msb = p >>> 11;
+					var lsb = p & 0x7FF;
+					var msbm = (msb >>> 8).toString(16).toUpperCase().padStart(2, "0");
+					var msbl = (msb & 0xFF).toString(16).toUpperCase().padStart(2, "0");
+					var lsbm = (lsb >>> 8).toString(16).toUpperCase().padStart(2, "0");
+					var lsbl = (lsb & 0xFF).toString(16).toUpperCase().padStart(2, "0");
+					b = getByte(1, 8, 64) + " " + msbm + " " + msbl + " " + lsbm + " " + lsbl;
+				}
+				s += b + " ";
+			}
+			if (document.form1.text1.value != "" && !isNaN(document.form1.text1.value)) {
+				var t = "";
+				var c = 1;
+				for (var i = 0; i < s.length; i++) {
+					if (s[i] == " ") {
+						if (c == document.form1.text1.value) {
+							t += "\n";
+							c = 1;
+						}
+						else {
+							t += " ";
+							c++;
+						}
+					}
+					else {
+						t += s[i];
+					}
+				}
+				s = t;
+			}
+			document.form1.textarea2.value = s.trim();
+		}
+
+		function decodeJIS() {
+			var arr = document.form1.textarea2.value.trim().split(/[\t\n ]+/);
+			var bs = new Array(arr.length);
+			for (var i = 0; i < arr.length; i++) {
+				bs[i] = parseInt(arr[i], 16);
+			}
+
+			var s = "";
+			for (var i = 0; i < bs.length; i++) {
+				//1バイト文字
+				if (!((bs[i] >= 0x81 && bs[i] <= 0x9F) || (bs[i] >= 0xE0 && bs[i] <= 0xFC))) {
+					if (bs[i] == 0x0D) {
+						s += "\n";
+						if (i < bs.length - 1 && bs[i + 1] == 0x0A) i++;
+					}
+					else {
+						s += getChar1(bs[i]);
+					}
+				}
+
+				//2バイト文字
+				else {
+					if (i == bs.length - 1) {
+						s += "不正なバイトです。";
+						continue;
+					}
+
+					var s1 = bs[i];
+					var s2 = bs[i + 1];
+					if (!((s2 >= 0x40 && s2 <= 0x7E) || (s2 >= 0x80 && s2 <= 0xFC))) {
+						s += "不正なバイトです。";
+						continue;
+					}
+
+					var m;
+					var k;
+					var t;
+					if (s1 <= 0xEF) {
+						m = 1;
+						if (s1 <= 0x9F)	k = s1 * 2 - 257;
+						else			k = s1 * 2 - 385;
+						if (s2 >= 0x9F) k++;
+					}
+					else {
+						m = 2;
+						var f = s2 < 0x9F;
+						switch (s1) {
+						case 0xF0:
+							k = f ? 1 : 8;
+							break;
+						case 0xF1:
+							k = f ? 3 : 4;
+							break;
+						case 0xF2:
+							k = f ? 5 : 12;
+							break;
+						case 0xF3:
+							k = f ? 13 : 14;
+							break;
+						case 0xF4:
+							k = f ? 15 : 78;
+							break;
+						default:
+							k = s1 * 2 - 411;
+							if (!f) k++;
+						}
+					}
+					if (k & 1) {
+						if (s2 <= 0x7E)	t = s2 - 63;
+						else			t = s2 - 64;
+					}
+					else {
+						t = s2 - 158;
+					}
+
+					if (!(m == 1 && k == 8 && t == 64)) {
+						s += getChar(m, k, t);
+						i++;
+					}
+
+					//Unicode文字
+					else {
+						if (i == bs.length - 5) {
+							s += "不正なバイトです。";
+							continue;
+						}
+
+						var msbm = bs[i + 2];
+						var msbl = bs[i + 3];
+						var lsbm = bs[i + 4];
+						var lsbl = bs[i + 5];
+
+						var c = msbm << 19 | msbl << 11 | lsbm << 8 | lsbl;
+						s += String.fromCodePoint(c);
+						i += 5;
+					}
+				}
+			}
+			document.form1.textarea1.value = s;
+		}
+
+		encodeJIS();
+	</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>JIS X 0213</title>
+	<style>
+		@font-face {
+			font-family: "myfont";
+			src: url("https://dl.dropboxusercontent.com/s/9zlhjnyj00fm5j6/RictyKana.woff2") format("woff2"),
+			     url("https://dl.dropboxusercontent.com/s/y09e0tdbbn3mqjz/RictyKana.woff") format("woff");
+			font-display: swap;
+		}
+		html {
+			font-size: 62.5%;
+		}
+		body {
+			font-size: 2rem;
+			font-family: "myfont", monospace;
+		}
+		table:first-of-type {
+			width: 56.1rem;
+		}
+		table {
+			width: 313.5rem;
+			table-layout: fixed;
+			border-collapse: collapse;
+		}
+		th,td {
+			height: 3rem;
+		}
+		th {
+			text-align: right;
+		}
+	</style>
+	<script src="utf-jis.js"></script>
+</head>
+<body>
+	<h3>1バイト文字</h3>
+	<table border="1">
+		<script>
+			document.write("<tr>");
+			document.write("<th></th>");
+			for (var i = 0; i < 16; i++) {
+				document.write('<th>&nbsp;' + i.toString(16).toUpperCase() + '</th>');
+			}
+			document.write("</tr>");
+			for (var p = 0; p < jis1.length; p++) {
+				if (p % 16 == 0) document.write('<tr><th>' + p.toString(16).toUpperCase() + '</th>');
+				var c = jis1[p].replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
+				document.write('<td>' + c + '</td>');
+				if (p % 16 == 15) document.write('</tr>');
+			}
+		</script>
+	</table>
+	<script>
+		for (var i = 0; i < jis.length; i++) {
+			document.write('<h3>' + (i + 1) + '面</h3>');
+			document.write('<table border="1">');
+			document.write('<tr>');
+			document.write('<th></th>');
+			for (var k = 1; k <= 94; k++) {
+				document.write('<th>' + (k < 10 ? '&nbsp;' + k : k) + '</th>');
+			}
+			document.write('</tr>');
+			for (var j = 0; j < jis[i].length; j++) {
+				document.write('<tr>');
+				document.write('<th>' + (j + 1) + '</th>');
+				for (var k = 0; k < jis[i][j].length; k++) {
+					document.write('<td>');
+					document.write(jis[i][j][k]);
+					document.write('</td>');
+				}
+				document.write('</tr>');
+			}
+			document.write('</table>');
+		}
+	</script>
+</body>
+</html>
