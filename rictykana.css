@@ -1,0 +1,9 @@
+@font-face {
+	font-family: "Ricty Kana";
+	src: url("https://dl.dropboxusercontent.com/s/9zlhjnyj00fm5j6/RictyKana.woff2") format("woff2"),
+	     url("https://dl.dropboxusercontent.com/s/y09e0tdbbn3mqjz/RictyKana.woff") format("woff");
+	font-display: swap;
+}
+.article-body {
+	font-family: "Ricty Kana";
+}
