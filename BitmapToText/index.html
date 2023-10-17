@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>ビットマップをテキストに</title>
+	<link rel="stylesheet" href="/mkanaplus.css">
+	<style>
+		html {
+			font-size: 62.5%;
+		}
+		body {
+			font-size: 1.6rem;
+		}
+		#bitmap {
+			width: 25.6rem;
+			height: 25.6rem;
+			border-bottom: 0.1rem solid #808080;
+			border-right: 0.1rem solid #808080;
+		}
+		.bitmap-dot {
+			width: 3.1rem;
+			height: 3.1rem;
+			float: left;
+			border-top: 0.1rem solid #808080;
+			border-left: 0.1rem solid #808080;
+		}
+		.bitmap-row:after {
+			content: "";
+			display: block;
+			clear: both;
+		}
+		.black {
+			background-color: #000;
+		}
+		input[type="text"] {
+			font-size: 2.4rem;
+			font-family: "Mkana+";
+			width: 2.4rem;
+		}
+		#output {
+			width: 20rem;
+			height: 20rem;
+			font-size: 4.8rem;
+			font-family: "Mkana+";
+			line-height: 4.8rem;
+		}
+	</style>
+</head>
+<body>
+	<p>ビットマップから テキストを 生成します。</p>
+
+	<script>
+		(function() {
+			var b = document.createElement("div");
+			document.body.appendChild(b);
+			b.id = "bitmap";
+			for (var i = 0; i < 8; i++) {
+				var r = document.createElement("div");
+				b.appendChild(r);
+				r.className = "bitmap-row";
+				for (var j = 0; j < 8; j++) {
+					var d = document.createElement("div");
+					r.appendChild(d);
+					d.id = `bitmap${i}-${j}`;
+					d.className = "bitmap-dot";
+					d.addEventListener("click", function() {
+						if (this.classList.contains("black")) {
+							this.classList.remove("black");
+						}
+						else {
+							this.classList.add("black");
+						}
+					});
+				}
+			}
+		})();
+
+		var block = [
+			[" ", "▘", "▝", "▀"],
+			["▖", "▌", "▞", "▛"],
+			["▗", "▚", "▐", "▜"],
+			["▄", "▙", "▟", "█"]
+		];
+
+		var table = document.createElement("table");
+		document.body.appendChild(table);
+		table.border = "1";
+		{
+			var tr = document.createElement("tr");
+			table.appendChild(tr);
+			{
+				var th = document.createElement("th");
+				tr.appendChild(th);
+			}
+			for (var j = 0; j < 4; j++) {
+				var th = document.createElement("th");
+				tr.appendChild(th);
+				th.textContent = j;
+			}
+		}
+		for (var i = 0; i < 4; i++) {
+			var tr = document.createElement("tr");
+			table.appendChild(tr);
+			{
+				var th = document.createElement("th");
+				tr.appendChild(th);
+				th.textContent = i;
+			}
+			for (var j = 0; j < 4; j++) {
+				var td = document.createElement("td");
+				tr.appendChild(td);
+				var t = document.createElement("input");
+				td.appendChild(t);
+				t.type = "text";
+				t.value = block[i][j];
+				t.id = `block${i}-${j}`;
+			}
+		}
+
+		function makeText() {
+			var b = new Array(8);
+			for (var i = 0; i < 8; i++) {
+				b[i] = new Array(8);
+				for (var j = 0; j < 8; j++) {
+					b[i][j] = document.getElementById(`bitmap${i}-${j}`).classList.contains("black") ? 1 : 0;
+				}
+			}
+			var s = "";
+			for (var i = 0; i < 4; i++) {
+				for (var j = 0; j < 4; j++) {
+					s += document.getElementById(`block${b[i * 2 + 1][j * 2] + b[i * 2 + 1][j * 2 + 1] * 2}-${b[i * 2][j * 2] + b[i * 2][j * 2 + 1] * 2}`).value;
+				}
+				if (i < 3) s += "\n";
+			}
+			document.getElementById("output").value = s;
+		}
+	</script>
+	<input type="button" value="生成" onclick="makeText()">
+	<textarea id="output"></textarea>
+</body>
+</html>
