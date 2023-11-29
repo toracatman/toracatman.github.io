@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>ビットマップをテキストに</title>
 	<link rel="stylesheet" href="/mkanaplus.css">
 	<style>
@@ -193,12 +194,8 @@
 					d.id = `bitmap${i}-${j}`;
 					d.className = "bitmap-dot";
 					d.addEventListener("click", function() {
-						if (this.classList.contains("black")) {
-							this.classList.remove("black");
-						}
-						else {
-							this.classList.add("black");
-						}
+						if (this.classList.contains("black")) this.classList.remove("black");
+						else								  this.classList.add("black");
 						makeOutput();
 					});
 				}
@@ -215,12 +212,8 @@
 					bitmap[i][j] = s[i][j] == e_bc.value ? 1 : 0;
 					var d = document.getElementById(`bitmap${i}-${j}`);
 					if (d == null) continue;
-					if (bitmap[i][j] == 1) {
-						d.classList.add("black");
-					}
-					else {
-						d.classList.remove("black");
-					}
+					if (bitmap[i][j] == 1) d.classList.add("black");
+					else				   d.classList.remove("black");
 				}
 			}
 			makeOutput();
