@@ -4,10 +4,18 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>ひらがなカタカナ変換（にしき的フォント）</title>
-	<link rel="stylesheet" href="/mkanaplus.css">
+	<link rel="stylesheet" href="/toracatman.css">
 	<style>
+		@font-face {
+			font-family: "Nishiki-teki";
+			src: url("nishiki-teki.woff2") format("woff2"),
+			     url("nishiki-teki.woff") format("woff");
+			font-display: swap;
+		}
 		#textarea1 {
-			font-size: 20pt;
+			width: 100%;
+			height: 72rem;
+			font-size: 2.4rem;
 			font-family: "Nishiki-teki";
 		}
 	</style>
@@ -163,7 +171,7 @@
 </head>
 <body>
 	にしき的フォントで使える，対が存在するひらがな、カタカナを相互変換します。入力内容は外部に送信されません。<br>
-	にしき的フォントをインストールしていない場合，にしき的フォントのインストールが必要です。<br>
+	にしき的フォントをWebフォントにして使っているので，にしき的フォントのインストールは不要です。<br>
 	<textarea cols="90" rows="20" id="textarea1">あいうえおかがきぎくぐけげこごさざしじすずせぜそぞただちぢつづてでとどなにぬねの
 はばぱひびぴふぶぷへべぺほぼぽまみむめもやゆよらりるれろわゐゑをんゔ
 アイウエオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂツヅテデトドナニヌネノ

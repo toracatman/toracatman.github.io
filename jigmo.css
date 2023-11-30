@@ -1,0 +1,18 @@
+@font-face {
+	font-family: "Jigmo";
+	src: url("fonts/Jigmo.woff2") format("woff2"),
+	     url("fonts/Jigmo.woff") format("woff");
+	font-display: swap;
+}
+@font-face {
+	font-family: "Jigmo2";
+	src: url("fonts/Jigmo2.woff2") format("woff2"),
+	     url("fonts/Jigmo2.woff") format("woff");
+	font-display: swap;
+}
+@font-face {
+	font-family: "Jigmo3";
+	src: url("fonts/Jigmo3.woff2") format("woff2"),
+	     url("fonts/Jigmo3.woff") format("woff");
+	font-display: swap;
+}

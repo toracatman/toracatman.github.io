@@ -1,9 +1,0 @@
-@font-face {
-	font-family: "Mkana+";
-	src: url("https://dl.dropboxusercontent.com/s/xzn8u0kw7ijx1hf/mkanaplus.woff2") format("woff2"),
-	     url("https://dl.dropboxusercontent.com/s/rw36pc4auo3ee1j/mkanaplus.woff") format("woff");
-	font-display: swap;
-}
-body {
-	font-family: "Mkana+";
-}
