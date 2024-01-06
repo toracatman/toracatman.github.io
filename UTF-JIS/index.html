@@ -48,6 +48,9 @@
 		<p>
 			<input type="text" name="text1">バイトごとに改行
 		</p>
+		<p>
+			<label><input type="checkbox" name="checkbox1">16進数の算用数字を使う</label>
+		</p>
 	</form>
 
 	<p><a href="jis_x_0213.html">JIS X 0213表</a></p>
@@ -223,11 +226,12 @@
 				}
 				s = t;
 			}
+			if (document.form1.checkbox1.checked) s = s.replace(/A/g, "↊").replace(/B/g, "↋").replace(/C/g, "↌").replace(/D/g, "↍").replace(/E/g, "↎").replace(/F/g, "↏");
 			document.form1.textarea2.value = s.trim();
 		}
 
 		function decodeJIS() {
-			var arr = document.form1.textarea2.value.trim().split(/[\t\n ]+/);
+			var arr = document.form1.textarea2.value.replace(/↊/g, "A").replace(/↋/g, "B").replace(/↌/g, "C").replace(/↍/g, "D").replace(/↎/g, "E").replace(/↏/g, "F").trim().split(/[\t\n ]+/);
 			var bs = new Array(arr.length);
 			for (var i = 0; i < arr.length; i++) {
 				bs[i] = parseInt(arr[i], 16);
