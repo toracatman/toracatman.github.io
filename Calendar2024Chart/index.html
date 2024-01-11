@@ -32,22 +32,25 @@
 			var s = document.form1.start.value;
 			var e = document.form1.end.value;
 
-			document.write('<!DOCTYPE html>');
-			document.write('<html lang="ja">');
-			document.write('<head>');
-			document.write('<meta charset="UTF-8">');
-			document.write('<title>早見表</title>');
-			document.write('<style>');
-			document.write('html { font-size: 62.5%; }');
-			document.write('body { font-size: 1.6rem; }');
-			document.write('td { text-align: right; font-size: 2rem; font-family: monospace; }');
-			document.write('.gregorian-first { background-color: #0ff; }');
-			document.write('.hhpc-first { background-color: #0f0; }');
-			document.write('</style>');
-			document.write('</head>');
-			document.write('<body>');
-			document.write('<table border="1">');
-			document.write('<tr><th>日の番号</th><th>グレゴリオ暦</th><th>HHPC改定案</th></tr>');
+			var nwin = window.open("");
+			nwin.document.open();
+			nwin.document.write('<!DOCTYPE html>');
+			nwin.document.write('<html lang="ja">');
+			nwin.document.write('<head>');
+			nwin.document.write('<meta charset="UTF-8">');
+			nwin.document.write('<meta name="viewport" content="width=device-width,initial-scale=1">');
+			nwin.document.write('<title>早見表</title>');
+			nwin.document.write('<style>');
+			nwin.document.write('html { font-size: 62.5%; }');
+			nwin.document.write('body { font-size: 1.6rem; }');
+			nwin.document.write('td { text-align: right; font-size: 2rem; font-family: monospace; }');
+			nwin.document.write('.gregorian-first { background-color: #0ff; }');
+			nwin.document.write('.hhpc-first { background-color: #0f0; }');
+			nwin.document.write('</style>');
+			nwin.document.write('</head>');
+			nwin.document.write('<body>');
+			nwin.document.write('<table border="1">');
+			nwin.document.write('<tr><th>日の番号</th><th>グレゴリオ暦</th><th>HHPC改定案</th></tr>');
 			for (var i = 1; i <= e; i++) {
 				gd++;
 				if (gm == 2) {
@@ -124,12 +127,13 @@
 					gd = gd.toString().padStart(2, "0");
 					hm = hm.toString().padStart(2, "0");
 					hd = hd.toString().padStart(2, "0");
-					document.write(`<tr><td>${i}</td><td${gf}>${gy}/${gm}/${gd}</td><td${hf}>${hy}/${hm}/${hd}</td></tr>`);
+					nwin.document.write(`<tr><td>${i}</td><td${gf}>${gy}/${gm}/${gd}</td><td${hf}>${hy}/${hm}/${hd}</td></tr>`);
 				}
 			}
-			document.write('</table>');
-			document.write('</body>');
-			document.write('</html>');
+			nwin.document.write('</table>');
+			nwin.document.write('</body>');
+			nwin.document.write('</html>');
+			nwin.document.close();
 		}
 	</script>
 </head>
