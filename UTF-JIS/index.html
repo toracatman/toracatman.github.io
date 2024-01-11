@@ -46,10 +46,10 @@
 			<label><input type="radio" name="radio1" value="lf">LF</label>
 		</p>
 		<p>
-			<input type="text" name="text1">バイトごとに改行
+			<input type="text" name="text1">バイトごとに 改行
 		</p>
 		<p>
-			<label><input type="checkbox" name="checkbox1">16進数の算用数字を使う</label>
+			<label><input type="checkbox" name="checkbox1">16進数の 算用数字を 使う</label>
 		</p>
 	</form>
 
@@ -61,7 +61,7 @@
 			return jis1[p];
 		}
 		function getChar(m, k, t) {
-			if (!checkJIS(m, k, t)) return "不正な面区点番号です。";
+			if (!checkJIS(m, k, t)) return "不正な 面区点番号です。";
 			return jis[m - 1][k - 1][t - 1];
 		}
 
@@ -86,7 +86,7 @@
 		}
 
 		function getByte(m, k, t) {
-			if (!checkJIS(m, k, t)) return "不正な面区点番号です。";
+			if (!checkJIS(m, k, t)) return "不正な 面区点番号です。";
 
 			var s1;
 			var s2;
@@ -251,14 +251,14 @@
 				//2バイト文字
 				else {
 					if (i == bs.length - 1) {
-						s += "不正なバイトです。";
+						s += "不正な バイトです。";
 						continue;
 					}
 
 					var s1 = bs[i];
 					var s2 = bs[i + 1];
 					if (!((s2 >= 0x40 && s2 <= 0x7E) || (s2 >= 0x80 && s2 <= 0xFC))) {
-						s += "不正なバイトです。";
+						s += "不正な バイトです。";
 						continue;
 					}
 
@@ -311,7 +311,7 @@
 					//Unicode文字
 					else {
 						if (i == bs.length - 5) {
-							s += "不正なバイトです。";
+							s += "不正な バイトです。";
 							continue;
 						}
 
