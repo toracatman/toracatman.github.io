@@ -120,7 +120,7 @@
 				s2 = t + 158;
 			}
 
-			return s1.toString(16).toUpperCase() + " " + s2.toString(16).toUpperCase();
+			return `${s1.toString(16).toUpperCase()} ${s2.toString(16).toUpperCase()}`;
 		}
 
 		function checkJIS(m, k, t) {
@@ -144,32 +144,30 @@
 
 				//半濁点
 				else if (p2 == 0x309A) {
-					var c1 = c.charAt(0);
 					var cc = "かきくけこカキクケコセツトㇷ";
-					if (cc.indexOf(c1) !== -1) {
+					if (cc.indexOf(c[0]) !== -1) {
 						i++;
 					}
 					else {
-						c = c1;
+						c = c[0];
 					}
 				}
 
 				//グレイヴ、アキュート
 				else if (p2 == 0x0300 || p2 == 0x0301) {
-					var c1 = c.charAt(0);
 					var cc = "ɔʌəɚ";
-					if (cc.indexOf(c1) !== -1) {
+					if (cc.indexOf(c[0]) !== -1) {
 						i++;
 					}
-					else if (p2 == 0x0300 && c1 == "æ") {
+					else if (p2 == 0x0300 && c[0] == "æ") {
 						i++;
 					}
 					else {
-						c = c1;
+						c = c[0];
 					}
 				}
 				else {
-					c = c.charAt(0);
+					c = c[0];
 				}
 				var mkt = findChar(c);
 				var b;
@@ -202,9 +200,9 @@
 					var msbl = (msb & 0xFF).toString(16).toUpperCase().padStart(2, "0");
 					var lsbm = (lsb >>> 8).toString(16).toUpperCase().padStart(2, "0");
 					var lsbl = (lsb & 0xFF).toString(16).toUpperCase().padStart(2, "0");
-					b = getByte(1, 8, 64) + " " + msbm + " " + msbl + " " + lsbm + " " + lsbl;
+					b = `${getByte(1, 8, 64)} ${msbm} ${msbl} ${lsbm} ${lsbl}`;
 				}
-				s += b + " ";
+				s += `${b} `;
 			}
 			if (document.form1.text1.value != "" && !isNaN(document.form1.text1.value)) {
 				var t = "";

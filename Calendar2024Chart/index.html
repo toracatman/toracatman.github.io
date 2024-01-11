@@ -124,7 +124,7 @@
 					gd = gd.toString().padStart(2, "0");
 					hm = hm.toString().padStart(2, "0");
 					hd = hd.toString().padStart(2, "0");
-					document.write('<tr><td>' + i + '</td><td' + gf + '>' + gy + '/' + gm + '/' + gd + '</td><td' + hf + '>' + hy + '/' + hm + '/' + hd + '</td></tr>');
+					document.write(`<tr><td>${i}</td><td${gf}>${gy}/${gm}/${gd}</td><td${hf}>${hy}/${hm}/${hd}</td></tr>`);
 				}
 			}
 			document.write('</table>');

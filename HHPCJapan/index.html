@@ -49,7 +49,7 @@
 			var day = ["日", "月", "火", "水", "木", "金", "土"];
 			document.write('<table border="1"><tr>');
 			for (var i = 0; i < 7; i++) {
-				document.write("<th>" + day[i] + "</th>");
+				document.write(`<th>${day[i]}</th>`);
 			}
 			document.write("</tr>");
 
@@ -61,8 +61,8 @@
 						var h = typeof holiday[d] !== 'undefined';
 						var c = "";
 						if (h) c = ' class="holiday"';
-						document.write('<td id="' + m + '-' + d + '" ' + c + '>' + d);
-						if (h) document.write('<div class="h-name">' + holiday[d] + '</div>');
+						document.write(`<td id="${m}-${d}" ${c}>${d}`);
+						if (h) document.write(`<div class="h-name">${holiday[d]}</div>`);
 					}
 					else document.write("<td>");
 					document.write("</td>");
@@ -225,7 +225,7 @@
 					return;
 				}
 
-				var date = document.getElementById(month + "-" + day);
+				var date = document.getElementById(`${month}-${day}`);
 
 				if (date === null) {
 					alert("日にちがありません。");
@@ -238,7 +238,7 @@
 				else if (a == 1)	hn = "秋分の";
 				else if (a == 2)	hn = "振替休";
 				else				hn = "国民の休";
-				date.innerHTML += '<div class="h-name">' + hn + '日</div>';
+				date.innerHTML += `<div class="h-name">${hn}日</div>`;
 			}
 		</script>
 	</div>

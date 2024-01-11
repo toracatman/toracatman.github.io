@@ -133,7 +133,7 @@
 					var as;
 					switch (a) {
 					case 0:
-						as = constants[i] + "y" + vowels[jx];
+						as = `${constants[i]}y${vowels[jx]}`;
 						as = as.replace(/d̂/g, "(d̂|dz)").replace(/y/g, "(y|j)").replace(/w/g, "(w|ŭ)");
 						break;
 					case 1:
@@ -147,7 +147,7 @@
 					var bs;
 					switch (b) {
 					case 0:
-						bs = constants[i] + "y" + vowels[jx];
+						bs = `${constants[i]}y${vowels[jx]}`;
 						if (document.form1.esperanto.checked) bs = bs.replace(/d̂/g, "dz").replace(/y/g, "j").replace(/w/g, "ŭ");
 						break;
 					case 1:
@@ -169,7 +169,7 @@
 					var as;
 					switch (a) {
 					case 0:
-						as = constants[i] + "w" + vowels[jx];
+						as = `${constants[i]}w${vowels[jx]}`;
 						as = as.replace(/d̂/g, "(d̂|dz)").replace(/y/g, "(y|j)").replace(/w/g, "(w|ŭ)");
 						break;
 					case 1:
@@ -183,7 +183,7 @@
 					var bs;
 					switch (b) {
 					case 0:
-						bs = constants[i] + "w" + vowels[jx];
+						bs = `${constants[i]}w${vowels[jx]}`;
 						if (document.form1.esperanto.checked) bs = bs.replace(/d̂/g, "dz").replace(/y/g, "j").replace(/w/g, "ŭ");
 						break;
 					case 1:

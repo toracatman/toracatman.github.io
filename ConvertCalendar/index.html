@@ -94,30 +94,30 @@
 			}
 			e_leap.classList.remove("red");
 			if (isLeap(document.form1.leapyear.value)) {
-				e_leap.innerHTML = "<span class='red'>" + document.form1.leapyear.value + "年は閏年です。</span>";
+				e_leap.innerHTML = `<span class="red">${document.form1.leapyear.value}年は閏年です。</span>`;
 			}
 			else {
-				e_leap.innerHTML = document.form1.leapyear.value + "年は閏年ではありません。";
+				e_leap.innerHTML = `${document.form1.leapyear.value}年は閏年ではありません。`;
 			}
 			if (isLeapH(document.form1.leapyear.value)) {
-				e_leap.innerHTML += "<span class='red'>" + document.form1.leapyear.value + "年はHHPCの閏年です。</span>";
+				e_leap.innerHTML += `<span class="red">${document.form1.leapyear.value}年はHHPCの閏年です。</span>`;
 			}
 			else {
-				e_leap.innerHTML += document.form1.leapyear.value + "年はHHPCの閏年ではありません。";
+				e_leap.innerHTML += `${document.form1.leapyear.value}年はHHPCの閏年ではありません。`;
 			}
 			e_leap.innerHTML += "<br>";
 			if (isLeap(document.form1.leapyear.value)) {
-				e_leap.innerHTML += "<span class='red'>" + document.form1.leapyear.value + " is a leap year.</span>";
+				e_leap.innerHTML += `<span class="red">${document.form1.leapyear.value} is a leap year.</span>`;
 			}
 			else {
-				e_leap.innerHTML += document.form1.leapyear.value + " is not a leap year.";
+				e_leap.innerHTML += `${document.form1.leapyear.value} is not a leap year.`;
 			}
 			e_leap.innerHTML += " ";
 			if (isLeapH(document.form1.leapyear.value)) {
-				e_leap.innerHTML += "<span class='red'>" + document.form1.leapyear.value + " is a HHPC leap year.</span>";
+				e_leap.innerHTML += `<span class="red">${document.form1.leapyear.value} is a HHPC leap year.</span>`;
 			}
 			else {
-				e_leap.innerHTML += document.form1.leapyear.value + " is not a HHPC leap year.";
+				e_leap.innerHTML += `${document.form1.leapyear.value} is not a HHPC leap year.`;
 			}
 		}
 
@@ -140,9 +140,9 @@
 						return false;
 					}
 				}
-				y = parseInt(arr[0]);
-				m = parseInt(arr[1]);
-				d = parseInt(arr[2]);
+				y = Number(arr[0]);
+				m = Number(arr[1]);
+				d = Number(arr[2]);
 			}
 			else if (v.indexOf("年") != -1) {
 				var arr = v.split("年");
@@ -154,14 +154,14 @@
 					e_error.innerHTML = "年が正しくありません。<br>Incorrect year.";
 					return false;
 				}
-				y = parseInt(arr[0]);
+				y = Number(arr[0]);
 				var arr2 = arr[1].match(/[0-9]+/g);
 				if (arr2 == null) {
 					e_error.innerHTML = "形式が正しくありません。<br>Incorrect format.";
 					return false;
 				}
 				if (arr2.length == 1) {
-					d = parseInt(arr2[0]);
+					d = Number(arr2[0]);
 					m = mon_name_ja.indexOf(arr[1].split(/[0-9]/)[0]);
 					if (m == -1) m = mon_name_ja_new.indexOf(arr[1].split(/[0-9]/)[0]);
 					if (m == -1) {
@@ -171,8 +171,8 @@
 					m++;
 				}
 				else if (arr2.length == 2) {
-					m = parseInt(arr2[0]);
-					d = parseInt(arr2[1]);
+					m = Number(arr2[0]);
+					d = Number(arr2[1]);
 				}
 				else {
 					e_error.innerHTML = "形式が正しくありません。<br>Incorrect format.";
@@ -198,8 +198,8 @@
 						return false;
 					}
 				}
-				d = parseInt(arr[1]);
-				y = parseInt(arr[2]);
+				d = Number(arr[1]);
+				y = Number(arr[2]);
 			}
 			else {
 				if (isNaN(v)) {
@@ -210,9 +210,9 @@
 					e_error.innerHTML = "8桁ではありません。<br>Not 8 digits.";
 					return false;
 				}
-				y = parseInt(v.slice(0, 4));
-				m = parseInt(v.slice(4, 6));
-				d = parseInt(v.slice(6, 8));
+				y = Number(v.slice(0, 4));
+				m = Number(v.slice(4, 6));
+				d = Number(v.slice(6, 8));
 			}
 
 			if (y < 1970 || y > 2200) {
@@ -339,31 +339,25 @@
 
 			switch (document.form1.format.value) {
 			case "ymdslash":
-				document.form1.hhpc.value = hy.toString().padStart(4, "0") + "/" +
-					(hm + 1).toString().padStart(2, "0") + "/" +
-					hd.toString().padStart(2, "0");
+				document.form1.hhpc.value = `${hy.toString().padStart(4, "0")}/${(hm + 1).toString().padStart(2, "0")}/${hd.toString().padStart(2, "0")}`;
 				break;
 			case "ymdhyphen":
-				document.form1.hhpc.value = hy.toString().padStart(4, "0") + "-" +
-					(hm + 1).toString().padStart(2, "0") + "-" +
-					hd.toString().padStart(2, "0");
+				document.form1.hhpc.value = `${hy.toString().padStart(4, "0")}-${(hm + 1).toString().padStart(2, "0")}-${hd.toString().padStart(2, "0")}`;
 				break;
 			case "ymd":
-				document.form1.hhpc.value = hy.toString().padStart(4, "0") +
-					(hm + 1).toString().padStart(2, "0") +
-					hd.toString().padStart(2, "0");
+				document.form1.hhpc.value = `${hy.toString().padStart(4, "0")}${(hm + 1).toString().padStart(2, "0")}${hd.toString().padStart(2, "0")}`;
 				break;
 			case "japanese":
-				document.form1.hhpc.value = hy + "年" + (hm + 1) + "月" + hd + "日";
+				document.form1.hhpc.value = `${hy}年${hm + 1}月${hd}日`;
 				break;
 			case "japaneseold":
-				document.form1.hhpc.value = hy + "年" + mon_name_ja[hm] + hd + "日";
+				document.form1.hhpc.value = `${hy}年${mon_name_ja[hm]}${hd}日`;
 				break;
 			case "japanesenew":
-				document.form1.hhpc.value = hy + "年" + mon_name_ja_new[hm] + hd + "日";
+				document.form1.hhpc.value = `${hy}年${mon_name_ja_new[hm]}${hd}日`;
 				break;
 			case "english":
-				document.form1.hhpc.value = mon_name_en[hm] + " " + hd + ", " + hy;
+				document.form1.hhpc.value = `${mon_name_en[hm]} ${hd}, ${hy}`;
 				break;
 			}
 
@@ -414,31 +408,25 @@
 
 			switch (document.form1.format.value) {
 			case "ymdslash":
-				document.form1.gregorian.value = gy.toString().padStart(4, "0") + "/" +
-					(gm + 1).toString().padStart(2, "0") + "/" +
-					gd.toString().padStart(2, "0");
+				document.form1.gregorian.value = `${gy.toString().padStart(4, "0")}/${(gm + 1).toString().padStart(2, "0")}/${gd.toString().padStart(2, "0")}`;
 				break;
 			case "ymdhyphen":
-				document.form1.gregorian.value = gy.toString().padStart(4, "0") + "-" +
-					(gm + 1).toString().padStart(2, "0") + "-" +
-					gd.toString().padStart(2, "0");
+				document.form1.gregorian.value = `${gy.toString().padStart(4, "0")}-${(gm + 1).toString().padStart(2, "0")}-${gd.toString().padStart(2, "0")}`;
 				break;
 			case "ymd":
-				document.form1.gregorian.value = gy.toString().padStart(4, "0") +
-					(gm + 1).toString().padStart(2, "0") +
-					gd.toString().padStart(2, "0");
+				document.form1.gregorian.value = `${gy.toString().padStart(4, "0")}${(gm + 1).toString().padStart(2, "0")}${gd.toString().padStart(2, "0")}`;
 				break;
 			case "japanese":
-				document.form1.gregorian.value = gy + "年" + (gm + 1) + "月" + gd + "日";
+				document.form1.gregorian.value = `${gy}年${gm + 1}月${gd}日`;
 				break;
 			case "japaneseold":
-				document.form1.gregorian.value = gy + "年" + mon_name_ja[gm] + gd + "日";
+				document.form1.gregorian.value = `${gy}年${mon_name_ja[gm]}${gd}日`;
 				break;
 			case "japanesenew":
-				document.form1.gregorian.value = gy + "年" + mon_name_ja_new[gm] + gd + "日";
+				document.form1.gregorian.value = `${gy}年${mon_name_ja_new[gm]}${gd}日`;
 				break;
 			case "english":
-				document.form1.gregorian.value = mon_name_en[gm] + " " + gd + ", " + gy;
+				document.form1.gregorian.value = `${mon_name_en[gm]} ${gd}, ${gy}`;
 				break;
 			}
 
@@ -457,7 +445,7 @@
 			e_day.classList.remove("blue");
 			if (day == 0)		e_day.classList.add("red");
 			else if (day == 6)	e_day.classList.add("blue");
-			e_day.innerHTML = day_name_ja[day] + "曜日<br>" + day_name_en[day];
+			e_day.innerHTML = `${day_name_ja[day]}曜日<br>${day_name_en[day]}`;
 		}
 	</script>
 </body>

@@ -31,30 +31,30 @@
 			document.write("<tr>");
 			document.write("<th></th>");
 			for (var i = 0; i < 16; i++) {
-				document.write('<th>&nbsp;' + i.toString(16).toUpperCase() + '</th>');
+				document.write(`<th>&nbsp;${i.toString(16).toUpperCase()}</th>`);
 			}
 			document.write("</tr>");
 			for (var p = 0; p < jis1.length; p++) {
-				if (p % 16 == 0) document.write('<tr><th>' + p.toString(16).toUpperCase() + '</th>');
+				if (p % 16 == 0) document.write(`<tr><th>${p.toString(16).toUpperCase()}</th>`);
 				var c = jis1[p].replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
-				document.write('<td>' + c + '</td>');
+				document.write(`<td>${c}</td>`);
 				if (p % 16 == 15) document.write('</tr>');
 			}
 		</script>
 	</table>
 	<script>
 		for (var i = 0; i < jis.length; i++) {
-			document.write('<h3>' + (i + 1) + '面</h3>');
+			document.write(`<h3>${i + 1}面</h3>`);
 			document.write('<table border="1">');
 			document.write('<tr>');
 			document.write('<th></th>');
 			for (var k = 1; k <= 94; k++) {
-				document.write('<th>' + (k < 10 ? '&nbsp;' + k : k) + '</th>');
+				document.write(`<th>${k < 10 ? "&nbsp;" : ""}${k}</th>`);
 			}
 			document.write('</tr>');
 			for (var j = 0; j < jis[i].length; j++) {
 				document.write('<tr>');
-				document.write('<th>' + (j + 1) + '</th>');
+				document.write(`<th>${j + 1}</th>`);
 				for (var k = 0; k < jis[i][j].length; k++) {
 					document.write('<td>');
 					document.write(jis[i][j][k]);

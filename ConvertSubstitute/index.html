@@ -19,8 +19,8 @@
 	<script>
 		function convert(back) {
 			var s = document.form1.textarea1.value;
-			var a = parseInt(document.form1.select1.value);
-			var b = parseInt(document.form1.select2.value);
+			var a = Number(document.form1.select1.value);
+			var b = Number(document.form1.select2.value);
 			if (back) {
 				var tmp = a;
 				a = b;
