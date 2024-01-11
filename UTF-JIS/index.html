@@ -133,7 +133,7 @@
 		function encodeJIS() {
 			var s = "";
 			for (var i = 0; i < document.form1.textarea1.value.length; i++) {
-				var c = document.form1.textarea1.value.substring(i, i + 2);
+				var c = document.form1.textarea1.value.slice(i, i + 2);
 				var p = c.codePointAt();
 				var p2 = c.codePointAt(1);
 

@@ -210,9 +210,9 @@
 					e_error.innerHTML = "8桁ではありません。<br>Not 8 digits.";
 					return false;
 				}
-				y = parseInt(v.substring(0, 4));
-				m = parseInt(v.substring(4, 6));
-				d = parseInt(v.substring(6, 8));
+				y = parseInt(v.slice(0, 4));
+				m = parseInt(v.slice(4, 6));
+				d = parseInt(v.slice(6, 8));
 			}
 
 			if (y < 1970 || y > 2200) {
