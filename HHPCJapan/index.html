@@ -213,13 +213,13 @@
 		</form>
 		<script>
 			function putED(a) {
-				var month = parseInt(document.form1.month.value) - 1;
+				var month = Number(document.form1.month.value) - 1;
 				if (isNaN(month)) {
 					alert("月が正しくありません。");
 					return;
 				}
 
-				var day = parseInt(document.form1.day.value);
+				var day = Number(document.form1.day.value);
 				if (isNaN(day)) {
 					alert("日が正しくありません。");
 					return;

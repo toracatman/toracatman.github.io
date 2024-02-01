@@ -171,9 +171,9 @@
 			if (error) return;
 
 			var w = String(cols * 32);
-			e_bitmap.style.width = `${w.slice(0, w.length - 1)}.${w.slice(-1)}rem`;
+			e_bitmap.style.width = `${w.slice(0, -1)}.${w.slice(-1)}rem`;
 			var h = String(rows * 32);
-			e_bitmap.style.height = `${h.slice(0, h.length - 1)}.${h.slice(-1)}rem`;
+			e_bitmap.style.height = `${h.slice(0, -1)}.${h.slice(-1)}rem`;
 			e_bitmap.innerHTML = "";
 			bitmap = new Array(rows);
 			for (var i = 0; i < rows; i++) bitmap[i] = new Array(cols);
