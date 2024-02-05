@@ -29,7 +29,7 @@
 		var file1 = document.getElementById("file1");
 		var file_name = document.getElementById("file-name");
 
-		file1.addEventListener("change", function() {
+		file1.addEventListener("change", () => {
 			file_name.textContent = file1.files[0].name;
 		});
 
