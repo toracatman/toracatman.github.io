@@ -187,7 +187,7 @@
 					r.appendChild(d);
 					d.id = `bitmap${i}-${j}`;
 					d.className = "bitmap-dot";
-					d.addEventListener("click", () => {
+					d.addEventListener("click", function() {
 						if (this.classList.contains("black")) this.classList.remove("black");
 						else								  this.classList.add("black");
 						makeOutput();
