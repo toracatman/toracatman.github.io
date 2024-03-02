@@ -68,7 +68,7 @@
 			if (c == 0x2CF02) return 0x2CEFF;					//𬼂
 
 			//仮名付録B
-			if (c >= 0xF7C38 && c <= 0xF7C3A) return c + 0x3;	//󷰸〰󷰺
+			if (c >= 0xF7C38 && c <= 0xF7C3A) return c + 0x3;	//𛅨〰𛅪
 			if (c == 0xF7CB0) return 0x30FF;					//󷲰
 			return c;
 		}
@@ -139,7 +139,7 @@
 			if (c == 0x2CEFF) return 0x2CF02;					//𬼂
 
 			//仮名付録B
-			if (c >= 0xF7C3B && c <= 0xF7C3D) return c - 0x3;	//󷰸〰󷰺
+			if (c >= 0xF7C3B && c <= 0xF7C3D) return c - 0x3;	//𛅨〰𛅪
 			if (c == 0x30FF) return 0xF7CB0;					//󷲰
 			return c;
 		}
@@ -186,8 +186,8 @@
 
 　
 　
-ぁぃぅぇぉゕゖ𛄲っ𛅄ゃ󷰸ゅ󷰹ょゎ𛅐󷰺𛅑𛅒𛅓
-ァィゥェォヵヶ𛅕ッㇸャ󷰻ュ󷰼ョヮ𛅤󷰽𛅥𛅦𛅧
+ぁぃぅぇぉゕゖ𛄲っ𛅄ゃ𛅨ゅ𛅩ょゎ𛅐𛅪𛅑𛅒𛅓
+ァィゥェォヵヶ𛅕ッㇸャ𛅫ュ𛅬ョヮ𛅤𛅭𛅥𛅦𛅧
 ゟヿ𪜈𬻿𬼀𬼂󷲰󷲲󷲳󷲴󷲵</textarea><br>
 	<input type="button" value="カタカナに変換" onclick="TextareaToKatakana()"><br>
 	<input type="button" value="ひらがなに変換" onclick="TextareaToHiragana()">
