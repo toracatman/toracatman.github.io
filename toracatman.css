@@ -1,6 +1,7 @@
 @font-face {
 	font-family: "Mkana+";
-	src: url("/fonts/mkanaplus.woff2") format("woff2"),
+	src: local("Mkana+"),
+	     url("/fonts/mkanaplus.woff2") format("woff2"),
 	     url("/fonts/mkanaplus.woff") format("woff");
 	font-display: swap;
 }

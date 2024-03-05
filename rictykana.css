@@ -1,6 +1,7 @@
 @font-face {
 	font-family: "Ricty Kana";
-	src: url("/fonts/RictyKana.woff2") format("woff2"),
+	src: local("Ricty Kana"),
+	     url("/fonts/RictyKana.woff2") format("woff2"),
 	     url("/fonts/RictyKana.woff") format("woff");
 	font-display: swap;
 }
