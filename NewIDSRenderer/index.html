@@ -188,17 +188,33 @@
 			transform: rotate(-90deg);
 		}
 
+		.red { color: red; }
+		.pink { color: pink; }
+		.orange { color: orange; }
+		.yellow { color: yellow; }
+		.yellowgreen { color: yellowgreen; }
+		.green { color: green; }
+		.blue { color: blue; }
+		.lightblue { color: lightblue; }
+		.purple { color: purple; }
+		.brown { color: brown; }
+		.black { color: black; }
+		.grey { color: grey; }
+		.white { color: white; }
+		.gold { color: gold; }
+		.silver { color: silver; }
+
 		.circle { border-radius: 50%; }
 
-		.black { background-color: black; }
-		.white { background-color: white; }
-		.red { background-color: red; }
-		.blue { background-color: blue; }
-		.orange { background-color: orange; }
-		.yellow { background-color: yellow; }
-		.green { background-color: green; }
-		.purple { background-color: purple; }
-		.brown { background-color: brown; }
+		.bg-red { background-color: red; }
+		.bg-orange { background-color: orange; }
+		.bg-yellow { background-color: yellow; }
+		.bg-green { background-color: green; }
+		.bg-blue { background-color: blue; }
+		.bg-purple { background-color: purple; }
+		.bg-brown { background-color: brown; }
+		.bg-black { background-color: black; }
+		.bg-white { background-color: white; }
 	</style>
 </head>
 <body>
@@ -254,7 +270,7 @@
 
 	<h3>色付きの 図形</h3>
 	<p>🔴🟠🟡🟢🔵🟣🟤⚫⚪🟥🟧🟨🟩🟦🟪🟫⬛⬜</p>
-	<p>これらの 図形は 絵文字ではく フラットに 表示されます。</p>
+	<p>これらの 図形は 絵文字でなく フラットに 表示されます。</p>
 	<p>国旗などを いい感じに 表示したかったからです。</p>
 
 	<h3>例</h3>
@@ -305,21 +321,21 @@
 				}
 				i++;
 				var heart = s.codePointAt(i);
-				if (heart == 0x2764) span.style.color = "red";
-				else if (heart == 0x1FA77) span.style.color = "pink";
-				else if (heart == 0x1F9E1) span.style.color = "orange";
-				else if (heart == 0x1F49B) span.style.color = "yellow";
-				else if (heart == 0x1F350) span.style.color = "yellowgreen";
-				else if (heart == 0x1F49A) span.style.color = "green";
-				else if (heart == 0x1F499) span.style.color = "blue";
-				else if (heart == 0x1FA75) span.style.color = "lightblue";
-				else if (heart == 0x1F49C) span.style.color = "purple";
-				else if (heart == 0x1F90E) span.style.color = "brown";
-				else if (heart == 0x1F5A4) span.style.color = "black";
-				else if (heart == 0x1FA76) span.style.color = "grey";
-				else if (heart == 0x1F90D) span.style.color = "white";
-				else if (heart == 0x1F4C0) span.style.color = "gold";
-				else if (heart == 0x1F4BF) span.style.color = "silver";
+				if (heart == 0x2764) span.classList.add("red");
+				else if (heart == 0x1FA77) span.classList.add("pink");
+				else if (heart == 0x1F9E1) span.classList.add("orange");
+				else if (heart == 0x1F49B) span.classList.add("yellow");
+				else if (heart == 0x1F350) span.classList.add("yellowgreen");
+				else if (heart == 0x1F49A) span.classList.add("green");
+				else if (heart == 0x1F499) span.classList.add("blue");
+				else if (heart == 0x1FA75) span.classList.add("lightblue");
+				else if (heart == 0x1F49C) span.classList.add("purple");
+				else if (heart == 0x1F90E) span.classList.add("brown");
+				else if (heart == 0x1F5A4) span.classList.add("black");
+				else if (heart == 0x1FA76) span.classList.add("grey");
+				else if (heart == 0x1F90D) span.classList.add("white");
+				else if (heart == 0x1F4C0) span.classList.add("gold");
+				else if (heart == 0x1F4BF) span.classList.add("silver");
 				i += heart > 0xFFFF ? 2 : 1;
 				return span;
 			}
@@ -413,13 +429,13 @@
 					if (c >= 0x1F534 && c <= 0x1F535 ||
 						c >= 0x1F7E0 && c <= 0x1F7E4) e1.classList.add("circle");
 
-					if (c == 0x1F534 || c == 0x1F7E5)		e1.classList.add("red");
-					else if (c == 0x1F535 || c == 0x1F7E6)	e1.classList.add("blue");
-					else if (c == 0x1F7E0 || c == 0x1F7E7)	e1.classList.add("orange");
-					else if (c == 0x1F7E1 || c == 0x1F7E8)	e1.classList.add("yellow");
-					else if (c == 0x1F7E2 || c == 0x1F7E9)	e1.classList.add("green");
-					else if (c == 0x1F7E3 || c == 0x1F7EA)	e1.classList.add("purple");
-					else if (c == 0x1F7E4 || c == 0x1F7EB)	e1.classList.add("brown");
+					if (c == 0x1F534 || c == 0x1F7E5)		e1.classList.add("bg-red");
+					else if (c == 0x1F535 || c == 0x1F7E6)	e1.classList.add("bg-blue");
+					else if (c == 0x1F7E0 || c == 0x1F7E7)	e1.classList.add("bg-orange");
+					else if (c == 0x1F7E1 || c == 0x1F7E8)	e1.classList.add("bg-yellow");
+					else if (c == 0x1F7E2 || c == 0x1F7E9)	e1.classList.add("bg-green");
+					else if (c == 0x1F7E3 || c == 0x1F7EA)	e1.classList.add("bg-purple");
+					else if (c == 0x1F7E4 || c == 0x1F7EB)	e1.classList.add("bg-brown");
 					i++;
 				}
 				else {
