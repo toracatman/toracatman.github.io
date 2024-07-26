@@ -30,10 +30,9 @@ var key_right = false;
 var key_z = false;
 var key_z_c = 0;
 
-var mouse_btn;
-var mouse_lbtn_c = 0;
-var mouse_x;
-var mouse_y;
+var mouse_lbtn = false;
+var mouse_x = 0;
+var mouse_y = 0;
 
 var scale;
 var draw_w;
@@ -305,10 +304,7 @@ document.addEventListener("keyup", (e) => {
 
 //マウス
 document.addEventListener("mousedown", (e) => {
-	mouse_btn = e.buttons;
-});
-document.addEventListener("mouseup", (e) => {
-	mouse_btn = e.buttons;
+	if (e.buttons & 1) mouse_lbtn = true;
 });
 document.addEventListener("mousemove", (e) => {
 	mouse_x = (e.clientX - draw_x) / scale;
@@ -321,8 +317,6 @@ function main() {
 
 	if (key_z)	key_z_c++;
 	else		key_z_c = 0;
-	if (mouse_btn & 1)	mouse_lbtn_c++;
-	else				mouse_lbtn_c = 0;
 
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
@@ -359,12 +353,7 @@ function main() {
 	ctx.clearRect(0, 0, canvas.width, draw_y);
 	ctx.clearRect(0, draw_y + draw_h, canvas.width, canvas.height);
 
-	ctx.fillStyle = "#fff";
-	ctx.font = "16px 'Mkana+'";
-	ctx.textAlign = "left";
-	ctx.textBaseline = "top";
-	ctx.fillText(`${mouse_x} ${mouse_y}`, 50, 50);
-
+	mouse_lbtn = false;
 	animcounter++;
 	waitFrameRate();
 }
@@ -372,9 +361,9 @@ main();
 
 //●ゲーム読み込み画面
 function gameLoad() {
-	if (key_z || (mouse_btn & 1)) {
+	if (key_z || mouse_lbtn) {
 		gstate = GAME_TITLE;
-		if (mouse_btn & 1) mmode = true;
+		if (mouse_lbtn) mmode = true;
 		openmusic.play();
 	}
 
@@ -389,7 +378,7 @@ function gameLoad() {
 
 //●ゲームタイトル画面
 function gameTitle() {
-	if (key_z_c == 1 || mouse_lbtn_c == 1) {
+	if (key_z_c == 1 || mouse_lbtn) {
 		gstate = GAME_MAIN;
 		jichara.init();
 		jitamas = [];
