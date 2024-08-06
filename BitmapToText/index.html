@@ -12,6 +12,7 @@
 			font-size: 1.6rem;
 			font-family: "Mkana+";
 			line-height: 1.6rem;
+			white-space: pre;
 		}
 		#error {
 			color: #f00;
@@ -46,6 +47,7 @@
 			font-size: 2.4rem;
 			font-family: "Mkana+";
 			line-height: 2.4rem;
+			white-space: pre;
 		}
 	</style>
 </head>
@@ -68,6 +70,7 @@
 	<div id="error"></div>
 
 	<div id="bitmap"></div>
+	<canvas id="bitmapa"></canvas>
 
 	<script>
 		var block = [
@@ -116,6 +119,9 @@
 		})();
 	</script>
 
+	<p>文字の 名前</p>
+	<input type="text" id="name" onchange="makeOutput()">
+
 	<p>出力</p>
 	<textarea id="output"></textarea>
 
@@ -133,7 +139,11 @@
 		var error;
 
 		var e_bitmap = document.getElementById("bitmap");
+		var e_bitmapa = document.getElementById("bitmapa");
+		var ctx = e_bitmapa.getContext("2d");
 		var bitmap;
+
+		var e_name = document.getElementById("name");
 
 		var e_output = document.getElementById("output");
 
@@ -175,8 +185,16 @@
 			var h = String(rows * 32);
 			e_bitmap.style.height = `${h.slice(0, -1)}.${h.slice(-1)}rem`;
 			e_bitmap.innerHTML = "";
-			bitmap = new Array(rows);
-			for (var i = 0; i < rows; i++) bitmap[i] = new Array(cols);
+			bitmap = Array(rows).fill().map(() => Array(cols).fill(0));
+
+			bitmapa.style.width = `${w.slice(0, -1)}.${w.slice(-1)}rem`;
+			bitmapa.style.height = `${h.slice(0, -1)}.${h.slice(-1)}rem`;
+			for (var i = 0; i < 8; i++) {
+				for (var j = 0; j < 8; j++) {
+					ctx.fillStyle = `rgb(${j * 8}, ${i * 8}, 0)`;
+					//ctx.fillRect(j * 8, i * 8, 4, 4);
+				}
+			}
 
 			for (var i = 0; i < rows; i++) {
 				var r = document.createElement("div");
@@ -194,6 +212,7 @@
 				}
 			}
 			makeInput();
+			console.log(bitmap);
 		}
 
 		function updateBitmap() {
@@ -205,7 +224,12 @@
 					bitmap[i][j] = s[i][j] == e_bc.value ? 1 : 0;
 					var d = document.getElementById(`bitmap${i}-${j}`);
 					if (d == null) continue;
-					d.classList.toggle("black");
+					if (bitmap[i][j] == 1) {
+						d.classList.add("black");
+					}
+					else {
+						d.classList.remove("black");
+					}
 				}
 			}
 			makeOutput();
@@ -230,13 +254,16 @@
 					bitmap[i][j] = document.getElementById(`bitmap${i}-${j}`).classList.contains("black") ? 1 : 0;
 				}
 			}
-			var s = "";
+			var s = "▒{\n";
 			for (var i = 0; i < rows / 2; i++) {
 				for (var j = 0; j < cols / 2; j++) {
 					s += document.getElementById(`block${bitmap[i * 2 + 1][j * 2] + bitmap[i * 2 + 1][j * 2 + 1] * 2}-${bitmap[i * 2][j * 2] + bitmap[i * 2][j * 2 + 1] * 2}`).value;
 				}
-				if (i < rows / 2 - 1) s += "\n";
+				s += "\n";
 			}
+			if (e_name.value != "") s += `(${e_name.value})
+`;
+			s += "}";
 			e_output.value = s;
 
 			makeInput();
