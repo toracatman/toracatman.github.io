@@ -68,7 +68,7 @@
 			font-family: "Mkana+";
 		}
 		#text {
-			width: 64rem;
+			width: 100%;
 			height: 32rem;
 			font-size: 2rem;
 			font-family: "Segoe UI Emoji", "Mkana+", sans-serif, "Jigmo", "Jigmo2", "Jigmo3";
@@ -273,6 +273,14 @@
 		line-height: 1;
 		white-space: pre-line;
 	}
+	@media screen and (min-width: 768px) {
+		#text {
+			width: 64rem;
+			height: 32rem;
+			font-size: 2rem;
+			font-family: "Segoe UI Emoji", "Mkana+", sans-serif, "Jigmo", "Jigmo2", "Jigmo3";
+		}
+	}
 	</style>
 </head>
 <body>
@@ -286,9 +294,10 @@
 	<h3>下の テキストエリアに 代用表記を 入力すれば，本来の 表記が レンダリングされます。</h3>
 	<div><textarea id="text"></textarea></div>
 	<div id="render"></div>
-	<input type="button" id="tweet" value="Twitter で つぶやく（レンダリングの スクショは 手動で お願いします）" onclick="tweetButton()">
+	<input type="button" id="tweet" value="Twitter で つぶやく" onclick="tweetButton()">
+	<p>レンダリングの スクショは 手動で お願いします。</p>
 	<div id="count">0/140</div>
-	<div id="count">140文字 ぴったりの ときは 末尾の 半角スペースを 削除すれば ツイートできます。</div>
+	<p>140文字 ぴったりの ときは 末尾の 半角スペースを 削除すれば ツイートできます。</p>
 
 	<h3>漢字構成記述文字の 一覧</h3>
 	<table border="1">
@@ -1387,7 +1396,6 @@
 				}
 				var dt = div.textContent;
 				var l = div.textContent.match(/\n/g).length;
-				console.log(l);
 				div.style.fontSize = `${3.2 / l}rem`;
 				div.style.lineHeight = `${3.2 / l}rem`;
 				return div;
