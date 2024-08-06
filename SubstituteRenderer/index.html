@@ -63,6 +63,7 @@
 		}
 		td {
 			text-align: center;
+			vertical-align: top;
 		}
 		.mkanaplus {
 			font-family: "Mkana+";
@@ -72,6 +73,9 @@
 			height: 32rem;
 			font-size: 2rem;
 			font-family: "Segoe UI Emoji", "Mkana+", sans-serif, "Jigmo", "Jigmo2", "Jigmo3";
+		}
+		div {
+			vertical-align: top;
 		}
 		#render {
 			margin: 1.6rem 0;
@@ -86,7 +90,13 @@
 		.bitmap {
 			display: inline-block;
 			position: relative;
-			top: 0.273rem;
+		}
+		#render:has(rtc) .part,
+		#render:has(rtc) .bitmap {
+			top: 2.4rem;
+		}
+		#render:has(rtc) .part-inner .part {
+			top: 0;
 		}
 		.part {
 			width: 3.2rem;
@@ -94,9 +104,6 @@
 			line-height: 1;
 			text-align: center;
 			transform-origin: 0 0;
-		}
-		.part-inner .part {
-			top: 0;
 		}
 		.part-inner {
 			position: absolute;
@@ -252,7 +259,7 @@
 	}
 	rtc {
 		text-indent: 0px;
-		line-height: normal;
+		line-height: 1;
 		text-emphasis: none;
 	}
 	ruby > rtc {
@@ -261,17 +268,16 @@
 		text-align: center;
 		width: 100%;
 		position: absolute;
-		top: 85%;
+		top: 100%;
 		left: 0;
 	}
 
 	.bitmap-digit {
 		display: inline-block;
-		position: relative;
-		top: 0.1rem;
 		font-size: 0.2rem;
 		line-height: 1;
-		white-space: pre-line;
+		vertical-align: -0.1rem;
+		white-space: pre-wrap;
 	}
 	@media screen and (min-width: 768px) {
 		#text {
@@ -397,37 +403,37 @@
 		<tr><td>↎</td><td>6ｫ</td><td>ぴゃい</td><td>14</td></tr>
 		<tr><td>↏</td><td>7ｫ</td><td>ぬゎい</td><td>15</td></tr>
 		<tr><td><div class="bitmap-digit">     
-▝▖  ▌
- ▝▖ ▌
- ▞▀▖▌
-▐  ▝▌
+▗   ▖
+ ▚  ▌
+ ▗▙ ▌
+▗▘ ▚▌
 ▐   ▌
- ▚▄▞ 
-     </div></td><td>8ｫ</td><td>つゎう</td><td>16</td></tr>
+▝▖ ▗▘
+ ▝▀▘ </div></td><td>8ｫ</td><td>つゎう</td><td>16</td></tr>
 		<tr><td><div class="bitmap-digit">     
-▐▀▀▛▘
+▗▄▄▄▖
 ▐  ▌ 
 ▐  ▌ 
 ▐  ▌ 
 ▐  ▌ 
 ▐  ▌ 
-     </div></td><td>9ｫ</td><td>づん</td><td>17</td></tr>
+▝  ▘ </div></td><td>9ｫ</td><td>づん</td><td>17</td></tr>
 		<tr><td><div class="bitmap-digit">     
+▗   ▖
 ▐   ▌
-▐   ▌
- ▚▄▟ 
-  ▗▘ 
- ▗▘  
-▗▙▄▄▖
-     </div></td><td>0ｫ</td><td>す𛅑ん</td><td>18</td></tr>
+▝▖ ▗▘
+ ▝▀▛ 
+  ▞  
+ ▞   
+▝▀▀▀▘</div></td><td>0ｫ</td><td>す𛅑ん</td><td>18</td></tr>
 		<tr><td><div class="bitmap-digit">     
+▗   ▖
 ▐   ▌
-▐   ▌
- ▚▄▞ 
-   ▝▖
-▗   ▌
- ▚▄▞ 
-     </div></td><td>1ｫ</td><td>ょう</td><td>19</td></tr>
+▝▖ ▗▘
+ ▝▀▚ 
+    ▌
+▝▖ ▗▘
+ ▝▀▘ </div></td><td>1ｫ</td><td>ょう</td><td>19</td></tr>
 	</table>
 	<p>※つゎう、づん、す𛅑ん、ょうは 本来の 表記は まだ フォントを 作っていないので，ビットマップになっています。作り次第，文字にします。</p>
 
@@ -471,11 +477,12 @@
 		}
 	</p>
 	<p>例: 拡張かナ文字 しｬ</p>
-	<p>▒{<br>
-		▖ ▖ <br>
+	<p>
+		▒{<br>
+		▗ ▖ <br>
 		▌▗▙ <br>
 		▌▚▘▌<br>
-		▚ ▗▘<br>
+		▚ ▞ <br>
 		(拡張かナ文字 しｬ)<br>
 		}
 	</p>
@@ -1212,43 +1219,43 @@
 			["7ｫ", "↏"],
 			["8ｫ", `▒{
      
-▝▖  ▌
- ▝▖ ▌
- ▞▀▖▌
-▐  ▝▌
+▗   ▖
+ ▚  ▌
+ ▗▙ ▌
+▗▘ ▚▌
 ▐   ▌
- ▚▄▞ 
-     
+▝▖ ▗▘
+ ▝▀▘ 
 }`],
 			["9ｫ", `▒{
      
-▐▀▀▛▘
+▗▄▄▄▖
 ▐  ▌ 
 ▐  ▌ 
 ▐  ▌ 
 ▐  ▌ 
 ▐  ▌ 
-     
+▝  ▘ 
 }`],
 			["0ｫ", `▒{
      
+▗   ▖
 ▐   ▌
-▐   ▌
- ▚▄▟ 
-  ▗▘ 
- ▗▘  
-▗▙▄▄▖
-     
+▝▖ ▗▘
+ ▝▀▛ 
+  ▞  
+ ▞   
+▝▀▀▀▘
 }`],
 			["1ｫ", `▒{
      
+▗   ▖
 ▐   ▌
-▐   ▌
- ▚▄▞ 
-   ▝▖
-▗   ▌
- ▚▄▞ 
-     
+▝▖ ▗▘
+ ▝▀▚ 
+    ▌
+▝▖ ▗▘
+ ▝▀▘ 
 }`],
 
 			//漢字
@@ -1397,7 +1404,7 @@
 				var dt = div.textContent;
 				var l = div.textContent.match(/\n/g).length;
 				div.style.fontSize = `${3.2 / l}rem`;
-				div.style.lineHeight = `${3.2 / l}rem`;
+				div.style.lineHeight = "1";
 				return div;
 			}
 
