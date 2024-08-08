@@ -6,6 +6,12 @@
 	<title>代用表記レンダラー</title>
 	<style>
 		@font-face {
+			font-family: "Emoji";
+			src: local("Segoe UI Emoji");
+			font-display: swap;
+			unicode-range: U+2764, U+26AA-26AB;
+		}
+		@font-face {
 			font-family: "Mkana+";
 			src: local("Mkana+"),
 			     url("../fonts/mkanaplus.woff2") format("woff2"),
@@ -38,7 +44,7 @@
 		}
 		body {
 			font-size: 1.6rem;
-			font-family: "Segoe UI Emoji", "Mkana+", sans-sefif, "Jigmo", "Jigmo2", "Jigmo3" !important;
+			font-family: "Emoji", "Mkana+", sans-sefif, "Jigmo", "Jigmo2", "Jigmo3" !important;
 		}
 		.beige {
 			background-color: beige;
@@ -65,14 +71,11 @@
 			text-align: center;
 			vertical-align: top;
 		}
-		.mkanaplus {
-			font-family: "Mkana+";
-		}
 		#text {
 			width: 100%;
 			height: 32rem;
 			font-size: 2rem;
-			font-family: "Segoe UI Emoji", "Mkana+", sans-serif, "Jigmo", "Jigmo2", "Jigmo3";
+			font-family: "Emoji", "Mkana+", sans-sefif, "Jigmo", "Jigmo2", "Jigmo3" !important;
 		}
 		div {
 			vertical-align: top;
@@ -438,7 +441,7 @@
 	<p>※つゎう、づん、す𛅑ん、ょうは 本来の 表記は まだ フォントを 作っていないので，ビットマップになっています。作り次第，文字にします。</p>
 
 	<h3>合略仮名の 代用表記</h3>
-	<p>合略仮名を「ｺ<span class="mkanaplus">〰︎</span>ｳ」という 形で 表します。</p>
+	<p>合略仮名を「ｺ〰︎ｳ」という 形で 表します。</p>
 	<table border="1">
 		<tr><th>合略仮名</th><th>代用表記</th></tr>
 		<tr><td>󷲰</td><td>ｺことｳ</td></tr>
