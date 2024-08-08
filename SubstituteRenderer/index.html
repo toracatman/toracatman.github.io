@@ -96,7 +96,7 @@
 			position: relative;
 		}
 		.bitmap {
-			top: -0.1rem;
+			top: 0.1rem;
 		}
 		#render:has(rtc) .part,
 		#render:has(rtc) .bitmap {
@@ -286,8 +286,10 @@
 		display: inline-block;
 		font-size: 0.2rem;
 		line-height: 1;
-		vertical-align: -0.1rem;
+		vertical-align: 0.1rem;
 		white-space: pre-wrap;
+		position: relative;
+		top: 0.3rem;
 	}
 
 	@media screen and (min-width: 768px) {
@@ -411,37 +413,37 @@
 		<tr><td>↎</td><td>6ｫ</td><td>ぴゃい</td><td>14</td></tr>
 		<tr><td>↏</td><td>7ｫ</td><td>ぬゎい</td><td>15</td></tr>
 		<tr><td><div class="bitmap-digit">     
-▗   ▖
- ▚  ▌
- ▗▙ ▌
-▗▘ ▚▌
+▝▖  ▌
+ ▝▖ ▌
+ ▞▀▖▌
+▐  ▝▌
 ▐   ▌
-▝▖ ▗▘
- ▝▀▘ </div></td><td>8ｫ</td><td>つゎう</td><td>16</td></tr>
+ ▚▄▞ 
+     </div></td><td>8ｫ</td><td>つゎう</td><td>16</td></tr>
 		<tr><td><div class="bitmap-digit">     
-▗▄▄▄▖
+▐▀▀▛▘
 ▐  ▌ 
 ▐  ▌ 
 ▐  ▌ 
 ▐  ▌ 
 ▐  ▌ 
-▝  ▘ </div></td><td>9ｫ</td><td>づん</td><td>17</td></tr>
+     </div></td><td>9ｫ</td><td>づん</td><td>17</td></tr>
 		<tr><td><div class="bitmap-digit">     
-▗   ▖
 ▐   ▌
-▝▖ ▗▘
- ▝▀▛ 
-  ▞  
- ▞   
-▝▀▀▀▘</div></td><td>0ｫ</td><td>す𛅑ん</td><td>18</td></tr>
-		<tr><td><div class="bitmap-digit">     
-▗   ▖
 ▐   ▌
-▝▖ ▗▘
- ▝▀▚ 
-    ▌
-▝▖ ▗▘
- ▝▀▘ </div></td><td>1ｫ</td><td>ょう</td><td>19</td></tr>
+ ▚▄▟ 
+  ▗▘ 
+ ▗▘  
+▗▙▄▄▖
+     </div></td><td>0ｫ</td><td>す𛅑ん</td><td>18</td></tr>
+		<tr><td><div class="bitmap-digit">     
+▐   ▌
+▐   ▌
+ ▚▄▞ 
+   ▝▖
+▗   ▌
+ ▚▄▞ 
+     </div></td><td>1ｫ</td><td>ょう</td><td>19</td></tr>
 	</table>
 	<p>※つゎう、づん、す𛅑ん、ょうは 本来の 表記は まだ フォントを 作っていないので，ビットマップになっています。作り次第，文字にします。</p>
 
@@ -1227,43 +1229,43 @@
 			["7ｫ", "↏"],
 			["8ｫ", `▒{
      
-▗   ▖
- ▚  ▌
- ▗▙ ▌
-▗▘ ▚▌
+▝▖  ▌
+ ▝▖ ▌
+ ▞▀▖▌
+▐  ▝▌
 ▐   ▌
-▝▖ ▗▘
- ▝▀▘ 
+ ▚▄▞ 
+     
 }`],
 			["9ｫ", `▒{
      
-▗▄▄▄▖
+▐▀▀▛▘
 ▐  ▌ 
 ▐  ▌ 
 ▐  ▌ 
 ▐  ▌ 
 ▐  ▌ 
-▝  ▘ 
+     
 }`],
 			["0ｫ", `▒{
      
-▗   ▖
 ▐   ▌
-▝▖ ▗▘
- ▝▀▛ 
-  ▞  
- ▞   
-▝▀▀▀▘
+▐   ▌
+ ▚▄▟ 
+  ▗▘ 
+ ▗▘  
+▗▙▄▄▖
+     
 }`],
 			["1ｫ", `▒{
      
-▗   ▖
 ▐   ▌
-▝▖ ▗▘
- ▝▀▚ 
-    ▌
-▝▖ ▗▘
- ▝▀▘ 
+▐   ▌
+ ▚▄▞ 
+   ▝▖
+▗   ▌
+ ▚▄▞ 
+     
 }`],
 
 			//漢字
