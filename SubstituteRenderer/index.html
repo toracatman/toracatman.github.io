@@ -17,6 +17,7 @@
 			     url("../fonts/mkanaplus.woff2") format("woff2"),
 			     url("../fonts/mkanaplus.woff") format("woff");
 			font-display: swap;
+			unicode-range: U+0-26A9, U+26AC-10FFFF;
 		}
 		@font-face {
 			font-family: "Jigmo";
@@ -75,7 +76,7 @@
 			width: 100%;
 			height: 32rem;
 			font-size: 2rem;
-			font-family: "Emoji", "Mkana+", sans-sefif, "Jigmo", "Jigmo2", "Jigmo3" !important;
+			font-family: inherit;
 		}
 		div {
 			vertical-align: top;
@@ -282,12 +283,10 @@
 		vertical-align: -0.1rem;
 		white-space: pre-wrap;
 	}
+
 	@media screen and (min-width: 768px) {
 		#text {
 			width: 64rem;
-			height: 32rem;
-			font-size: 2rem;
-			font-family: "Segoe UI Emoji", "Mkana+", sans-serif, "Jigmo", "Jigmo2", "Jigmo3";
 		}
 	}
 	</style>
