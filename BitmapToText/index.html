@@ -113,7 +113,8 @@
 					t.type = "text";
 					t.value = block[i][j];
 					t.className = "block";
-					t.id = `block${i}-${j}`;
+					t.setAttribute("data-bottom", String(i));
+					t.setAttribute("data-top", String(j));
 				}
 			}
 		})();
@@ -123,7 +124,7 @@
 	<input type="text" id="name" onchange="makeOutput()">
 
 	<p>出力</p>
-	<textarea id="output"></textarea>
+	<textarea id="output" onchange="decodeBitmap()"></textarea>
 
 	<script>
 		var e_wc = document.getElementById("wc");
@@ -140,12 +141,24 @@
 
 		var e_bitmap = document.getElementById("bitmap");
 		var e_bitmapa = document.getElementById("bitmapa");
+		e_bitmapa.addEventListener("mousedown", (e) => {
+			console.log(e);
+		});
 		var ctx = e_bitmapa.getContext("2d");
 		var bitmap;
 
 		var e_name = document.getElementById("name");
 
 		var e_output = document.getElementById("output");
+
+		function drawLine(x1, y1, x2, y2, t, c) {
+			ctx.beginPath();
+			ctx.lineWidth = t;
+			ctx.strokeStyle = c;
+			ctx.moveTo(x1 + 0.5, y1 + 0.5);
+			ctx.lineTo(x2 + 0.5, y2 + 0.5);
+			ctx.stroke();
+		}
 
 		function makeBitmap() {
 			error = false;
@@ -180,21 +193,18 @@
 
 			if (error) return;
 
-			var w = String(cols * 32);
-			e_bitmap.style.width = `${w.slice(0, -1)}.${w.slice(-1)}rem`;
-			var h = String(rows * 32);
-			e_bitmap.style.height = `${h.slice(0, -1)}.${h.slice(-1)}rem`;
+			var w = cols * 32;
+			var ws = String(w);
+			e_bitmap.style.width = `${ws.slice(0, -1)}.${ws.slice(-1)}rem`;
+			var h = rows * 32;
+			var hs = String(h);
+			e_bitmap.style.height = `${hs.slice(0, -1)}.${hs.slice(-1)}rem`;
 			e_bitmap.innerHTML = "";
 			bitmap = Array(rows).fill().map(() => Array(cols).fill(0));
 
-			bitmapa.style.width = `${w.slice(0, -1)}.${w.slice(-1)}rem`;
-			bitmapa.style.height = `${h.slice(0, -1)}.${h.slice(-1)}rem`;
-			for (var i = 0; i < 8; i++) {
-				for (var j = 0; j < 8; j++) {
-					ctx.fillStyle = `rgb(${j * 8}, ${i * 8}, 0)`;
-					//ctx.fillRect(j * 8, i * 8, 4, 4);
-				}
-			}
+			bitmapa.width = w + 1;
+			bitmapa.height = h + 1;
+			bitmapa.style.display = "none";
 
 			for (var i = 0; i < rows; i++) {
 				var r = document.createElement("div");
@@ -211,8 +221,15 @@
 					});
 				}
 			}
+			for (var i = 0; i < rows + 1; i++) {
+				drawLine(0, i * 32, w, i * 32, 1, "#808080");
+			}
+			for (var i = 0; i < cols; i++) {
+				drawLine(i * 32, 0, i * 32, h, 1, "#808080");
+			}
+			drawLine(w, 0, w, h + 1, 1, "#808080");
+			
 			makeInput();
-			console.log(bitmap);
 		}
 
 		function updateBitmap() {
@@ -255,9 +272,14 @@
 				}
 			}
 			var s = "▒{\n";
-			for (var i = 0; i < rows / 2; i++) {
-				for (var j = 0; j < cols / 2; j++) {
-					s += document.getElementById(`block${bitmap[i * 2 + 1][j * 2] + bitmap[i * 2 + 1][j * 2 + 1] * 2}-${bitmap[i * 2][j * 2] + bitmap[i * 2][j * 2 + 1] * 2}`).value;
+
+			var r = rows / 2;
+			var c = cols / 2;
+			for (var i = 0; i < r; i++) {
+				for (var j = 0; j < c; j++) {
+					var b = bitmap[i * 2 + 1][j * 2] + bitmap[i * 2 + 1][j * 2 + 1] * 2;
+					var t = bitmap[i * 2][j * 2] + bitmap[i * 2][j * 2 + 1] * 2;
+					s += block[b][t];
 				}
 				s += "\n";
 			}
@@ -269,7 +291,44 @@
 			makeInput();
 		}
 
+		function decodeBitmap() {
+			var ss = e_output.value.replace(/^▒\{\n/, "").replace(/(\n\(.*\))?\n\}$/, "").split("\n");
+
+			var r = ss.length;
+			rows = r * 2;
+			e_rows.value = rows;
+			var c = 0;
+			for (var i = 0; i < ss.length; i++) {
+				var l = ss[i].length;
+				if (c < l) c = l;
+			}
+			cols = c * 2;
+			e_cols.value = cols;
+
+			for (var i = 0; i < r; i++) {
+				for (var j = 0; j < c; j++) {
+					for (var b = 0; b < 4; b++) {
+						for (var t = 0; t < 4; t++) {
+							if (false) {
+							}
+						}
+					}
+				}
+			}
+		}
+
 		(function() {
+			var e_blocks = document.getElementsByClassName("block");
+			for (var i = 0; i < e_blocks.length; i++) {
+				e_blocks[i].addEventListener("change", function() {
+					console.log(this);
+					var b = Number(this.getAttribute("data-bottom"));
+					var t = Number(this.getAttribute("data-top"));
+					block[b][t] = this.value;
+					makeOutput();
+				});
+			}
+
 			makeBitmap();
 		})();
 	</script>

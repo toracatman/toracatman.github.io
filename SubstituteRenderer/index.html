@@ -95,15 +95,9 @@
 			display: inline-block;
 			position: relative;
 		}
-		.bitmap {
-			top: 0.1rem;
-		}
 		#render:has(rtc) .part,
 		#render:has(rtc) .bitmap {
 			top: 2.4rem;
-		}
-		#render:has(rtc) .bitmap {
-			top: 2.3rem;
 		}
 		#render:has(rtc) .part-inner .part {
 			top: 0;
@@ -1227,46 +1221,6 @@
 			["5ｫ", "↍"],
 			["6ｫ", "↎"],
 			["7ｫ", "↏"],
-			["8ｫ", `▒{
-     
-▝▖  ▌
- ▝▖ ▌
- ▞▀▖▌
-▐  ▝▌
-▐   ▌
- ▚▄▞ 
-     
-}`],
-			["9ｫ", `▒{
-     
-▐▀▀▛▘
-▐  ▌ 
-▐  ▌ 
-▐  ▌ 
-▐  ▌ 
-▐  ▌ 
-     
-}`],
-			["0ｫ", `▒{
-     
-▐   ▌
-▐   ▌
- ▚▄▟ 
-  ▗▘ 
- ▗▘  
-▗▙▄▄▖
-     
-}`],
-			["1ｫ", `▒{
-     
-▐   ▌
-▐   ▌
- ▚▄▞ 
-   ▝▖
-▗   ▌
- ▚▄▞ 
-     
-}`],
 
 			//漢字
 			["⿱苦⿲⿰⿹耳舌鼻⿱⿱平⿰惡意⿱眼⿰淨染⿰⿱女子身", "󸀑"]
@@ -1411,10 +1365,60 @@
 						if (i >= s.length) break;
 					}
 				}
-				var dt = div.textContent;
 				var l = div.textContent.match(/\n/g).length;
 				div.style.fontSize = `${3.2 / l}rem`;
 				div.style.lineHeight = "1";
+				return div;
+			}
+
+			if (/[0189]ｫ/.test(s.slice(i, i + 2))) {
+				var div = document.createElement("div");
+				div.classList.add("bitmap");
+				if (s[i] == "8") {
+					div.textContent = `     
+▝▖  ▌
+ ▝▖ ▌
+ ▞▀▖▌
+▐  ▝▌
+▐   ▌
+ ▚▄▞ 
+     `;
+				}
+				else if (s[i] == "9") {
+					div.textContent = `     
+▐▀▀▛▘
+▐  ▌ 
+▐  ▌ 
+▐  ▌ 
+▐  ▌ 
+▐  ▌ 
+     `;
+				}
+				else if (s[i] == "0") {
+					div.textContent = `     
+▐   ▌
+▐   ▌
+ ▚▄▟ 
+  ▗▘ 
+ ▗▘  
+▗▙▄▄▖
+     `;
+				}
+				else {
+					div.textContent = `     
+▐   ▌
+▐   ▌
+ ▚▄▞ 
+   ▝▖
+▗   ▌
+ ▚▄▞ 
+     `;
+				}
+				var l = div.textContent.match(/\n/g).length + 1;
+				div.style.fontSize = `${3.2 / l}rem`;
+				div.style.lineHeight = "1";
+				div.style.top = "0.1rem";
+				i++;
 				return div;
 			}
 
