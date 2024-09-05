@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>代用表記の 相互変換</title>
+	<link rel="stylesheet" href="/toracatman.css">
+	<style>
+		textarea {
+			width: 100%;
+			height: 72rem;
+			font-size: 20pt;
+		}
+	</style>
+	<script src="newkana.js"></script>
+	<script src="hentaigana.js"></script>
+	<script>
+		function convert(back) {
+			var s = document.form1.textarea1.value;
+			var a = Number(document.form1.select1.value);
+			var b = Number(document.form1.select2.value);
+			if (back) {
+				var tmp = a;
+				a = b;
+				b = tmp;
+			}
+
+			for (var i = 0; i < hentaigana.length; i++) {
+				if (document.form1.ye.value == 0 &&
+					(hentaigana[i][0] == "𛀁" ||
+					hentaigana[i][0] == "𛀆" ||
+					hentaigana[i][0] == "𛀹" ||
+					hentaigana[i][0] == "𛁃" ||
+					hentaigana[i][0] == "𛁭")) continue;
+				var ak;
+				switch (a) {
+				case 0:
+				case 1:
+					ak = hentaigana[i][0];
+					break;
+				case 2:
+				case 3:
+					ak = hentaigana[i][document.form1.hentaigana.value];
+					break;
+				case 4:
+					ak = hentaigana[i][document.form1.hentaigana.value].replace("ﾍ", "&\\*").replace("ﾝ", ";").replace("゙", "゛").replace("゚", "゜");
+					break;
+				}
+				var bk;
+				switch (b) {
+				case 0:
+				case 1:
+					bk = hentaigana[i][0];
+					break;
+				case 2:
+				case 3:
+					bk = hentaigana[i][document.form1.hentaigana.value];
+					break;
+				case 4:
+					bk = hentaigana[i][document.form1.hentaigana.value].replace("ﾍ", "&*").replace("ﾝ", ";").replace("゙", "゛").replace("゚", "゜");
+					break;
+				}
+				s = s.replace(new RegExp(ak.replace("(", "\\(").replace(")", "\\)"), "g"), bk);
+			}
+
+			for (var i = 0; i < newkana.length; i++) {
+				var ak = newkana[i][a].replace(".", "\\.").replace("^", "\\^").replace("*", "\\*");
+				s = s.replace(new RegExp(ak, "g"), newkana[i][b]);
+			}
+
+			document.form1.textarea1.value = s;
+		}
+		
+		function checkGaiji() {
+			var s = document.form1.textarea1.value;
+			var n = 0;
+			for (var i = 0; i < s.length; i++) {
+				var c = s.codePointAt(i);
+				if ((c >= 0xE000 && c <= 0xF8FF) || c >= 0xF0000) {
+					n++;
+					console.log(String.fromCodePoint(c));
+				}
+				if (c >= 0x10000) i++;
+			}
+			console.log(n);
+		}
+		function checkDakuten() {
+			var s = document.form1.textarea1.value;
+			s = s.replace(/゙/g, "▲").replace(/゚/g, "●");
+			document.form1.textarea1.value = s;
+		}
+	</script>
+</head>
+<body>
+	Mkana+で 使える 文字と，変体仮名の，本来の 表記、代用表記を 相互変換します。入力内容は 外部に 送信されません。<br>
+	Webフォントを 使っているので，Mkana+の インストールは 不要です。<br>
+	変体仮名は，字雲フォントを 使って 表示します。
+	<form name="form1">
+		<textarea name="textarea1">あいうゔえおかがきぎくぐけげこごさざすずせぜそぞ
+𛁃しじただ𛁭てでとどちぢつづ
+なにぬねのはばぱひびぴふぶぷ𛀹へべぺほぼぽまみむめもや𛀆ゆ𛀁よらりるれろ
+わゐ𛄟ゑをん
+アイウヴエオカガキギクグケゲコゴサザスズセゼソゾ
+シジタダテデトドチヂツヅ
+ナニヌネノハバパヒビピフブプヘベペホボポマミムメモヤ𛄠ユ𛄡ヨラリルレロ
+ワヷヰヸ𛄢ヱヹヲヺン
+゠　゙゛ﾞ　゚゜ﾟ　ゝゞ・ーヽヾ
+
+　
+　
+ぁぃぅぇぉゕ　ゖ𛄲　　　っ　　　　𛅄　　ゃ𛅨ゅ𛅩ょ　　　　　ゎ𛅐𛅪𛅑𛅒𛅓
+ァィゥェォヵㇰヶ𛅕ㇲㇱㇳッㇴㇵㇶㇷㇸㇹㇺャ𛅫ュ𛅬ョㇻㇼㇽㇾㇿヮ𛅤𛅭𛅥𛅦𛅧
+𛀀𛀄𛀕𛀙𛀬𛀸𛀿𛁈𛁋𛁕𛁛𛁟𛁻𛂁𛂦𛂱𛂶𛃅𛃛𛃭𛄚𛀙゙𛀬゙𛀸゙𛀿゙𛁈゙𛁋゙𛁕゙𛁛゙𛁟゙𛁻゙𛂦゙𛂱゙𛂶゙𛂦゚𛂱゚𛂶゚
+ゟ󷲵󷲰ヿ𪜈𬼂𬻿𬼀󷲴󷲲󷲳</textarea><br>
+		変換前
+		<select name="select1">
+			<option value="0">本来の 表記</option>
+			<option value="1">Unicode未収録</option>
+			<option value="2">サロゲートペア未収録</option>
+			<option value="3">Shift_JIS未収録</option>
+			<option value="4">半角カタカナ、旧仮名非対応</option>
+		</select>
+		変換後
+		<select name="select2">
+			<option value="0">本来の 表記</option>
+			<option value="1">Unicode未収録</option>
+			<option value="2" selected>サロゲートペア未収録</option>
+			<option value="3">Shift_JIS未収録</option>
+			<option value="4">半角カタカナ、旧仮名非対応</option>
+		</select>
+		<input type="button" value="変換" onclick="convert(false)">
+		<input type="button" value="戻す" onclick="convert(true)">
+		<p>
+			「𛀁、𛀆」、拡張かな文字の 扱い<br>
+			<label><input type="radio" name="ye" value="0" checked>「ye、yi」、拡張かな文字として 扱う</label><br>
+			<label><input type="radio" name="ye" value="1">変体仮名として 扱う</label>
+		</p>
+		<p>
+			変体仮名の 代用表記<br>
+			<label><input type="radio" name="hentaigana" value="1" checked>振り漢字</label><br>
+			<label><input type="radio" name="hentaigana" value="2">現代の 仮名を 囲む</label><br>
+			<label><input type="radio" name="hentaigana" value="3">元の 漢字を 囲む</label>
+		</p>
+	</form>
+	<hr>
+	<details>
+		<summary>デバッグ機能</summary>
+		<p>
+			<input type="button" value="外字チェック" onclick="checkGaiji()">
+			<input type="button" value="濁点チェック" onclick="checkDakuten()">
+		</p>
+	</details>
+</body>
+</html>

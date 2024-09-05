@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>グレゴリオ暦とHHPC（従来）の変換</title>
+	<link rel="stylesheet" href="/toracatman.css">
+	<style>
+		.red {
+			color: red;
+		}
+		.blue {
+			color: blue;
+		}
+	</style>
+</head>
+<body>
+	<form name="form1">
+		<p>
+			閏年、HHPC（従来）の閏年をチェックします。<br>
+			Checks leap year, HHPC (Legacy) leap year.
+		</p>
+		<p>
+			<input type="text" name="leapyear" onchange="checkLeap()">
+			<div id="leap">
+				結果がここに表示されます<br>
+				Result is displayed here.
+			</div>
+		</p>
+		<p>
+			グレゴリオ暦、HHPC（従来）を相互変換します。<br>
+			「YYYY/MM/DD」か「YYYY-MM-DD」、8桁、「Y年M月D日」、「Y年月名D日」、「Month D, Y」の形式で入力してください。<br>
+			Converts Gregorian, HHPC (Legacy) .<br>
+			Input “YYYY/MM/DD”, “YYYY-MM-DD”, 8 digits, “Y年M月D日”, “Y年月名D日” or “Month D, Y”.
+		</p>
+		<p>
+			出力形式
+			<label><input type="radio" name="format" value="ymdslash" onchange="changeFormat()" checked>YYYY/MM/DD</label>
+			<label><input type="radio" name="format" value="ymdhyphen" onchange="changeFormat()">YYYY-MM-DD</label>
+			<label><input type="radio" name="format" value="ymd" onchange="changeFormat()">8桁</label>
+			<label><input type="radio" name="format" value="japanese" onchange="changeFormat()">日本語（数）</label>
+			<label><input type="radio" name="format" value="japaneseold" onchange="changeFormat()">日本語（旧）</label>
+			<label><input type="radio" name="format" value="japanesenew" onchange="changeFormat()">日本語（新）</label>
+			<label><input type="radio" name="format" value="english" onchange="changeFormat()">English</label>
+		</p>
+		<p>
+			グレゴリオ暦<br>
+			<input type="text" name="gregorian" onchange="g2h()">
+		</p>
+		<p>
+			HHPC<br>
+			<input type="text" name="hhpc" onchange="h2g()">
+		</p>
+	</form>
+	<div id="day"></div>
+	<div id="error" class="red"></div>
+	<script>
+		var e_leap = document.getElementById("leap");
+		var e_day = document.getElementById("day");
+		var e_error = document.getElementById("error");
+
+		var offset = {};
+		var o = 3;
+		for (var y = 1970; y <= 2200; y++) {
+			offset[y] = o;
+			o++;
+			if (y % 400 == 0 || (y % 100 != 0 && y % 4 == 0)) o++;
+			if (o > 3) o -= 7;
+		}
+		var ndb = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+		var nhdb = [0, 30, 60, 91, 121, 151, 182, 212, 242, 273, 303, 333, 364];
+		var mon_name = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Irv"];
+		var mon_name_en = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", "Irvember"];
+		var mon_name_ja = ["睦月", "如月", "弥生", "卯月", "皐月", "水無月", "文月", "葉月", "長月", "神無月", "霜月", "師走", "？月"];
+		var mon_name_ja_new = ["雅月", "菲月", "瑪月", "艾月", "邁月", "淳月", "茱月", "奥月", "摂月", "憶月", "衲月", "迪月", "繧月"];
+		var day_name = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+		var day_name_en = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+		var day_name_ja = ["日", "月", "火", "水", "木", "金", "土"];
+
+		function isLeap(y) {
+			return y % 400 == 0 || (y % 100 != 0 && y % 4 == 0);
+		}
+
+		function isLeapH(y) {
+			return offset[y] == 3 || (offset[y] == 2 && isLeap(y));
+		}
+
+		function checkLeap() {
+			if (isNaN(document.form1.leapyear.value) ||
+				document.form1.leapyear.value < 1970 || document.form1.leapyear.value > 2200) {
+				e_leap.classList.add("red");
+				e_leap.innerHTML = "1970年から2200年までを入力してください。<br>Input from 1970 to 2200.";
+				return;
+			}
+			e_leap.classList.remove("red");
+			if (isLeap(document.form1.leapyear.value)) {
+				e_leap.innerHTML = `<span class="red">${document.form1.leapyear.value}年は閏年です。</span>`;
+			}
+			else {
+				e_leap.innerHTML = `${document.form1.leapyear.value}年は閏年ではありません。`;
+			}
+			if (isLeapH(document.form1.leapyear.value)) {
+				e_leap.innerHTML += `<span class="red">${document.form1.leapyear.value}年はHHPCの閏年です。</span>`;
+			}
+			else {
+				e_leap.innerHTML += `${document.form1.leapyear.value}年はHHPCの閏年ではありません。`;
+			}
+			e_leap.innerHTML += "<br>";
+			if (isLeap(document.form1.leapyear.value)) {
+				e_leap.innerHTML += `<span class="red">${document.form1.leapyear.value} is a leap year.</span>`;
+			}
+			else {
+				e_leap.innerHTML += `${document.form1.leapyear.value} is not a leap year.`;
+			}
+			e_leap.innerHTML += " ";
+			if (isLeapH(document.form1.leapyear.value)) {
+				e_leap.innerHTML += `<span class="red">${document.form1.leapyear.value} is a HHPC leap year.</span>`;
+			}
+			else {
+				e_leap.innerHTML += `${document.form1.leapyear.value} is not a HHPC leap year.`;
+			}
+		}
+
+		function getYMD(v, gh) {
+			e_error.innerHTML = "";
+
+			var y;
+			var m;
+			var d;
+
+			if (v.indexOf("-") != -1 || v.indexOf("/") != -1) {
+				var arr = v.split(/[-/]/);
+				if (arr.length != 3) {
+					e_error.innerHTML = "形式が正しくありません。<br>Incorrect format.";
+					return false;
+				}
+				for (var i = 0; i < 3; i++) {
+					if (isNaN(arr[i])) {
+						e_error.innerHTML = "数値が正しくありません。<br>Incorrect number.";
+						return false;
+					}
+				}
+				y = Number(arr[0]);
+				m = Number(arr[1]);
+				d = Number(arr[2]);
+			}
+			else if (v.indexOf("年") != -1) {
+				var arr = v.split("年");
+				if (arr.length != 2) {
+					e_error.innerHTML = "形式が正しくありません。<br>Incorrect format.";
+					return false;
+				}
+				if (isNaN(arr[0])) {
+					e_error.innerHTML = "年が正しくありません。<br>Incorrect year.";
+					return false;
+				}
+				y = Number(arr[0]);
+				var arr2 = arr[1].match(/[0-9]+/g);
+				if (arr2 == null) {
+					e_error.innerHTML = "形式が正しくありません。<br>Incorrect format.";
+					return false;
+				}
+				if (arr2.length == 1) {
+					d = Number(arr2[0]);
+					m = mon_name_ja.indexOf(arr[1].split(/[0-9]/)[0]);
+					if (m == -1) m = mon_name_ja_new.indexOf(arr[1].split(/[0-9]/)[0]);
+					if (m == -1) {
+						e_error.innerHTML = "月が正しくありません。<br>Incorrect month.";
+						return false;
+					}
+					m++;
+				}
+				else if (arr2.length == 2) {
+					m = Number(arr2[0]);
+					d = Number(arr2[1]);
+				}
+				else {
+					e_error.innerHTML = "形式が正しくありません。<br>Incorrect format.";
+					return false;
+				}
+			}
+			else if (v.indexOf(",") != -1) {
+				var arr = v.split(/, |[ ,]/);
+				if (arr.length != 3) {
+					e_error.innerHTML = "形式が正しくありません。<br>Incorrect format.";
+					return false;
+				}
+				m = mon_name.indexOf(arr[0]);
+				if (m == -1) m = mon_name_en.indexOf(arr[0]);
+				if (m == -1) {
+					e_error.innerHTML = "月が正しくありません。<br>Incorrect month.";
+					return false;
+				}
+				m++;
+				for (var i = 1; i <= 2; i++) {
+					if (isNaN(arr[i])) {
+						e_error.innerHTML = "数値が正しくありません。<br>Incorrect number.";
+						return false;
+					}
+				}
+				d = Number(arr[1]);
+				y = Number(arr[2]);
+			}
+			else {
+				if (isNaN(v)) {
+					e_error.innerHTML = "数値が正しくありません。<br>Incorrect number.";
+					return false;
+				}
+				if (v.length != 8) {
+					e_error.innerHTML = "8桁ではありません。<br>Not 8 digits.";
+					return false;
+				}
+				y = Number(v.slice(0, 4));
+				m = Number(v.slice(4, 6));
+				d = Number(v.slice(6, 8));
+			}
+
+			if (y < 1970 || y > 2200) {
+				e_error.innerHTML = "年は1970年から2200年までを入力してください。<br>" +
+					"Input from 1970 to 2200 in year.";
+				return false;
+			}
+			if (d < 1) {
+				e_error.innerHTML = "日は1以上を入力してください。<br>" +
+					"Input 1 or over in date.";
+				return false;
+			}
+			if (gh == 0) {
+				if (m < 1 || m > 12) {
+					e_error.innerHTML = "月は1から12までを入力してください。<br>" +
+						"Input from 1 to 12 in month.";
+					return false;
+				}
+				if (m == 2) {
+					if (isLeap(y)) {
+						if (d > 29) {
+							e_error.innerHTML = "閏年の2月の日は29以下を入力してください。<br>" +
+								"Input 29 or under in date in February in a leap year.";
+							return false;
+						}
+					}
+					else {
+						if (d > 28) {
+							e_error.innerHTML = "平年の2月の日は28以下を入力してください。<br>" +
+								"Input 28 or under in date in February in a common year.";
+							return false;
+						}
+					}
+				}
+				if (m == 4 || m == 6 || m == 9 || m == 11) {
+					if (d > 30) {
+						e_error.innerHTML = "4月、6月、9月、11月の日は30までを入力してください。<br>" +
+							"Input 30 or under in date in April, June, September or November.";
+						return false;
+					}
+				}
+				else {
+					if (d > 31) {
+						e_error.innerHTML = "1月、3月、5月、7月、8月、10月、12月の日は31までを入力してください。<br>" +
+							"Input 31 or under in date in January, March, May, July, August, October or December.";
+						return false;
+					}
+				}
+			}
+			else {
+				if (m < 1) {
+					e_error.innerHTML = "月は1以上を入力してください。<br>" +
+						"Input 1 or over in month.";
+					return false;
+				}
+				if (isLeapH(y)) {
+					if (m > 13) {
+						e_error.innerHTML = "HHPCの閏年の月は13以下を入力してください。<br>" +
+							"Input 13 or under in month in a HHPC leap year.";
+						return false;
+					}
+				}
+				else {
+					if (m > 12) {
+						e_error.innerHTML = "HHPCの平年の月は12以下を入力してください。<br>" +
+							"Input 12 or under in month in a HHPC common year.";
+						return false;
+					}
+				}
+				if (m == 13) {
+					if (d > 7) {
+						e_error.innerHTML = "13月の日は7までを入力してください。<br>" +
+							"Input 7 or under in date in Irvember.";
+						return false;
+					}
+				}
+				else if (m == 3 || m == 6 || m == 9 || m == 12) {
+					if (d > 31) {
+						e_error.innerHTML = "3月、6月、9月、12月の日は31までを入力してください。<br>" +
+							"Input 31 or under in date in March, June, September or December.";
+						return false;
+					}
+				}
+				else {
+					if (d > 30) {
+						e_error.innerHTML = "1月、2月、4月、5月、7月、8月、10月、11月の日は30までを入力してください。<br>" +
+							"Input 30 or under in date in January, February, April, May, July, August, October or November.";
+						return false;
+					}
+				}
+			}
+
+			return [y, m - 1, d];
+		}
+
+		function g2h() {
+			var arr = getYMD(document.form1.gregorian.value, 0);
+			if (arr == false) return;
+			gy = arr[0];
+			gm = arr[1];
+			gd = arr[2];
+
+			var hdn = gd + ndb[gm];
+			var hy = gy;
+			if (gm >= 2 && isLeap(hy)) hdn++;
+			hdn += offset[hy];
+			if (hdn > 364 && !isLeapH(hy)) {
+				hdn -= 364;
+				hy++;
+			}
+			if (hdn <= 0) {
+				hy--;
+				hdn += 364;
+				if (isLeapH(hy)) hdn += 7;
+			}
+			var hm;
+			for (var i = 12; i >= 0; i--) {
+				if (nhdb[i] < hdn) {
+					hm = i;
+					break;
+				}
+			}
+			var hd = hdn - nhdb[hm];
+
+			switch (document.form1.format.value) {
+			case "ymdslash":
+				document.form1.hhpc.value = `${hy.toString().padStart(4, "0")}/${(hm + 1).toString().padStart(2, "0")}/${hd.toString().padStart(2, "0")}`;
+				break;
+			case "ymdhyphen":
+				document.form1.hhpc.value = `${hy.toString().padStart(4, "0")}-${(hm + 1).toString().padStart(2, "0")}-${hd.toString().padStart(2, "0")}`;
+				break;
+			case "ymd":
+				document.form1.hhpc.value = `${hy.toString().padStart(4, "0")}${(hm + 1).toString().padStart(2, "0")}${hd.toString().padStart(2, "0")}`;
+				break;
+			case "japanese":
+				document.form1.hhpc.value = `${hy}年${hm + 1}月${hd}日`;
+				break;
+			case "japaneseold":
+				document.form1.hhpc.value = `${hy}年${mon_name_ja[hm]}${hd}日`;
+				break;
+			case "japanesenew":
+				document.form1.hhpc.value = `${hy}年${mon_name_ja_new[hm]}${hd}日`;
+				break;
+			case "english":
+				document.form1.hhpc.value = `${mon_name_en[hm]} ${hd}, ${hy}`;
+				break;
+			}
+
+			displayDay(gy, gm, gd);
+		}
+
+		function h2g() {
+			var arr = getYMD(document.form1.hhpc.value, 1);
+			if (arr == false) return;
+			hy = arr[0];
+			hm = arr[1];
+			hd = arr[2];
+
+			var gdn = hd + nhdb[hm];
+			var gy = hy;
+			gdn -= offset[hy];
+			var u = isLeap(gy);
+			var yn = u ? 366 : 365;
+			if (gdn > yn) {
+				gdn -= yn;
+				gy++;
+			}
+			if (gdn <= 0) {
+				gy--;
+				u = isLeap(gy);
+				yn = u ? 366 : 365;
+				gdn += yn;
+			}
+			if (u) {
+				if (gdn == 60) gdn = 0;
+				else if (gdn >= 61) gdn--;
+			}
+			var gm;
+			var gd;
+			if (gdn == 0) {
+				gm = 1;
+				gd = 29;
+			}
+			else {
+				for (var i = 11; i >= 0; i--) {
+					if (ndb[i] < gdn) {
+						gm = i;
+						break;
+					}
+				}
+				gd = gdn - ndb[gm];
+			}
+
+			switch (document.form1.format.value) {
+			case "ymdslash":
+				document.form1.gregorian.value = `${gy.toString().padStart(4, "0")}/${(gm + 1).toString().padStart(2, "0")}/${gd.toString().padStart(2, "0")}`;
+				break;
+			case "ymdhyphen":
+				document.form1.gregorian.value = `${gy.toString().padStart(4, "0")}-${(gm + 1).toString().padStart(2, "0")}-${gd.toString().padStart(2, "0")}`;
+				break;
+			case "ymd":
+				document.form1.gregorian.value = `${gy.toString().padStart(4, "0")}${(gm + 1).toString().padStart(2, "0")}${gd.toString().padStart(2, "0")}`;
+				break;
+			case "japanese":
+				document.form1.gregorian.value = `${gy}年${gm + 1}月${gd}日`;
+				break;
+			case "japaneseold":
+				document.form1.gregorian.value = `${gy}年${mon_name_ja[gm]}${gd}日`;
+				break;
+			case "japanesenew":
+				document.form1.gregorian.value = `${gy}年${mon_name_ja_new[gm]}${gd}日`;
+				break;
+			case "english":
+				document.form1.gregorian.value = `${mon_name_en[gm]} ${gd}, ${gy}`;
+				break;
+			}
+
+			displayDay(gy, gm, gd);
+		}
+
+		function changeFormat() {
+			g2h();
+			h2g();
+		}
+
+		function displayDay(y, m, d) {
+			var date = new Date(y, m, d);
+			var day = date.getDay();
+			e_day.classList.remove("red");
+			e_day.classList.remove("blue");
+			if (day == 0)		e_day.classList.add("red");
+			else if (day == 6)	e_day.classList.add("blue");
+			e_day.innerHTML = `${day_name_ja[day]}曜日<br>${day_name_en[day]}`;
+		}
+	</script>
+</body>
+</html>

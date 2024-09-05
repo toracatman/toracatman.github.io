@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>ハンキ゠ヘンリー・パーマネントカレンダー</title>
+	<link rel="stylesheet" href="/toracatman.css">
+	<style>
+		.wrapper {
+			font-size: 0;
+		}
+		.calendar {
+			display: inline-block;
+			font-size: 1.6rem;
+			margin-right: 1rem;
+		}
+		td {
+			width: 8rem;
+			height: 8rem;
+			font-size: 4rem;
+			vertical-align: top;
+		}
+		tr th:first-child,
+		tr td:first-child {
+			color: red;
+		}
+		tr th:last-child,
+		tr td:last-child {
+			color: blue;
+		}
+		tr td.holiday {
+			color: red;
+		}
+		.h-name {
+			font-size: 1.2rem;
+		}
+		#setED {
+			margin-top: 10rem;
+		}
+	</style>
+	<script>
+		function makeCalendar(m, f, n, r, holiday) {
+			var day = ["日", "月", "火", "水", "木", "金", "土"];
+			document.write('<table border="1"><tr>');
+			for (var i = 0; i < 7; i++) {
+				document.write(`<th>${day[i]}</th>`);
+			}
+			document.write("</tr>");
+
+			var d = 1 - f;
+			for (var i = 0; i < r; i++) {
+				document.write("<tr>");
+				for (var j = 0; j < 7; j++) {
+					if (d >= 1 && d <= n) {
+						var h = typeof holiday[d] !== 'undefined';
+						var c = "";
+						if (h) c = ' class="holiday"';
+						document.write(`<td id="${m}-${d}" ${c}>${d}`);
+						if (h) document.write(`<div class="h-name">${holiday[d]}</div>`);
+					}
+					else document.write("<td>");
+					document.write("</td>");
+					d++;
+				}
+				document.write("</tr>");
+			}
+			document.write("</table>");
+		}
+	</script>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="calendar">
+			<h3>1月</h3>
+			<script>
+				var holiday = {
+					1: "元日",
+					8: "成人の日"
+				};
+				makeCalendar(0, 1, 30, 6, holiday);
+			</script>
+		</div>
+		<div class="calendar">
+			<h3>2月</h3>
+			<script>
+				var holiday = {
+					11: "建国記念の日",
+					23: "天皇誕生日"
+				};
+				makeCalendar(1, 3, 30, 6, holiday);
+			</script>
+		</div>
+		<div class="calendar">
+			<h3>3月</h3>
+			<script>
+				var holiday = {
+				};
+				makeCalendar(2, 5, 31, 6, holiday);
+			</script>
+		</div>
+	</div>
+	<div class="wrapper">
+		<div class="calendar">
+			<h3>4月</h3>
+			<script>
+				var holiday = {
+					29: "昭和の日"
+				};
+				makeCalendar(3, 1, 30, 6, holiday);
+			</script>
+		</div>
+		<div class="calendar">
+			<h3>5月</h3>
+			<script>
+				var holiday = {
+					3: "憲法記念日",
+					4: "みどりの日",
+					5: "こどもの日",
+					6: "振替休日"
+				};
+				makeCalendar(4, 3, 30, 6, holiday);
+			</script>
+		</div>
+		<div class="calendar">
+			<h3>6月</h3>
+			<script>
+				var holiday = {
+				};
+				makeCalendar(5, 5, 31, 6, holiday);
+			</script>
+		</div>
+	</div>
+	<div class="wrapper">
+		<div class="calendar">
+			<h3>7月</h3>
+			<script>
+				var holiday = {
+					15: "海の日"
+				};
+				makeCalendar(6, 1, 30, 6, holiday);
+			</script>
+		</div>
+		<div class="calendar">
+			<h3>8月</h3>
+			<script>
+				var holiday = {
+					11: "山の日"
+				};
+				makeCalendar(7, 3, 30, 6, holiday);
+			</script>
+		</div>
+		<div class="calendar">
+			<h3>9月</h3>
+			<script>
+				var holiday = {
+					18: "敬老の日"
+				};
+				makeCalendar(8, 5, 31, 6, holiday);
+			</script>
+		</div>
+	</div>
+	<div class="wrapper">
+		<div class="calendar">
+			<h3>10月</h3>
+			<script>
+				var holiday = {
+					8: "スポーツの日"
+				};
+				makeCalendar(9, 1, 30, 6, holiday);
+			</script>
+		</div>
+		<div class="calendar">
+			<h3>11月</h3>
+			<script>
+				var holiday = {
+					3: "文化の日",
+					23: "勤労感謝の日"
+				};
+				makeCalendar(10, 3, 30, 6, holiday);
+			</script>
+		</div>
+		<div class="calendar">
+			<h3>12月</h3>
+			<script>
+				var holiday = {
+				};
+				makeCalendar(11, 5, 31, 6, holiday);
+			</script>
+		</div>
+	</div>
+	<div class="calendar">
+		<h3>13月</h3>
+			<script>
+				var holiday = {
+				};
+				makeCalendar(12, 1, 7, 2, holiday);
+			</script>
+	</div>
+	<div id="setED">
+		<form name="form1">
+			月<input type="text" name="month"><br>
+			日<input type="text" name="day"><br>
+			<input type="button" value="春分の日にする" onclick="putED(0)">
+			<input type="button" value="秋分の日にする" onclick="putED(1)">
+			<input type="button" value="振替休日にする" onclick="putED(2)">
+			<input type="button" value="国民の休日にする" onclick="putED(3)">
+		</form>
+		<script>
+			function putED(a) {
+				var month = Number(document.form1.month.value) - 1;
+				if (isNaN(month)) {
+					alert("月が正しくありません。");
+					return;
+				}
+
+				var day = Number(document.form1.day.value);
+				if (isNaN(day)) {
+					alert("日が正しくありません。");
+					return;
+				}
+
+				var date = document.getElementById(`${month}-${day}`);
+
+				if (date === null) {
+					alert("日にちがありません。");
+					return;
+				}
+
+				date.classList.add("holiday");
+				var hn;
+				if (a == 0)			hn = "春分の";
+				else if (a == 1)	hn = "秋分の";
+				else if (a == 2)	hn = "振替休";
+				else				hn = "国民の休";
+				date.innerHTML += `<div class="h-name">${hn}日</div>`;
+			}
+		</script>
+	</div>
+</body>
+</html>

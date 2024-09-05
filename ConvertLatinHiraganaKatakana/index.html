@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>ラテン文字、ひらがな、カタカナの 相互変換（Mkana+）</title>
+	<link rel="stylesheet" href="/toracatman.css">
+	<style>
+		table {
+			float: left;
+			margin-right: 2rem;
+		}
+		td,th {
+			width: 5rem;
+			height: 5rem;
+		}
+		tr:nth-child(2n) {
+			background-color: #ccffff;
+		}
+		td {
+			font-size: 2.4rem;
+			text-align: center;
+		}
+		.wrapper:after {
+			content: "";
+			display: block;
+			clear: both;
+		}
+		textarea {
+			width: 100%;
+			height: 72rem;
+			font-size: 2.4rem;
+		}
+	</style>
+	<script>
+		var vowels = ["a", "i", "u", "e", "o", ""];
+		var constants = ["", "k", "g", "ŋ", "s", "z", "þ", "ð", "ŝ", "ĵ", "t", "d", "ĉ", "ĝ", "c", "d̂", "n", "h", "ĥ", "ɸ", "b", "p", "m", "y", "r", "l", "w", "v", "f", "nʼy", "nʼw", "開拗音●y●", "合拗音●w●"];
+		var kanas = [
+			[ ["あ", "ア"], ["い", "イ"], ["う", "ウ"], ["え", "エ"], ["お", "オ"], ["", ""] ],
+			[ ["か", "カ"], ["き", "キ"], ["く", "ク"], ["け", "ケ"], ["こ", "コ"], ["𛄱", "ㇰ"] ],
+			[ ["が", "ガ"], ["ぎ", "ギ"], ["ぐ", "グ"], ["げ", "ゲ"], ["ご", "ゴ"], ["𛄱゙", "ㇰ゙"] ],
+			[ ["", ""], ["", ""], ["", ""], ["", ""], ["", ""], ["𛄱゚", "ㇰ゚"] ],
+			[ ["さ", "サ"], ["", ""], ["す", "ス"], ["せ", "セ"], ["そ", "ソ"], ["𛄵", "ㇲ"] ],
+			[ ["ざ", "ザ"], ["", ""], ["ず", "ズ"], ["ぜ", "ゼ"], ["ぞ", "ゾ"], ["𛄵゙", "ㇲ゙"] ],
+			[ ["", ""], ["", ""], ["", ""], ["", ""], ["", ""], ["𛄵゚", "ㇲ゚"] ],
+			[ ["", ""], ["", ""], ["", ""], ["", ""], ["", ""], ["𛄵", "ㇲ"] ],
+			[ ["𛁃", ""], ["し", "シ"], ["", ""], ["", ""], ["", ""], ["𛄴", "ㇱ"] ],
+			[ ["", ""], ["じ", "ジ"], ["", ""], ["", ""], ["", ""], ["𛄴゙", "ㇱ゙"] ],
+			[ ["た", "タ"], ["", ""], ["𛁭", ""], ["て", "テ"], ["と", "ト"], ["𛄻", "ㇳ"] ],
+			[ ["だ", "ダ"], ["", ""], ["", ""], ["で", "デ"], ["ど", "ド"], ["𛄻゙", "ㇳ゙"] ],
+			[ ["", ""], ["ち", "チ"], ["", ""], ["", ""], ["", ""], ["𛄹", "𛅚"] ],
+			[ ["", ""], ["ぢ", "ヂ"], ["", ""], ["", ""], ["", ""], ["𛄹゙", "𛅚゙"] ],
+			[ ["", ""], ["", ""], ["つ", "ツ"], ["", ""], ["", ""], ["", ""] ],
+			[ ["", ""], ["", ""], ["づ", "ヅ"], ["", ""], ["", ""], ["っ゙", "ッ゙"] ],
+			[ ["な", "ナ"], ["に", "ニ"], ["ぬ", "ヌ"], ["ね", "ネ"], ["の", "ノ"], ["ん", "ン"] ],
+			[ ["は", "ハ"], ["ひ", "ヒ"], ["𛀹", ""], ["へ", "ヘ"], ["ほ", "ホ"], ["𛅁", "ㇵ"] ],
+			[ ["", ""], ["", ""], ["", ""], ["", ""], ["", ""], ["𛅁", "ㇵ"] ],
+			[ ["ふぁ", "ファ"], ["ふぃ", "フィ"], ["ふ", "フ"], ["ふぇ", "フェ"], ["ふぉ", "フォ"], ["𛅃", "ㇷ"] ],
+			[ ["ば", "バ"], ["び", "ビ"], ["ぶ", "ブ"], ["べ", "ベ"], ["ぼ", "ボ"], ["𛅃゙", "ㇷ゙"] ],
+			[ ["ぱ", "パ"], ["ぴ", "ピ"], ["ぷ", "プ"], ["ぺ", "ペ"], ["ぽ", "ポ"], ["𛅃゚", "ㇷ゚"] ],
+			[ ["ま", "マ"], ["み", "ミ"], ["む", "ム"], ["め", "メ"], ["も", "モ"], ["𛅈", "ㇺ"] ],
+			[ ["や", "ヤ"], ["𛀆", "𛄠"], ["ゆ", "ユ"], ["𛀁", "𛄡"], ["よ", "ヨ"], ["", ""] ],
+			[ ["ら", "ラ"], ["り", "リ"], ["る", "ル"], ["れ", "レ"], ["ろ", "ロ"], ["𛅍", "ㇽ"] ],
+			[ ["", ""], ["", ""], ["", ""], ["", ""], ["", ""], ["𛅍゚", "ㇽ゚"] ],
+			[ ["わ", "ワ"], ["ゐ", "ヰ"], ["𛄟", "𛄢"], ["ゑ", "ヱ"], ["を", "ヲ"], ["", ""] ],
+			[ ["", "ヷ"], ["", "ヸ"], ["", ""], ["", "ヹ"], ["", "ヺ"], ["𛅪゙", "𛅭゙"] ],
+			[ ["", ""], ["", ""], ["", ""], ["", ""], ["", ""], ["𛅪゚", "𛅭゚"] ],
+			[ ["んや", "ンヤ"], ["ん𛀆", "ン𛄠"], ["んゆ", "ンユ"], ["ん𛀁", "ン𛄡"], ["んよ", "ンヨ"], ["", ""] ],
+			[ ["んわ", "ンワ"], ["んゐ", "ンヰ"], ["ん𛄟", "ン𛄢"], ["んゑ", "ンヱ"], ["んを", "ンヲ"], ["", ""] ],
+			[ ["ゃ", "ャ"], ["𛅨", "𛅫"], ["ゅ", "ュ"], ["𛅩", "𛅬"], ["ょ", "ョ"], ["", ""] ],
+			[ ["ゎ", "ヮ"], ["𛅐", "𛅤"], ["𛅪", "𛅭"], ["𛅑", "𛅥"], ["𛅒", "𛅦"], ["", ""] ]
+		];
+		var order_fx = [0, 1, 3, 4, 2, 5];
+
+		function convert(a, b) {
+			var s = document.form1.textarea1.value.replace(/f̂/g, "ɸ").replace(/ん゚/gu, "𛄱゚").replace(/ン゚/g, "ㇰ゚").replace(/ā/g, "ā").replace(/ī/g, "ī").replace(/ū/g, "ū").replace(/ē/g, "ē").replace(/ō/g, "ō");
+			if (document.form1.sxcx.checked) {
+				s = s.replace(/しゃ/gu, "𛁃").replace(/じゃ/gu, "");
+				s = s.replace(/しゅ/gu, "").replace(/じゅ/gu, "");
+				s = s.replace(/しぇ/gu, "").replace(/じぇ/gu, "");
+				s = s.replace(/しょ/gu, "").replace(/じょ/gu, "");
+				s = s.replace(/ちゃ/gu, "").replace(/ぢゃ/gu, "");
+				s = s.replace(/ちゅ/gu, "").replace(/ぢゅ/gu, "");
+				s = s.replace(/ちぇ/gu, "").replace(/ぢぇ/gu, "");
+				s = s.replace(/ちょ/gu, "").replace(/ぢょ/gu, "");
+				s = s.replace(/シャ/gu, "").replace(/ジャ/gu, "");
+				s = s.replace(/シュ/gu, "").replace(/ジュ/gu, "");
+				s = s.replace(/シェ/gu, "").replace(/ジェ/gu, "");
+				s = s.replace(/ショ/gu, "").replace(/ジョ/gu, "");
+				s = s.replace(/チャ/gu, "").replace(/ヂャ/gu, "");
+				s = s.replace(/チュ/gu, "").replace(/ヂュ/gu, "");
+				s = s.replace(/チェ/gu, "").replace(/ヂェ/gu, "");
+				s = s.replace(/チョ/gu, "").replace(/ヂョ/gu, "");
+			}
+			s = s.replace(/すぃ/gu, "").replace(/ずぃ/gu, "").replace(/ぃ/gu, "").replace(/ぃ/gu, "");
+			s = s.replace(/てぃ/gu, "").replace(/でぃ/gu, "");
+			s = s.replace(/とぅ/gu, "𛁭").replace(/どぅ/gu, "");
+			s = s.replace(/つぁ/gu, "").replace(/づぁ/gu, "");
+			s = s.replace(/つぃ/gu, "").replace(/づぃ/gu, "");
+			s = s.replace(/つぇ/gu, "").replace(/づぇ/gu, "");
+			s = s.replace(/つぉ/gu, "").replace(/づぉ/gu, "");
+			s = s.replace(/ほぅ/gu, "𛀹").replace(/ぅ/gu, "");
+			s = s.replace(/いぃ/gu, "𛀆");
+			s = s.replace(/いぇ/gu, "𛀁");
+			s = s.replace(/うぃ/gu, "ゐ").replace(/うぅ/gu, "𛄟").replace(/うぇ/gu, "ゑ").replace(/うぉ/gu, "を");
+			s = s.replace(/ゔぁ/gu, "").replace(/ゔぃ/gu, "").replace(/ゔぇ/gu, "").replace(/ゔぉ/gu, "").replace(/ゔ/gu, "").replace(/ぅ゙/gu, "𛅪゙");
+			s = s.replace(/スィ/gu, "").replace(/ズィ/gu, "").replace(/ィ/gu, "").replace(/ィ/gu, "");
+			s = s.replace(/ティ/gu, "").replace(/ディ/gu, "");
+			s = s.replace(/トゥ/gu, "").replace(/ドゥ/gu, "");
+			s = s.replace(/ツァ/gu, "").replace(/ヅァ/gu, "");
+			s = s.replace(/ツィ/gu, "").replace(/ヅィ/gu, "");
+			s = s.replace(/ツェ/gu, "").replace(/ヅェ/gu, "");
+			s = s.replace(/ツォ/gu, "").replace(/ヅォ/gu, "");
+			s = s.replace(/ホゥ/gu, "").replace(/ゥ/gu, "");
+			s = s.replace(/イィ/gu, "𛄠");
+			s = s.replace(/イェ/gu, "𛄡");
+			s = s.replace(/ウィ/gu, "ヰ").replace(/ウゥ/gu, "𛄢").replace(/ウェ/gu, "ヱ").replace(/ウォ/gu, "ヲ");
+			s = s.replace(/ヴァ/gu, "ヷ").replace(/ヴィ/gu, "ヸ").replace(/ヴェ/gu, "ヹ").replace(/ヴォ/gu, "ヺ").replace(/ヴ/gu, "").replace(/ゥ゙/gu, "𛅭゙");
+
+			s = s.replace(/う゚ぁ/gu, "").replace(/う゚ぃ/gu, "").replace(/う゚ぇ/gu, "").replace(/う゚ぉ/gu, "").replace(/う゚/gu, "").replace(/ぅ゚/gu, "𛅪゚");
+			s = s.replace(/ウ゚ァ/gu, "").replace(/ウ゚ィ/gu, "").replace(/ウ゚ェ/gu, "").replace(/ウ゚ォ/gu, "").replace(/ウ゚/gu, "").replace(/ゥ゚/gu, "𛅭゚");
+			if (document.form1.ffx.checked) {
+				s = s.replace(/f̂/g, "f");
+				s = s.replace(/ふぁ/gu, "").replace(/ふぃ/gu, "").replace(/ふぇ/gu, "").replace(/ふぉ/gu, "").replace(/ふ/gu, "");
+				s = s.replace(/ファ/gu, "").replace(/フィ/gu, "").replace(/フェ/gu, "").replace(/フォ/gu, "").replace(/フ/gu, "");
+			}
+
+			//開拗音
+			for (var i = 28; i >= 1; i--) {
+				for (var j = 0; j < 5; j++) {
+					var jx = (i == 19) ? order_fx[j] : j;
+					var as;
+					switch (a) {
+					case 0:
+						as = `${constants[i]}y${vowels[jx]}`;
+						as = as.replace(/d̂/g, "(d̂|dz)").replace(/y/g, "(y|j)").replace(/w/g, "(w|ŭ)");
+						break;
+					case 1:
+					var as = kanas[i][1][0] + kanas[31][jx][0];
+						break;
+					case 2:
+					var as = kanas[i][1][1] + kanas[31][jx][1];
+						break;
+					}
+					if (as == "") continue;
+					var bs;
+					switch (b) {
+					case 0:
+						bs = `${constants[i]}y${vowels[jx]}`;
+						if (document.form1.esperanto.checked) bs = bs.replace(/d̂/g, "dz").replace(/y/g, "j").replace(/w/g, "ŭ");
+						break;
+					case 1:
+					var bs = kanas[i][1][0] + kanas[31][jx][0];
+						break;
+					case 2:
+					var bs = kanas[i][1][1] + kanas[31][jx][1];
+						break;
+					}
+					if (bs == "") continue;
+					s = s.replace(new RegExp(as, "giu"), bs);
+				}
+			}
+
+			//合拗音
+			for (var i = 28; i >= 1; i--) {
+				for (var j = 0; j < 5; j++) {
+					var jx = (i == 19) ? order_fx[j] : j;
+					var as;
+					switch (a) {
+					case 0:
+						as = `${constants[i]}w${vowels[jx]}`;
+						as = as.replace(/d̂/g, "(d̂|dz)").replace(/y/g, "(y|j)").replace(/w/g, "(w|ŭ)");
+						break;
+					case 1:
+					var as = kanas[i][2][0] + kanas[32][jx][0];
+						break;
+					case 2:
+					var as = kanas[i][2][1] + kanas[32][jx][1];
+						break;
+					}
+					if (as == "") continue;
+					var bs;
+					switch (b) {
+					case 0:
+						bs = `${constants[i]}w${vowels[jx]}`;
+						if (document.form1.esperanto.checked) bs = bs.replace(/d̂/g, "dz").replace(/y/g, "j").replace(/w/g, "ŭ");
+						break;
+					case 1:
+					var bs = kanas[i][2][0] + kanas[32][jx][0];
+						break;
+					case 2:
+					var bs = kanas[i][2][1] + kanas[32][jx][1];
+						break;
+					}
+					if (bs == "") continue;
+					s = s.replace(new RegExp(as, "giu"), bs);
+				}
+			}
+
+			//直音
+			for (var i = 30; i >= 0; i--) {
+				for (var j = 0; j < 6; j++) {
+					var jx = (i == 19) ? order_fx[j] : j;
+					var as;
+					switch (a) {
+					case 0:
+						as = constants[i] + vowels[jx];
+						as = as.replace(/d̂/g, "(d̂|dz)").replace(/y/g, "(y|j)").replace(/w/g, "(w|ŭ)");
+						break;
+					case 1:
+					var as = kanas[i][jx][0];
+						break;
+					case 2:
+					var as = kanas[i][jx][1];
+						break;
+					}
+					if (as == "") continue;
+					var bs;
+					switch (b) {
+					case 0:
+						bs = constants[i] + vowels[jx];
+						if (document.form1.esperanto.checked) bs = bs.replace(/d̂/g, "dz").replace(/y/g, "j").replace(/w/g, "ŭ");
+						break;
+					case 1:
+					var bs = kanas[i][jx][0];
+						break;
+					case 2:
+					var bs = kanas[i][jx][1];
+						break;
+					}
+					if (bs == "") continue;
+					s = s.replace(new RegExp(as, "giu"), bs);
+				}
+			}
+
+			//促音
+			var as;
+			switch (a) {
+			case 0:
+				as = "q";
+				break;
+			case 1:
+			var as = "っ";
+				break;
+			case 2:
+			var as = "ッ";
+				break;
+			}
+			var bs;
+			switch (b) {
+			case 0:
+				bs = "q";
+				break;
+			case 1:
+			var bs = "っ";
+				break;
+			case 2:
+			var bs = "ッ";
+				break;
+			}
+			s = s.replace(new RegExp(as, "g"), bs);
+
+			//記号
+			if (a == 0 && b > 0) {
+				s = s.replace(/̄/g, "ー").replace(/, /g, "，").replace(/､ /g, "、").replace(/\./g, "。").replace(/!/g, "！").replace(/\?/g, "？").replace(/“/g, "「").replace(/”/g, "」").replace(/‘/g, "『").replace(/’/g, "』");
+				if (document.form1.comma.checked) s = s.replace(/，/g, "、");
+				if (document.form1.space.checked) s = s.replace(/ /g, "　");
+				if (document.form1.sxcx.checked) {
+					s = s.replace(/𛁃/gu, "しゃ").replace(//gu, "じゃ");
+					s = s.replace(//gu, "しゅ").replace(//gu, "じゅ");
+					s = s.replace(//gu, "しぇ").replace(//gu, "じぇ");
+					s = s.replace(//gu, "しょ").replace(//gu, "じょ");
+					s = s.replace(//gu, "ちゃ").replace(//gu, "ぢゃ");
+					s = s.replace(//gu, "ちゅ").replace(//gu, "ぢゅ");
+					s = s.replace(//gu, "ちぇ").replace(//gu, "ぢぇ");
+					s = s.replace(//gu, "ちょ").replace(//gu, "ぢょ");
+					s = s.replace(//gu, "シャ").replace(//gu, "ジャ");
+					s = s.replace(//gu, "シュ").replace(//gu, "ジュ");
+					s = s.replace(//gu, "シェ").replace(//gu, "ジェ");
+					s = s.replace(//gu, "ショ").replace(//gu, "ジョ");
+					s = s.replace(//gu, "チャ").replace(//gu, "ヂャ");
+					s = s.replace(//gu, "チュ").replace(//gu, "ヂュ");
+					s = s.replace(//gu, "チェ").replace(//gu, "ヂェ");
+					s = s.replace(//gu, "チョ").replace(//gu, "ヂョ");
+				}
+				if (document.form1.ffx.checked) {
+					s = s.replace(//gu, "ふぁ").replace(//gu, "ふぃ").replace(//gu, "ふぇ").replace(//gu, "ふぉ").replace(//gu, "ふ").replace(/𛅪゚/gu, "𛅃");
+					s = s.replace(//gu, "ファ").replace(//gu, "フィ").replace(//gu, "フェ").replace(//gu, "フォ").replace(//gu, "フ").replace(/𛅭゚/gu, "ㇷ");
+				}
+				if (document.form1.genkou.checked) {
+					s = s.replace(//gu, "すぃ").replace(//gu, "ずぃ").replace(//gu, "ぃ").replace(//gu, "ぃ");
+					s = s.replace(//gu, "てぃ").replace(//gu, "でぃ");
+					s = s.replace(/𛁭/gu, "とぅ").replace(//gu, "どぅ");
+					s = s.replace(//gu, "つぁ").replace(//gu, "づぁ");
+					s = s.replace(//gu, "つぃ").replace(//gu, "づぃ");
+					s = s.replace(//gu, "つぇ").replace(//gu, "づぇ");
+					s = s.replace(//gu, "つぉ").replace(//gu, "づぉ");
+					s = s.replace(/𛀹/gu, "ほぅ").replace(//gu, "ぅ");
+					s = s.replace(/𛀆/gu, "いぃ");
+					s = s.replace(/𛀁/gu, "いぇ");
+					s = s.replace(/ゐ/gu, "うぃ").replace(/𛄟/gu, "うぅ").replace(/ゑ/gu, "うぇ").replace(/を/gu, "うぉ");
+					s = s.replace(//gu, "ゔぁ").replace(//gu, "ゔぃ").replace(//gu, "ゔぇ").replace(//gu, "ゔぉ").replace(//gu, "ゔ").replace(/𛅪゙/gu, "ぅ゙");
+					s = s.replace(//gu, "スィ").replace(//gu, "ズィ").replace(//gu, "ィ").replace(//gu, "ィ");
+					s = s.replace(//gu, "ティ").replace(//gu, "ディ");
+					s = s.replace(//gu, "トゥ").replace(//gu, "ドゥ");
+					s = s.replace(//gu, "ツァ").replace(//gu, "ヅァ");
+					s = s.replace(//gu, "ツィ").replace(//gu, "ヅィ");
+					s = s.replace(//gu, "ツェ").replace(//gu, "ヅェ");
+					s = s.replace(//gu, "ツォ").replace(//gu, "ヅォ");
+					s = s.replace(//gu, "ホゥ").replace(//gu, "ゥ");
+					s = s.replace(/𛄠/gu, "イィ");
+					s = s.replace(/𛄡/gu, "イェ");
+					s = s.replace(/ヰ/gu, "ウィ").replace(/𛄢/gu, "ウゥ").replace(/ヱ/gu, "ウェ").replace(/ヲ/gu, "ウォ");
+					s = s.replace(/ヷ/gu, "ヴァ").replace(/ヸ/gu, "ヴィ").replace(/ヹ/gu, "ヴェ").replace(/ヺ/gu, "ヴォ").replace(//gu, "ヴ").replace(/𛅭゙/gu, "ゥ゙");
+
+					s = s.replace(//gu, "う゚ぁ").replace(//gu, "う゚ぃ").replace(//gu, "う゚ぇ").replace(//gu, "う゚ぉ").replace(//gu, "う゚").replace(/𛅪゚/gu, "ぅ゚");
+					s = s.replace(//gu, "ウ゚ァ").replace(//gu, "ウ゚ィ").replace(//gu, "ウ゚ェ").replace(//gu, "ウ゚ォ").replace(//gu, "ウ゚").replace(/𛅭゚/gu, "ゥ゚");
+				}
+			}
+			else if (a > 0 && b == 0) {
+				s = s.replace(/ー/g, "̄").replace(/，/g, ", ").replace(/、/g, "､ ").replace(/。/g, ".").replace(/！/g, "!").replace(/？/g, "?").replace(/「/g, "“").replace(/」/g, "”").replace(/『/g, "‘").replace(/』/g, "’");
+				if (document.form1.comma.checked) s = s.replace(/､/g, ",");
+				if (document.form1.space.checked) s = s.replace(/　/g, " ");
+				if (document.form1.ffx.checked) s = s.replace(/ɸ/g, "f");
+			}
+			s = s.replace(/ɸ/g, "f̂").replace(/𛄱゚/gu, "ん゚").replace(/ㇰ゚/g, "ン゚").replace(/ā/g, "ā").replace(/ī/g, "ī").replace(/ū/g, "ū").replace(/ē/g, "ē").replace(/ō/g, "ō");
+			document.form1.textarea1.value = s;
+		}
+	</script>
+</head>
+<body>
+	<div class="wrapper">
+		<table border="1"></table>
+		<table border="1"></table>
+		<table border="1"></table>
+		<table border="1"></table>
+	</div>
+	<p>ラテン文字（共通式ローマ字、エスペラント）、ひらがな、カタカナを 相互変換します。</p>
+	<p>Mkana+の 外字を 使っているので，Mkana+以外では うまく 表示されません。</p>
+	<p>Mkana+の Webフォントを 使っているので，Mkana+の インストールは 不要です。</p>
+	<p>入力内容は 外部に 送信されません。</p>
+	<form name="form1">
+		<textarea name="textarea1"></textarea><br>
+		<input type="button" value="ラテン文字→ひらがな" onclick="convert(0, 1)">
+		<input type="button" value="ひらがな→ラテン文字" onclick="convert(1, 0)"><br>
+		<input type="button" value="ラテン文字→カタカナ" onclick="convert(0, 2)">
+		<input type="button" value="カタカナ→ラテン文字" onclick="convert(2, 0)"><br>
+		<input type="button" value="ひらがな→カタカナ" onclick="convert(1, 2)">
+		<input type="button" value="カタカナ→ひらがな" onclick="convert(2, 1)"><br>
+		<label><input type="checkbox" name="esperanto">エスペラントモード（d̂→dz、y→j、w→ŭ）</label><br>
+		<label><input type="checkbox" name="comma">読点「，」と 列点「、」を 区別しない</label><br>
+		<label><input type="checkbox" name="space">ラテン文字は 半角スペース，かナ文字は 全角スペース</label><br>
+		<label><input type="checkbox" name="sxcx">ŝを しゃ行，ĉを ちゃ行にする</label><br>
+		<label><input type="checkbox" name="ffx">fを ふぁ行とする</label><br>
+		<label><input type="checkbox" name="genkou">現行の 書き方にする（可能な 限り）</label><br>
+	</form>
+	<script>
+		var tables = document.getElementsByTagName("table");
+		for (var i = 0; i < tables.length; i++) {
+			var tr = document.createElement("tr");
+			var th = document.createElement("th");
+			tr.appendChild(th);
+			for (var j = 0; j < vowels.length; j++) {
+				th = document.createElement("th");
+				th.textContent = vowels[j];
+				tr.appendChild(th);
+			}
+			tables[i].appendChild(tr);
+			var s = 0 + (i & 1) * 16;
+			var e = 16 + (i & 1) * 15;
+			for (var j = s; j < e; j++) {
+				tr = document.createElement("tr");
+				th = document.createElement("th");
+				th.textContent = constants[j <= 28 ? j : j + 2].replace("ɸ", "f̂").replace("d̂", "d̂/dz").replace(/^y/, "j/y").replace(/^w/, "ŭ/w");
+				tr.appendChild(th);
+				for (var k = 0; k < vowels.length; k++) {
+					var td = document.createElement("td");
+					if (j <= 28) {
+						td.textContent = kanas[j][k][i / 2 | 0].replace("𛄱゚", "ん゚").replace("ㇰ゚", "ン゚");
+					}
+					else {
+						td.textContent = (k < 5 ? "●" : "") + kanas[j + 2][k][i / 2 | 0];
+					}
+					tr.appendChild(td);
+				}
+				tables[i].appendChild(tr);
+			}
+		}
+	</script>
+</body>
+</html>

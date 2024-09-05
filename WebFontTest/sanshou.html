@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Webフォントの テスト</title>
+	<link rel="stylesheet" href="/toracatman.css">
+	<style>
+		table {
+			width: 150rem;
+			table-layout: fixed;
+		}
+		td {
+			vertical-align: top;
+		}
+		.big {
+			line-height: 1em;
+		}
+	</style>
+</head>
+<body>
+	<h3>代用</h3>
+	<h4>点</h4>
+	<table border="1">
+		<tr><td>濁点</td><td>ﾞ</td></tr>
+		<tr><td>半濁点</td><td>ﾟ</td></tr>
+		<tr><td>濁半濁点</td><td>ﾞﾟ</td></tr>
+	</table>
+
+	<h4>ひらがな清音・濁音・半濁音・濁半濁音</h4>
+	<table border="1">
+		<tr><th></th><th>A</th><th>I</th><th>U</th><th>E</th><th>O</th></tr>
+		<tr><th></th><td>あ</td><td>い</td><td>う</td><td>え</td><td>お</td></tr>
+		<tr><th>K</th><td>か</td><td>き</td><td>く</td><td>け</td><td>こ</td></tr>
+		<tr><th>G</th><td>が</td><td>ぎ</td><td>ぐ</td><td>げ</td><td>ご</td></tr>
+		<tr><th>NG</th><td>かﾟ</td><td>きﾟ</td><td>くﾟ</td><td>けﾟ</td><td>こﾟ</td></tr>
+		<tr><th>S</th><td>さ</td><td>&すぃ;</td><td>す</td><td>せ</td><td>そ</td></tr>
+		<tr><th>Z</th><td>ざ</td><td>&ずぃ;</td><td>ず</td><td>ぜ</td><td>ぞ</td></tr>
+		<tr><th>TH</th><td>さﾟ</td><td>&すﾟぃ;</td><td>すﾟ</td><td>せﾟ</td><td>そﾟ</td></tr>
+		<tr><th>DH</th><td>ざﾟ</td><td>&ずﾟぃ;</td><td>ずﾟ</td><td>ぜﾟ</td><td>ぞﾟ</td></tr>
+		<tr><th>SH</th><td>&しゃ;</td><td>し</td><td>&しゅ;</td><td>&しぇ;</td><td>&しょ;</td></tr>
+		<tr><th>J</th><td>&じゃ;</td><td>じ</td><td>&じゅ;</td><td>&じぇ;</td><td>&じょ;</td></tr>
+		<tr><th>T</th><td>た</td><td>&てぃ;</td><td>&とぅ;</td><td>て</td><td>と</td></tr>
+		<tr><th>D</th><td>だ</td><td>&でぃ;</td><td>&どぅ;</td><td>で</td><td>ど</td></tr>
+		<tr><th>CH</th><td>&ちゃ;</td><td>ち</td><td>&ちゅ;</td><td>&ちぇ;</td><td>&ちょ;</td></tr>
+		<tr><th>DJ</th><td>&ぢゃ;</td><td>ぢ</td><td>&ぢゅ;</td><td>&ぢぇ;</td><td>&ぢょ;</td></tr>
+		<tr><th>TS</th><td>&つぁ;</td><td>&つぃ;</td><td>つ</td><td>&つぇ;</td><td>&つぉ;</td></tr>
+		<tr><th>DZ</th><td>&づぁ;</td><td>&づぃ;</td><td>づ</td><td>&づぇ;</td><td>&づぉ;</td></tr>
+		<tr><th>N</th><td>な</td><td>に</td><td>ぬ</td><td>ね</td><td>の</td></tr>
+		<tr><th>H</th><td>は</td><td>ひ</td><td>ふ、&ほぅ;</td><td>へ</td><td>ほ</td></tr>
+		<tr><th>B</th><td>ば</td><td>び</td><td>ぶ</td><td>べ</td><td>ぼ</td></tr>
+		<tr><th>P</th><td>ぱ</td><td>ぴ</td><td>ぷ</td><td>ぺ</td><td>ぽ</td></tr>
+		<tr><th>M</th><td>ま</td><td>み</td><td>む</td><td>め</td><td>も</td></tr>
+		<tr><th>Y</th><td>や</td><td>&いぃ;</td><td>ゆ</td><td>&いぇ;</td><td>よ</td></tr>
+		<tr><th>R</th><td>ら</td><td>り</td><td>る</td><td>れ</td><td>ろ</td></tr>
+		<tr><th>L</th><td>らﾟ</td><td>りﾟ</td><td>るﾟ</td><td>れﾟ</td><td>ろﾟ</td></tr>
+		<tr><th>W</th><td>わ</td><td>&うぃ;</td><td>&うぅ;</td><td>&うぇ;</td><td>を</td></tr>
+		<tr><th>V</th><td>わﾞ</td><td>&うﾞぃ;</td><td>&うﾞ;</td><td>&うﾞぇ;</td><td>をﾞ</td></tr>
+		<tr><th>F</th><td>わﾟ</td><td>&うﾟぃ;</td><td>&うﾟ;</td><td>&うﾟぇ;</td><td>をﾟ</td></tr>
+		<tr><th></th><td>ん</td><td>&ふん;</td><td>&ちっ;</td><td></td><td></td></tr>
+		<tr><th></th><td></td><td>&ぶん;</td><td></td><td></td><td></td></tr>
+	</table>
+
+	<h4>ひらがな開拗音・開拗濁音・開拗半濁音・開拗濁半濁音</h4>
+	<table border="1">
+		<tr><th></th><th>A</th><th></th><th>U</th><th>E</th><th>O</th></tr>
+		<tr><th>KY</th><td>きゃ</td><td></td><td>きゅ</td><td>き&ぃぇ;</td><td>きょ</td></tr>
+		<tr><th>GY</th><td>ぎゃ</td><td></td><td>ぎゅ</td><td>ぎ&ぃぇ;</td><td>ぎょ</td></tr>
+		<tr><th>NGY</th><td>きﾟゃ</td><td></td><td>きﾟゅ</td><td>きﾟ&ぃぇ;</td><td>きﾟょ</td></tr>
+		<tr><th>SY</th><td>&すぃ;ゃ</td><td></td><td>&すぃ;ゅ</td><td>&すぃ;&ぃぇ;</td><td>&すぃ;ょ</td></tr>
+		<tr><th>ZY</th><td>&ずぃ;ゃ</td><td></td><td>&ずぃ;ゅ</td><td>&ずぃ;&ぃぇ;</td><td>&ずぃ;ょ</td></tr>
+		<tr><th>THY</th><td>&すﾟぃ;ゃ</td><td></td><td>&すﾟぃ;ゅ</td><td>&すﾟぃ;&ぃぇ;</td><td>&すﾟぃ;ょ</td></tr>
+		<tr><th>DHY</th><td>&ずﾟぃ;ゃ</td><td></td><td>&ずﾟぃ;ゅ</td><td>&ずﾟぃ;&ぃぇ;</td><td>&ずﾟぃ;ょ</td></tr>
+		<tr><th>SHY</th><td>しゃ</td><td></td><td>しゅ</td><td>し&ぃぇ;</td><td>しょ</td></tr>
+		<tr><th>JY</th><td>じゃ</td><td></td><td>じゅ</td><td>じ&ぃぇ;</td><td>じょ</td></tr>
+		<tr><th>TY</th><td>&てぃ;ゃ</td><td></td><td>&てぃ;ゅ</td><td>&てぃ;&ぃぇ;</td><td>&てぃ;ょ</td></tr>
+		<tr><th>DY</th><td>&でぃ;ゃ</td><td></td><td>&でぃ;ゅ</td><td>&でぃ;&ぃぇ;</td><td>&でぃ;ょ</td></tr>
+		<tr><th>CHY</th><td>ちゃ</td><td></td><td>ちゅ</td><td>ち&ぃぇ;</td><td>ちょ</td></tr>
+		<tr><th>DJY</th><td>ぢゃ</td><td></td><td>ぢゅ</td><td>ぢ&ぃぇ;</td><td>ぢょ</td></tr>
+		<tr><th>TSY</th><td>&つぃ;ゃ</td><td></td><td>&つぃ;ゅ</td><td>&つぃ;&ぃぇ;</td><td>&つぃ;ょ</td></tr>
+		<tr><th>DZY</th><td>&づぃ;ゃ</td><td></td><td>&づぃ;ゅ</td><td>&づぃ;&ぃぇ;</td><td>&づぃ;ょ</td></tr>
+		<tr><th>NY</th><td>にゃ</td><td></td><td>にゅ</td><td>に&ぃぇ;</td><td>にょ</td></tr>
+		<tr><th>HY</th><td>ひゃ</td><td></td><td>ひゅ</td><td>ひ&ぃぇ;</td><td>ひょ</td></tr>
+		<tr><th>BY</th><td>びゃ</td><td></td><td>びゅ</td><td>び&ぃぇ;</td><td>びょ</td></tr>
+		<tr><th>PY</th><td>ぴゃ</td><td></td><td>ぴゅ</td><td>ぴ&ぃぇ;</td><td>ぴょ</td></tr>
+		<tr><th>MY</th><td>みゃ</td><td></td><td>みゅ</td><td>み&ぃぇ;</td><td>みょ</td></tr>
+		<tr><th>RY</th><td>りゃ</td><td></td><td>りゅ</td><td>り&ぃぇ;</td><td>りょ</td></tr>
+		<tr><th>LY</th><td>りﾟゃ</td><td></td><td>りﾟゅ</td><td>りﾟ&ぃぇ;</td><td>りﾟょ</td></tr>
+		<tr><th>WY</th><td>&うぃ;ゃ</td><td></td><td>&うぃ;ゅ</td><td>&うぃ;&ぃぇ;</td><td>&うぃ;ょ</td></tr>
+		<tr><th>VY</th><td>&うﾞぃ;ゃ</td><td></td><td>&うﾞぃ;ゅ</td><td>&うﾞぃ;&ぃぇ;</td><td>&うﾞぃ;ょ</td></tr>
+		<tr><th>FY</th><td>&うﾟぃ;ゃ</td><td></td><td>&うﾟぃ;ゅ</td><td>&うﾟぃ;&ぃぇ;</td><td>&うﾟぃ;ょ</td></tr>
+	</table>
+
+	<h4>ひらがな合拗音・合拗濁音・合拗半濁音・合拗濁半濁音</h4>
+	<table border="1">
+		<tr><th></th><th>A</th><th>I</th><th></th><th>E</th><th>O</th></tr>
+		<tr><th>KW</th><td>く&ぅぁ;</td><td>く&ぅぃ;</td><td></td><td>く&ぅぇ;</td><td>く&ぅぉ;</td></tr>
+		<tr><th>GW</th><td>ぐ&ぅぁ;</td><td>ぐ&ぅぃ;</td><td></td><td>ぐ&ぅぇ;</td><td>ぐ&ぅぉ;</td></tr>
+		<tr><th>NGW</th><td>くﾟ&ぅぁ;</td><td>くﾟ&ぅぃ;</td><td></td><td>くﾟ&ぅぇ;</td><td>くﾟ&ぅぉ;</td></tr>
+		<tr><th>SW</th><td>す&ぅぁ;</td><td>す&ぅぃ;</td><td></td><td>す&ぅぇ;</td><td>す&ぅぉ;</td></tr>
+		<tr><th>ZW</th><td>ず&ぅぁ;</td><td>ず&ぅぃ;</td><td></td><td>ず&ぅぇ;</td><td>ず&ぅぉ;</td></tr>
+		<tr><th>THW</th><td>すﾟ&ぅぁ;</td><td>すﾟ&ぅぃ;</td><td></td><td>すﾟ&ぅぇ;</td><td>すﾟ&ぅぉ;</td></tr>
+		<tr><th>DHW</th><td>ずﾟ&ぅぁ;</td><td>ずﾟ&ぅぃ;</td><td></td><td>ずﾟ&ぅぇ;</td><td>ずﾟ&ぅぉ;</td></tr>
+		<tr><th>SHW</th><td>&しゅ;&ぅぁ;</td><td>&しゅ;&ぅぃ;</td><td></td><td>&しゅ;&ぅぇ;</td><td>&しゅ;&ぅぉ;</td></tr>
+		<tr><th>JW</th><td>&じゅ;&ぅぁ;</td><td>&じゅ;&ぅぃ;</td><td></td><td>&じゅ;&ぅぇ;</td><td>&じゅ;&ぅぉ;</td></tr>
+		<tr><th>TW</th><td>&とぅ;&ぅぁ;</td><td>&とぅ;&ぅぃ;</td><td></td><td>&とぅ;&ぅぇ;</td><td>&とぅ;&ぅぉ;</td></tr>
+		<tr><th>DW</th><td>&どぅ;&ぅぁ;</td><td>&どぅ;&ぅぃ;</td><td></td><td>&どぅ;&ぅぇ;</td><td>&どぅ;&ぅぉ;</td></tr>
+		<tr><th>CHW</th><td>&ちゅ;&ぅぁ;</td><td>&ちゅ;&ぅぃ;</td><td></td><td>&ちゅ;&ぅぇ;</td><td>&ちゅ;&ぅぉ;</td></tr>
+		<tr><th>DJW</th><td>&ぢゅ;&ぅぁ;</td><td>&ぢゅ;&ぅぃ;</td><td></td><td>&ぢゅ;&ぅぇ;</td><td>&ぢゅ;&ぅぉ;</td></tr>
+		<tr><th>TSW</th><td>つ&ぅぁ;</td><td>つ&ぅぃ;</td><td></td><td>つ&ぅぇ;</td><td>つ&ぅぉ;</td></tr>
+		<tr><th>DZW</th><td>づ&ぅぁ;</td><td>づ&ぅぃ;</td><td></td><td>づ&ぅぇ;</td><td>づ&ぅぉ;</td></tr>
+		<tr><th>NW</th><td>ぬ&ぅぁ;</td><td>ぬ&ぅぃ;</td><td></td><td>ぬ&ぅぇ;</td><td>ぬ&ぅぉ;</td></tr>
+		<tr><th>HW</th><td>&ほぅ;&ぅぁ;</td><td>&ほぅ;&ぅぃ;</td><td></td><td>&ほぅ;&ぅぇ;</td><td>&ほぅ;&ぅぉ;</td></tr>
+		<tr><th>BW</th><td>ぶ&ぅぁ;</td><td>ぶ&ぅぃ;</td><td></td><td>ぶ&ぅぇ;</td><td>ぶ&ぅぉ;</td></tr>
+		<tr><th>PW</th><td>ぷ&ぅぁ;</td><td>ぷ&ぅぃ;</td><td></td><td>ぷ&ぅぇ;</td><td>ぷ&ぅぉ;</td></tr>
+		<tr><th>MW</th><td>む&ぅぁ;</td><td>む&ぅぃ;</td><td></td><td>む&ぅぇ;</td><td>む&ぅぉ;</td></tr>
+		<tr><th>YW</th><td>ゆ&ぅぁ;</td><td>ゆ&ぅぃ;</td><td></td><td>ゆ&ぅぇ;</td><td>ゆ&ぅぉ;</td></tr>
+		<tr><th>RW</th><td>る&ぅぁ;</td><td>る&ぅぃ;</td><td></td><td>る&ぅぇ;</td><td>る&ぅぉ;</td></tr>
+		<tr><th>LW</th><td>るﾟ&ぅぁ;</td><td>るﾟ&ぅぃ;</td><td></td><td>るﾟ&ぅぇ;</td><td>るﾟ&ぅぉ;</td></tr>
+		<tr><th>VW</th><td>&うﾞ;&ぅぁ;</td><td>&うﾞ;&ぅぃ;</td><td></td><td>&うﾞ;&ぅぇ;</td><td>&うﾞ;&ぅぉ;</td></tr>
+		<tr><th>FW</th><td>&うﾟ;&ぅぁ;</td><td>&うﾟ;&ぅぃ;</td><td></td><td>&うﾟ;&ぅぇ;</td><td>&うﾟ;&ぅぉ;</td></tr>
+	</table>
+
+	<h4>小さいひらがな</h4>
+	<table border="1">
+		<tr><td>小さいあ</td><td>ぁ</td></tr>
+		<tr><td>小さいい</td><td>ぃ</td></tr>
+		<tr><td>小さいう</td><td>ぅ</td></tr>
+		<tr><td>小さいえ</td><td>ぇ</td></tr>
+		<tr><td>小さいお</td><td>ぉ</td></tr>
+		<tr><td>小さいか</td><td>&チか;</td></tr>
+		<tr><td>小さいく</td><td>&チく;</td></tr>
+		<tr><td>小さいけ</td><td>&チけ;</td></tr>
+		<tr><td>小さいこ</td><td>&チこ;</td></tr>
+		<tr><td>小さいし</td><td>&チし;</td></tr>
+		<tr><td>小さいす</td><td>&チす;</td></tr>
+		<tr><td>小さいつ</td><td>っ</td></tr>
+		<tr><td>小さいと</td><td>&チと;</td></tr>
+		<tr><td>小さいぬ</td><td>&チぬ;</td></tr>
+		<tr><td>小さいは</td><td>&チは;</td></tr>
+		<tr><td>小さいひ</td><td>&チひ;</td></tr>
+		<tr><td>小さいふ</td><td>&チふ;</td></tr>
+		<tr><td>小さいへ</td><td>&チへ;</td></tr>
+		<tr><td>小さいほ</td><td>&チほ;</td></tr>
+		<tr><td>小さいむ</td><td>&チむ;</td></tr>
+		<tr><td>小さいや</td><td>ゃ</td></tr>
+		<tr><td>小さい&いぃ;</td><td>&ぃぃ;</td></tr>
+		<tr><td>小さいゆ</td><td>ゅ</td></tr>
+		<tr><td>小さい&いぇ;</td><td>&ぃぇ;</td></tr>
+		<tr><td>小さいよ</td><td>ょ</td></tr>
+		<tr><td>小さいら</td><td>&チら;</td></tr>
+		<tr><td>小さいり</td><td>&チり;</td></tr>
+		<tr><td>小さいる</td><td>&チる;</td></tr>
+		<tr><td>小さいれ</td><td>&チれ;</td></tr>
+		<tr><td>小さいろ</td><td>&チろ;</td></tr>
+		<tr><td>小さいわ</td><td>&ぅぁ;</td></tr>
+		<tr><td>小さい&うぃ;</td><td>&ぅぃ;</td></tr>
+		<tr><td>小さい&うぅ;</td><td>&ぅぅ;</td></tr>
+		<tr><td>小さい&うぇ;</td><td>&ぅぇ;</td></tr>
+		<tr><td>小さいを</td><td>&ぅぉ;</td></tr>
+		<tr><td>小さいん</td><td>&チん;</td></tr>
+	</table>
+
+	<h4>カタカナ清音・濁音・半濁音・濁半濁音</h4>
+	<table border="1">
+		<tr><th></th><th>A</th><th>I</th><th>U</th><th>E</th><th>O</th></tr>
+		<tr><th></th><td>ア</td><td>イ</td><td>ウ</td><td>エ</td><td>オ</td></tr>
+		<tr><th>K</th><td>カ</td><td>キ</td><td>ク</td><td>ケ</td><td>コ</td></tr>
+		<tr><th>G</th><td>ガ</td><td>ギ</td><td>グ</td><td>ゲ</td><td>ゴ</td></tr>
+		<tr><th>NG</th><td>カﾟ</td><td>キﾟ</td><td>クﾟ</td><td>ケﾟ</td><td>コﾟ</td></tr>
+		<tr><th>S</th><td>サ</td><td>&スィ;</td><td>ス</td><td>セ</td><td>ソ</td></tr>
+		<tr><th>Z</th><td>ザ</td><td>&ズィ;</td><td>ズ</td><td>ゼ</td><td>ゾ</td></tr>
+		<tr><th>TH</th><td>サﾟ</td><td>&スﾟィ;</td><td>スﾟ</td><td>セﾟ</td><td>ソﾟ</td></tr>
+		<tr><th>DH</th><td>ザﾟ</td><td>&ズﾟィ;</td><td>ズﾟ</td><td>ゼﾟ</td><td>ゾﾟ</td></tr>
+		<tr><th>SH</th><td>&シャ;</td><td>シ</td><td>&シュ;</td><td>&シェ;</td><td>&ショ;</td></tr>
+		<tr><th>J</th><td>&ジャ;</td><td>ジ</td><td>&ジュ;</td><td>&ジェ;</td><td>&ジョ;</td></tr>
+		<tr><th>T</th><td>タ</td><td>&ティ;</td><td>&トゥ;</td><td>テ</td><td>ト</td></tr>
+		<tr><th>D</th><td>ダ</td><td>&ディ;</td><td>&ドゥ;</td><td>デ</td><td>ド</td></tr>
+		<tr><th>CH</th><td>&チャ;</td><td>チ</td><td>&チュ;</td><td>&チェ;</td><td>&チョ;</td></tr>
+		<tr><th>DJ</th><td>&ヂャ;</td><td>ヂ</td><td>&ヂュ;</td><td>&ヂェ;</td><td>&ヂョ;</td></tr>
+		<tr><th>TS</th><td>&ツァ;</td><td>&ツィ;</td><td>ツ</td><td>&ツェ;</td><td>&ツォ;</td></tr>
+		<tr><th>DZ</th><td>&ヅァ;</td><td>&ヅィ;</td><td>ヅ</td><td>&ヅェ;</td><td>&ヅォ;</td></tr>
+		<tr><th>N</th><td>ナ</td><td>ニ</td><td>ヌ</td><td>ネ</td><td>ノ</td></tr>
+		<tr><th>H</th><td>ハ</td><td>ヒ</td><td>フ、&ホゥ;</td><td>ヘ</td><td>ホ</td></tr>
+		<tr><th>B</th><td>バ</td><td>ビ</td><td>ブ</td><td>ベ</td><td>ボ</td></tr>
+		<tr><th>P</th><td>パ</td><td>ピ</td><td>プ</td><td>ペ</td><td>ポ</td></tr>
+		<tr><th>M</th><td>マ</td><td>ミ</td><td>ム</td><td>メ</td><td>モ</td></tr>
+		<tr><th>Y</th><td>ヤ</td><td>&イィ;</td><td>ユ</td><td>&イェ;</td><td>ヨ</td></tr>
+		<tr><th>R</th><td>ラ</td><td>リ</td><td>ル</td><td>レ</td><td>ロ</td></tr>
+		<tr><th>L</th><td>ラﾟ</td><td>リﾟ</td><td>ルﾟ</td><td>レﾟ</td><td>ロﾟ</td></tr>
+		<tr><th>W</th><td>ワ</td><td>&ウィ;</td><td>&ウゥ;</td><td>&ウェ;</td><td>ヲ</td></tr>
+		<tr><th>V</th><td>ワﾞ</td><td>&ヴィ;</td><td>&ヴ;</td><td>&ヴェ;</td><td>ヲﾞ</td></tr>
+		<tr><th>F</th><td>ワﾟ</td><td>&ウﾟィ;</td><td>&ウﾟ;</td><td>&ウﾟェ;</td><td>ヲﾟ</td></tr>
+		<tr><th></th><td>ン</td><td>&フン;</td><td>&チッ;</td><td></td><td></td></tr>
+		<tr><th></th><td></td><td>&ブン;</td><td></td><td></td><td></td></tr>
+	</table>
+
+	<h4>カタカナ開拗音・開拗濁音・開拗半濁音・開拗濁半濁音</h4>
+	<table border="1">
+		<tr><th></th><th>A</th><th></th><th>U</th><th>E</th><th>O</th></tr>
+		<tr><th>KY</th><td>キャ</td><td></td><td>キュ</td><td>キ&ィェ;</td><td>キョ</td></tr>
+		<tr><th>GY</th><td>ギャ</td><td></td><td>ギュ</td><td>ギ&ィェ;</td><td>ギョ</td></tr>
+		<tr><th>NGY</th><td>キﾟャ</td><td></td><td>キﾟュ</td><td>キﾟ&ィェ;</td><td>キﾟョ</td></tr>
+		<tr><th>SY</th><td>&スィ;ャ</td><td></td><td>&スィ;ュ</td><td>&スィ;&ィェ;</td><td>&スィ;ョ</td></tr>
+		<tr><th>ZY</th><td>&ズィ;ャ</td><td></td><td>&ズィ;ュ</td><td>&ズィ;&ィェ;</td><td>&ズィ;ョ</td></tr>
+		<tr><th>THY</th><td>&スﾟィ;ャ</td><td></td><td>&スﾟィ;ュ</td><td>&スﾟィ;&ィェ;</td><td>&スﾟィ;ョ</td></tr>
+		<tr><th>DHY</th><td>&ズﾟィ;ャ</td><td></td><td>&ズﾟィ;ュ</td><td>&ズﾟィ;&ィェ;</td><td>&ズﾟィ;ョ</td></tr>
+		<tr><th>SHY</th><td>シャ</td><td></td><td>シュ</td><td>シ&ィェ;</td><td>ショ</td></tr>
+		<tr><th>JY</th><td>ジャ</td><td></td><td>ジュ</td><td>ジ&ィェ;</td><td>ジョ</td></tr>
+		<tr><th>TY</th><td>&ティ;ャ</td><td></td><td>&ティ;ュ</td><td>&ティ;&ィェ;</td><td>&ティ;ョ</td></tr>
+		<tr><th>DY</th><td>&ディ;ャ</td><td></td><td>&ディ;ュ</td><td>&ディ;&ィェ;</td><td>&ディ;ョ</td></tr>
+		<tr><th>CHY</th><td>チャ</td><td></td><td>チュ</td><td>チ&ィェ;</td><td>チョ</td></tr>
+		<tr><th>DJY</th><td>ヂャ</td><td></td><td>ヂュ</td><td>ヂ&ィェ;</td><td>ヂョ</td></tr>
+		<tr><th>TSY</th><td>&ツィ;ャ</td><td></td><td>&ツィ;ュ</td><td>&ツィ;&ィェ;</td><td>&ツィ;ョ</td></tr>
+		<tr><th>DZY</th><td>&ヅィ;ャ</td><td></td><td>&ヅィ;ュ</td><td>&ヅィ;&ィェ;</td><td>&ヅィ;ョ</td></tr>
+		<tr><th>NY</th><td>ニャ</td><td></td><td>ニュ</td><td>ニ&ィェ;</td><td>ニョ</td></tr>
+		<tr><th>HY</th><td>ヒャ</td><td></td><td>ヒュ</td><td>ヒ&ィェ;</td><td>ヒョ</td></tr>
+		<tr><th>BY</th><td>ビャ</td><td></td><td>ビュ</td><td>ビ&ィェ;</td><td>ビョ</td></tr>
+		<tr><th>PY</th><td>ピャ</td><td></td><td>ピュ</td><td>ピ&ィェ;</td><td>ピョ</td></tr>
+		<tr><th>MY</th><td>ミャ</td><td></td><td>ミュ</td><td>ミ&ィェ;</td><td>ミョ</td></tr>
+		<tr><th>RY</th><td>リャ</td><td></td><td>リュ</td><td>リ&ィェ;</td><td>リョ</td></tr>
+		<tr><th>LY</th><td>リﾟャ</td><td></td><td>リﾟュ</td><td>リﾟ&ィェ;</td><td>リﾟョ</td></tr>
+		<tr><th>WY</th><td>&ウィ;ャ</td><td></td><td>&ウィ;ュ</td><td>&ウィ;&ィェ;</td><td>&ウィ;ョ</td></tr>
+		<tr><th>VY</th><td>&ヴィ;ャ</td><td></td><td>&ヴィ;ュ</td><td>&ヴィ;&ィェ;</td><td>&ヴィ;ョ</td></tr>
+		<tr><th>FY</th><td>&ウﾟィ;ャ</td><td></td><td>&ウﾟィ;ュ</td><td>&ウﾟィ;&ィェ;</td><td>&ウﾟィ;ョ</td></tr>
+	</table>
+
+	<h4>カタカナ合拗音・合拗濁音・合拗半濁音・合拗濁半濁音</h4>
+	<table border="1">
+		<tr><th></th><th>A</th><th>I</th><th></th><th>E</th><th>O</th></tr>
+		<tr><th>KW</th><td>ク&ゥァ;</td><td>ク&ゥィ;</td><td></td><td>ク&ゥェ;</td><td>ク&ゥォ;</td></tr>
+		<tr><th>GW</th><td>グ&ゥァ;</td><td>グ&ゥィ;</td><td></td><td>グ&ゥェ;</td><td>グ&ゥォ;</td></tr>
+		<tr><th>NGW</th><td>クﾟ&ゥァ;</td><td>クﾟ&ゥィ;</td><td></td><td>クﾟ&ゥェ;</td><td>クﾟ&ゥォ;</td></tr>
+		<tr><th>SW</th><td>ス&ゥァ;</td><td>ス&ゥィ;</td><td></td><td>ス&ゥェ;</td><td>ス&ゥォ;</td></tr>
+		<tr><th>ZW</th><td>ズ&ゥァ;</td><td>ズ&ゥィ;</td><td></td><td>ズ&ゥェ;</td><td>ズ&ゥォ;</td></tr>
+		<tr><th>THW</th><td>スﾟ&ゥァ;</td><td>スﾟ&ゥィ;</td><td></td><td>スﾟ&ゥェ;</td><td>スﾟ&ゥォ;</td></tr>
+		<tr><th>DHW</th><td>ズﾟ&ゥァ;</td><td>ズﾟ&ゥィ;</td><td></td><td>ズﾟ&ゥェ;</td><td>ズﾟ&ゥォ;</td></tr>
+		<tr><th>SHW</th><td>&シュ;&ゥァ;</td><td>&シュ;&ゥィ;</td><td></td><td>&シュ;&ゥェ;</td><td>&シュ;&ゥォ;</td></tr>
+		<tr><th>JW</th><td>&ジュ;&ゥァ;</td><td>&ジュ;&ゥィ;</td><td></td><td>&ジュ;&ゥェ;</td><td>&ジュ;&ゥォ;</td></tr>
+		<tr><th>TW</th><td>&トゥ;&ゥァ;</td><td>&トゥ;&ゥィ;</td><td></td><td>&トゥ;&ゥェ;</td><td>&トゥ;&ゥォ;</td></tr>
+		<tr><th>DW</th><td>&ドゥ;&ゥァ;</td><td>&ドゥ;&ゥィ;</td><td></td><td>&ドゥ;&ゥェ;</td><td>&ドゥ;&ゥォ;</td></tr>
+		<tr><th>CHW</th><td>&チュ;&ゥァ;</td><td>&チュ;&ゥィ;</td><td></td><td>&チュ;&ゥェ;</td><td>&チュ;&ゥォ;</td></tr>
+		<tr><th>DJW</th><td>&ヂュ;&ゥァ;</td><td>&ヂュ;&ゥィ;</td><td></td><td>&ヂュ;&ゥェ;</td><td>&ヂュ;&ゥォ;</td></tr>
+		<tr><th>TSW</th><td>ツ&ゥァ;</td><td>ツ&ゥィ;</td><td></td><td>ツ&ゥェ;</td><td>ツ&ゥォ;</td></tr>
+		<tr><th>DZW</th><td>ヅ&ゥァ;</td><td>ヅ&ゥィ;</td><td></td><td>ヅ&ゥェ;</td><td>ヅ&ゥォ;</td></tr>
+		<tr><th>NW</th><td>ヌ&ゥァ;</td><td>ヌ&ゥィ;</td><td></td><td>ヌ&ゥェ;</td><td>ヌ&ゥォ;</td></tr>
+		<tr><th>HW</th><td>&ホゥ;&ゥァ;</td><td>&ホゥ;&ゥィ;</td><td></td><td>&ホゥ;&ゥェ;</td><td>&ホゥ;&ゥォ;</td></tr>
+		<tr><th>BW</th><td>ブ&ゥァ;</td><td>ブ&ゥィ;</td><td></td><td>ブ&ゥェ;</td><td>ブ&ゥォ;</td></tr>
+		<tr><th>PW</th><td>プ&ゥァ;</td><td>プ&ゥィ;</td><td></td><td>プ&ゥェ;</td><td>プ&ゥォ;</td></tr>
+		<tr><th>MW</th><td>ム&ゥァ;</td><td>ム&ゥィ;</td><td></td><td>ム&ゥェ;</td><td>ム&ゥォ;</td></tr>
+		<tr><th>YW</th><td>ユ&ゥァ;</td><td>ユ&ゥィ;</td><td></td><td>ユ&ゥェ;</td><td>ユ&ゥォ;</td></tr>
+		<tr><th>RW</th><td>ル&ゥァ;</td><td>ル&ゥィ;</td><td></td><td>ル&ゥェ;</td><td>ル&ゥォ;</td></tr>
+		<tr><th>LW</th><td>ルﾟ&ゥァ;</td><td>ルﾟ&ゥィ;</td><td></td><td>ルﾟ&ゥェ;</td><td>ルﾟ&ゥォ;</td></tr>
+		<tr><th>VW</th><td>&ヴ;&ゥァ;</td><td>&ヴ;&ゥィ;</td><td></td><td>&ヴ;&ゥェ;</td><td>&ヴ;&ゥォ;</td></tr>
+		<tr><th>FW</th><td>&ウﾟ;&ゥァ;</td><td>&ウﾟ;&ゥィ;</td><td></td><td>&ウﾟ;&ゥェ;</td><td>&ウﾟ;&ゥォ;</td></tr>
+	</table>
+
+	<h4>小さいカタカナ</h4>
+	<table border="1">
+		<tr><td>小さいア</td><td>ァ</td></tr>
+		<tr><td>小さいイ</td><td>ィ</td></tr>
+		<tr><td>小さいウ</td><td>ゥ</td></tr>
+		<tr><td>小さいエ</td><td>ェ</td></tr>
+		<tr><td>小さいオ</td><td>ォ</td></tr>
+		<tr><td>小さいカ</td><td>ヵ</td></tr>
+		<tr><td>小さいク</td><td>&チク;</td></tr>
+		<tr><td>小さいケ</td><td>ヶ</td></tr>
+		<tr><td>小さいコ</td><td>&チコ;</td></tr>
+		<tr><td>小さいシ</td><td>&チシ;</td></tr>
+		<tr><td>小さいス</td><td>&チス;</td></tr>
+		<tr><td>小さいツ</td><td>ッ</td></tr>
+		<tr><td>小さいト</td><td>&チト;</td></tr>
+		<tr><td>小さいヌ</td><td>&チヌ;</td></tr>
+		<tr><td>小さいハ</td><td>&チハ;</td></tr>
+		<tr><td>小さいヒ</td><td>&チヒ;</td></tr>
+		<tr><td>小さいフ</td><td>&チフ;</td></tr>
+		<tr><td>小さいヘ</td><td>&チヘ;</td></tr>
+		<tr><td>小さいホ</td><td>&チホ;</td></tr>
+		<tr><td>小さいム</td><td>&チム;</td></tr>
+		<tr><td>小さいヤ</td><td>ャ</td></tr>
+		<tr><td>小さい&イィ;</td><td>&ィィ;</td></tr>
+		<tr><td>小さいユ</td><td>ュ</td></tr>
+		<tr><td>小さい&イェ;</td><td>&ィェ;</td></tr>
+		<tr><td>小さいヨ</td><td>ョ</td></tr>
+		<tr><td>小さいラ</td><td>&チラ;</td></tr>
+		<tr><td>小さいリ</td><td>&チリ;</td></tr>
+		<tr><td>小さいル</td><td>&チル;</td></tr>
+		<tr><td>小さいレ</td><td>&チレ;</td></tr>
+		<tr><td>小さいロ</td><td>&チロ;</td></tr>
+		<tr><td>小さいワ</td><td>&ゥァ;</td></tr>
+		<tr><td>小さい&ウィ;</td><td>&ゥィ;</td></tr>
+		<tr><td>小さい&ウゥ;</td><td>&ゥゥ;</td></tr>
+		<tr><td>小さい&ウェ;</td><td>&ゥェ;</td></tr>
+		<tr><td>小さいヲ</td><td>&ゥォ;</td></tr>
+		<tr><td>小さいン</td><td>&チン;</td></tr>
+	</table>
+
+	<h4>変体仮名</h4>
+	<table border="1">
+		<tr><td>エ1</td><td>&*エ1;</td></tr>
+		<tr><td>あ3</td><td>&*あ3;</td></tr>
+		<tr><td>お2</td><td>&*お2;</td></tr>
+		<tr><td>か3</td><td>&*か3;</td></tr>
+		<tr><td>く2</td><td>&*く2;</td></tr>
+		<tr><td>こ1</td><td>&*こ1;</td></tr>
+		<tr><td>さ4</td><td>&*さ4;</td></tr>
+		<tr><td>し5</td><td>&*し5;</td></tr>
+		<tr><td>す2</td><td>&*す2;</td></tr>
+		<tr><td>せ4</td><td>&*せ4;</td></tr>
+		<tr><td>そ5</td><td>&*そ5;</td></tr>
+		<tr><td>た2</td><td>&*た2;</td></tr>
+		<tr><td>と5</td><td>&*と5;</td></tr>
+		<tr><td>な4</td><td>&*な4;</td></tr>
+		<tr><td>は9</td><td>&*は9;</td></tr>
+		<tr><td>ふ2</td><td>&*ふ2;</td></tr>
+		<tr><td>へ4</td><td>&*へ4;</td></tr>
+		<tr><td>ま4</td><td>&*ま4;</td></tr>
+		<tr><td>も5</td><td>&*も5;</td></tr>
+		<tr><td>ら1</td><td>&*ら1;</td></tr>
+		<tr><td>を5</td><td>&*を5;</td></tr>
+		<tr><td>は9</td><td>&*は9;</td></tr>
+	</table>
+
+	<h4>合略仮名</h4>
+	<table border="1">
+		<tr><td>こと</td><td>&amp;こと;</td></tr>
+		<tr><td>コト</td><td>&amp;コト;</td></tr>
+		<tr><td>とも</td><td>&amp;とも;</td></tr>
+		<tr><td>トモ</td><td>&amp;トモ;</td></tr>
+		<tr><td>なり</td><td>&amp;なり;</td></tr>
+		<tr><td>ナリ</td><td>&amp;ナリ;</td></tr>
+		<tr><td>より</td><td>&amp;より;</td></tr>
+		<tr><td>ヨリ</td><td>&amp;ヨリ;</td></tr>
+		<tr><td>さま</td><td>&amp;さま;</td></tr>
+		<tr><td>そうろう</td><td>&amp;そうろう;</td></tr>
+		<tr><td>かしこ</td><td>&amp;かしこ;</td></tr>
+		<tr><td>まいらせそうろう</td><td>&amp;まいらせそうろう;</td></tr>
+		<tr><td>イウ</td><td>&amp;イウ;</td></tr>
+		<tr><td>シテ</td><td>&amp;シテ;</td></tr>
+		<tr><td>トイウ</td><td>&amp;トイウ;</td></tr>
+		<tr><td>トキ</td><td>&amp;トキ;</td></tr>
+		<tr><td>トキ</td><td>&amp;トキ;</td></tr>
+		<tr><td>トテ</td><td>&amp;トテ;</td></tr>
+		<tr><td>なら</td><td>&amp;なら;</td></tr>
+		<tr><td>ても</td><td>&amp;ても;</td></tr>
+		<tr><td>しかし</td><td>&amp;しかし;</td></tr>
+		<tr><td>アリ</td><td>&amp;アリ;</td></tr>
+		<tr><td>タイ</td><td>&amp;タイ;</td></tr>
+		<tr><td>など</td><td>&amp;など;</td></tr>
+		<tr><td>へと</td><td>&amp;へと;</td></tr>
+	</table>
+
+	<h4>数字</h4>
+	<p>0123456789TE</p>
+
+	<p><a href="index.html">半角カナ方式</a></a></a>
+</body>
+</html>

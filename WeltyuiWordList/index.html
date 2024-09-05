@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Weltyui</title>
+	<link rel="stylesheet" href="/toracatman.css">
+	<style>
+		tr:nth-child(2n) {
+			background-color: #ccffcc;
+		}
+		th,td {
+			padding: 0.4rem;
+			white-space: pre-line;
+		}
+	</style>
+	<script src="weltyui.js"></script>
+</head>
+<body>
+	<table border="1">
+		<tr><th>Weltyui</th><th>日本語</th><th>English</th><th>備考</th></tr>
+		<script>
+			var table = document.getElementsByTagName("table")[0];
+			var td;
+			for (var i = 0; i < weltyui["words"].length; i++) {
+				var tr = document.createElement("tr");
+				td = document.createElement("td");
+				td.textContent = weltyui["words"][i]["entry"]["form"];
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.textContent = weltyui["words"][i]["translations"][0]["forms"].join("、").replace(/、+$/, "");
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				if (weltyui["words"][i]["translations"].length > 1) {
+					td.textContent = weltyui["words"][i]["translations"][1]["forms"].join("､ ").replace(/(､ )+$/, "");
+				}
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				if (weltyui["words"][i]["contents"].length > 0) {
+					var title = weltyui["words"][i]["contents"][0]["title"];
+					if (title == "") title = "語源";
+					td.textContent = `${title}: ${weltyui["words"][i]["contents"][0]["text"]}`;
+					for (var j = 1; j < weltyui["words"][i]["contents"].length; j++) {
+						title = weltyui["words"][i]["contents"][j]["title"];
+						if (title == "") title = "語源";
+						td.textContent += `\n${title}: ${weltyui["words"][i]["contents"][j]["text"]}`;
+					}
+				}
+				tr.appendChild(td);
+
+				table.appendChild(tr);
+			}
+		</script>
+	</table>
+</body>
+</html>

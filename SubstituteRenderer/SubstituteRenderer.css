@@ -1,0 +1,334 @@
+button {
+	font-family: inherit;
+}
+.beige {
+	background-color: beige;
+}
+input,
+button {
+	color: #000;
+	background-color: #e0e0e0;
+	border: 0.1rem solid #808080;
+}
+input[type="text"] {
+	background-color: #fff;
+}
+select {
+	font-family: inherit;
+	color: #000;
+	border: 0.1rem solid #808080;
+}
+input:hover,
+button:hover,
+select:hover {
+	border: 0.1rem solid #000;
+}
+input:active,
+button:active {
+	background-color: #c0c0c0;
+	border: 0.1rem solid #808080;
+}
+input[type="text"]:active {
+	background-color: #fff;
+}
+.dark,
+.dark #text,
+.dark input,
+.dark button,
+.dark select {
+	color: #fff;
+	background-color: #000;
+}
+.dark input,
+.dark button,
+.dark select {
+	border: 0.1rem solid #808080;
+}
+.dark input:hover,
+.dark button:hover,
+.dark select:hover {
+	border: 0.1rem solid #fff;
+}
+.dark input:active,
+.dark button:active {
+	border: 0.1rem solid #808080;
+}
+.dark input[type="text"]:active {
+	background-color: #000;
+}
+td {
+	text-align: center;
+	vertical-align: top;
+}
+#text {
+	width: 100%;
+	height: 9.6rem;
+	font-size: 2rem;
+}
+div {
+	vertical-align: top;
+}
+#render {
+	margin: 6.4rem 0;
+	font-size: 3.2rem;
+	line-height: 1;
+	white-space: pre-wrap;
+}
+#render:has(rtc) {
+	line-height: 2.5;
+}
+.part,
+.bitmap {
+	display: inline-block;
+	position: relative;
+}
+#render:has(rtc) .part,
+#render:has(rtc) .bitmap {
+	top: 2.4rem;
+}
+#render:has(rtc) .part-inner .part {
+	top: 0;
+}
+.part {
+	width: 3.2rem;
+	height: 3.2rem;
+	line-height: 1;
+	text-align: center;
+	transform-origin: 0 0;
+}
+.part-inner {
+	position: absolute;
+	width: 3.2rem;
+	height: 3.2rem;
+	transform-origin: top left;
+}
+.part-over {
+	background-color: #fcc;
+}
+
+.part-hencukuri>.part-inner:first-child {
+	transform: scale(0.5, 1);
+}
+.part-hencukuri>.part-inner:last-child {
+	transform-origin: top right;
+	transform: scale(0.5, 1);
+}
+
+.part-kanmuriasxi>.part-inner:first-child {
+	transform: scale(1, 0.5);
+}
+.part-kanmuriasxi>.part-inner:last-child {
+	transform-origin: bottom left;
+	transform: scale(1, 0.5);
+}
+
+.part-tatemiqcu>.part-inner:first-child {
+	transform: scale(0.333, 1);
+}
+.part-tatemiqcu>.part-inner:nth-child(2) {
+	transform-origin: top center;
+	transform: scale(0.333, 1);
+}
+.part-tatemiqcu>.part-inner:last-child {
+	transform-origin: top right;
+	transform: scale(0.333, 1);
+}
+
+.part-yokomiqcu>.part-inner:first-child {
+	transform: scale(1, 0.333);
+}
+.part-yokomiqcu>.part-inner:nth-child(2) {
+	transform-origin: center left;
+	transform: scale(1, 0.333);
+}
+.part-yokomiqcu>.part-inner:last-child {
+	transform-origin: bottom left;
+	transform: scale(1, 0.333);
+}
+
+.part-kunigakomi>.part-inner:last-child {
+	transform-origin: center;
+	transform: scale(0.7, 0.7);
+}
+
+.part-dougakomi>.part-inner:last-child {
+	transform-origin: bottom center;
+	transform: scale(0.7, 0.7);
+}
+
+.part-ukegakomi>.part-inner:last-child {
+	transform-origin: top center;
+	transform: scale(0.7, 0.7);
+}
+
+.part-hakogakomi>.part-inner:last-child {
+	transform-origin: center right;
+	transform: scale(0.7, 0.7);
+}
+
+.part-gangakomi>.part-inner:last-child {
+	transform-origin: bottom right;
+	transform: scale(0.7, 0.7);
+}
+
+.part-cucumigakomi>.part-inner:last-child {
+	transform-origin: bottom left;
+	transform: scale(0.7, 0.7);
+}
+
+.part-nyougakomi>.part-inner:last-child {
+	transform-origin: top right;
+	transform: scale(0.7, 0.7);
+}
+
+.part-konojxigakomi>.part-inner:last-child {
+	transform-origin: center left;
+	transform: scale(0.7, 0.7);
+}
+
+.part-gyakunyou>.part-inner:last-child {
+	transform: scale(0.7, 0.7);
+}
+
+.part-kagamimojxi>.part-inner:first-child {
+	transform-origin: center;
+	transform: scale(-1, 1);
+}
+
+.part-sakasamojxi>.part-inner:first-child {
+	transform-origin: center;
+	transform: scale(-1, -1);
+}
+
+.part-torinozoku>.part-inner:last-child {
+	color: #f00;
+	opacity: 0.5;
+}
+
+.part-migidaosxi>.part-inner:first-child {
+	transform-origin: center;
+	transform: rotate(90deg);
+}
+
+.part-hidaridaosxi>.part-inner:first-child {
+	transform-origin: center;
+	transform: rotate(-90deg);
+}
+
+.red { color: red; }
+.orange { color: orange; }
+.yellow { color: yellow; }
+.lime { color: lime; }
+.green { color: green; }
+.aqua { color: aqua; }
+.skyblue { color: #80c0ff; }
+.blue { color: blue; }
+.purple { color: purple; }
+.fuchsia { color: fuchsia; }
+.pink { color: #ff80c0; }
+.brown { color: brown; }
+.black { color: black; }
+.grey { color: grey; }
+.white { color: white; }
+.gold { color: gold; }
+.silver { color: silver; }
+
+.circle { border-radius: 50%; }
+
+.bg-red { background-color: red; }
+.bg-orange { background-color: orange; }
+.bg-yellow { background-color: yellow; }
+.bg-lime { background-color: lime; }
+.bg-green { background-color: green; }
+.bg-blue { background-color: blue; }
+.bg-purple { background-color: purple; }
+.bg-brown { background-color: brown; }
+.bg-black { background-color: black; }
+.bg-white { background-color: white; }
+
+.error { color: #f00; }
+
+ruby {
+	position: relative;
+}
+rtc {
+	text-indent: 0px;
+	line-height: 1;
+	text-emphasis: none;
+}
+ruby > rtc {
+	display: ruby-text;
+	font-size: 50%;
+	text-align: center;
+	width: 100%;
+	position: absolute;
+	top: 100%;
+	left: 0;
+}
+
+#error {
+	color: #f00;
+}
+#bitmap {
+	border-bottom: 0.1rem solid #808080;
+	border-right: 0.1rem solid #808080;
+}
+.bitmap-dot {
+	width: 3.1rem;
+	height: 3.1rem;
+	float: left;
+	border-top: 0.1rem solid #808080;
+	border-left: 0.1rem solid #808080;
+}
+.bitmap-row:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.yoko {
+	float: left;
+	margin-left: 1rem;
+}
+.yoko:first-child {
+	margin-left: 0;
+}
+.yoko-wrapper:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.dwpi {
+	font-family: "DWPIMincho";
+}
+.nishiki {
+	font-family: "Nishiki-teki";
+}
+.jigmo {
+	font-family: "Jigmo", "Jigmo2", "Jigmo3";
+}
+.jigmo2 {
+	font-family: "Jigmo2";
+}
+.jigmo3 {
+	font-family: "Jigmo3";
+}
+.zh-cn {
+	font-family: "Noto Sans SC";
+}
+.zh-tw {
+	font-family: "Noto Sans TC";
+}
+.zh-hk {
+	font-family: "Noto Sans HK";
+}
+
+@media screen and (min-width: 768px) {
+	#text {
+		width: 60rem;
+	}
+	#render {
+		width: 96rem;
+	}
+}
