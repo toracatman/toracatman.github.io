@@ -1101,8 +1101,7 @@ function textProcess(d) {
 		i++;
 		var rb = document.createElement("rb");
 		rt.before(rb);
-		while (s[i] != "}") {
-			if (s[i] == "|") break;
+		while (s[i] != "}" && s[i] != "|") {
 			var e = textProcess(d);
 			rb.appendChild(e);
 			i++;
@@ -1132,13 +1131,13 @@ function textProcess(d) {
 		i += 3;
 		var div = document.createElement("div");
 		div.classList.add("bitmap");
-		while (s[i] != "}") {
-			if (s[i] == "(") break;
-			var e = textProcess(d);
-			div.appendChild(e);
+		var b = "";
+		while (s[i] != "}" && s[i] != "(") {
+			b += s[i];
 			i++;
 			if (i >= s.length) break;
 		}
+		div.textContent = b;
 		if (s[i] == "(") {
 			while (s[i] != "}") {
 				i++;
@@ -1147,7 +1146,6 @@ function textProcess(d) {
 		}
 		var l = div.textContent.match(/\n/g).length;
 		div.style.fontSize = `${3.2 / l}rem`;
-		div.style.lineHeight = "1";
 		return div;
 	}
 

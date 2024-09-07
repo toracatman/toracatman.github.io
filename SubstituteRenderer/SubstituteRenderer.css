@@ -80,19 +80,22 @@ div {
 .part,
 .bitmap {
 	display: inline-block;
-	position: relative;
+	line-height: 1;
 }
 #render:has(rtc) .part,
 #render:has(rtc) .bitmap {
 	top: 2.4rem;
 }
+.bitmap {
+	text-align: left;
+}
 #render:has(rtc) .part-inner .part {
 	top: 0;
 }
 .part {
+	position: relative;
 	width: 3.2rem;
 	height: 3.2rem;
-	line-height: 1;
 	text-align: center;
 	transform-origin: 0 0;
 }
