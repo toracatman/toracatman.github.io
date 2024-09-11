@@ -80,6 +80,7 @@ div {
 .part,
 .bitmap {
 	display: inline-block;
+	position: relative;
 	line-height: 1;
 }
 #render:has(rtc) .part,
@@ -93,7 +94,6 @@ div {
 	top: 0;
 }
 .part {
-	position: relative;
 	width: 3.2rem;
 	height: 3.2rem;
 	text-align: center;
