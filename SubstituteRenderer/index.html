@@ -1060,16 +1060,6 @@
 	</details>
 
 	<details>
-		<summary>ビットマップ表記</summary>
-		<p><label>行<input type="text" value="8" id="rows" onchange="makeBitmap()"></label></p>
-		<p><label>列<input type="text" value="8" id="cols" onchange="makeBitmap()"></label></p>
-		<div id="error"></div>
-		<div id="bitmap"></div>
-		<p>文字の 名前<input type="text" id="name"></p>
-		<input type="button" value="出力" onclick="makeOutput()">
-	</details>
-
-	<details>
 		<summary>色線文字</summary>
 		<p>
 			<input type="button" value="" onclick="insert('ｶ{⟀⎝}')">
@@ -1167,6 +1157,16 @@
 			<input type="button" value="" onclick="insert('ｶ{∠}')">
 			<input type="button" value="" onclick="insert('ｶ{＿}')">
 		</p>
+	</details>
+
+	<details>
+		<summary>ビットマップ表記</summary>
+		<p><label>行<input type="text" value="8" id="rows" onchange="makeBitmap()"></label></p>
+		<p><label>列<input type="text" value="8" id="cols" onchange="makeBitmap()"></label></p>
+		<div id="error"></div>
+		<div id="bitmap"></div>
+		<p>文字の 名前<input type="text" id="name"></p>
+		<input type="button" value="出力" onclick="makeOutput()">
 	</details>
 
 	<h3>下の テキストエリアに 代用表記を 入力すれば，本来の 表記が レンダリングされます。</h3>
@@ -1422,25 +1422,6 @@
 		<tr><td></td><td>無ｯ</td><td>null</td></tr>
 	</table>
 
-	<h3>ビットマップ表記</h3>
-	<p>代用表記では 形を 正確に 表せないので，形を 正確に 表すために ビットマップ表記を 使います。</p>
-	<p>▒{<br>
-		（ビットマップ）<br>
-		(文字の 名前（任意）)<br>
-		}
-	</p>
-	<p>例: 拡張かナ文字 しｬ</p>
-	<p>
-		▒{<br>
-		▗ ▖<br>
-		▌▗▙<br>
-		▌▚▘▌<br>
-		▚ ▞<br>
-		(拡張かナ文字 しｬ)<br>
-		}
-	</p>
-	<p>こちらで 出力された ビットマップを そのまま 貼り付ければ 使えます。<a href="../BitmapToText">ビットマップをテキストに</a></p>
-
 	<h3>色線文字</h3>
 	<p>色を 用いずに，色の 情報を 示す 文字。</p>
 	<p>カードゲーム、ボードゲームなど、色が 重要な ものに，色と 一緒に この 文字を つけることで，色弱の 人にも 色を 伝えることが できます。</p>
@@ -1560,6 +1541,25 @@
 		<tr><td></td><td>赤紫</td><td style="background-color: #800080;">　　</td><td>ｶ{＿ᴶ⏋}</td></tr>
 	</table>
 
+	<h3>ビットマップ表記</h3>
+	<p>代用表記では 形を 正確に 表せないので，形を 正確に 表すために ビットマップ表記を 使います。</p>
+	<p>▒{<br>
+		（ビットマップ）<br>
+		(文字の 名前（任意）)<br>
+		}
+	</p>
+	<p>例: 拡張かナ文字 しｬ</p>
+	<p>
+		▒{<br>
+		▗ ▖<br>
+		▌▗▙<br>
+		▌▚▘▌<br>
+		▚ ▞<br>
+		(拡張かナ文字 しｬ)<br>
+		}
+	</p>
+	<p>こちらで 出力された ビットマップを そのまま 貼り付ければ 使えます。<a href="../BitmapToText">ビットマップをテキストに</a></p>
+
 	<h3>DWPI明朝、にしき的フォント、Mkana+、字雲フォントの 外字</h3>
 	<p>DWPI明朝、にしき的フォント、Mkana+、字雲フォントの 外字を 表すために，</p>
 	<ul>
@@ -1582,6 +1582,8 @@
 	</ul>
 	<p>という 表記を します。</p>
 
+	<script src="chr.js"></script>
+	<script src="ExtJzanteiIDS.js"></script>
 	<script src="SubstituteRenderer.js"></script>
 </body>
 </html>

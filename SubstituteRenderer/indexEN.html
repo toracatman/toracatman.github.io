@@ -1060,16 +1060,6 @@
 	</details>
 
 	<details>
-		<summary>Bitmap notation</summary>
-		<p><label>Row<input type="text" value="8" id="rows" onchange="makeBitmap()"></label></p>
-		<p><label>Column<input type="text" value="8" id="cols" onchange="makeBitmap()"></label></p>
-		<div id="error"></div>
-		<div id="bitmap"></div>
-		<p>Name<input type="text" id="name"></p>
-		<input type="button" value="Insert" onclick="makeOutput()">
-	</details>
-
-	<details>
 		<summary>Colinor script</summary>
 		<p>
 			<input type="button" value="" onclick="insert('ｶ{⟀⎝}')">
@@ -1167,6 +1157,16 @@
 			<input type="button" value="" onclick="insert('ｶ{∠}')">
 			<input type="button" value="" onclick="insert('ｶ{＿}')">
 		</p>
+	</details>
+
+	<details>
+		<summary>Bitmap notation</summary>
+		<p><label>Row<input type="text" value="8" id="rows" onchange="makeBitmap()"></label></p>
+		<p><label>Column<input type="text" value="8" id="cols" onchange="makeBitmap()"></label></p>
+		<div id="error"></div>
+		<div id="bitmap"></div>
+		<p>Name<input type="text" id="name"></p>
+		<input type="button" value="Insert" onclick="makeOutput()">
 	</details>
 
 	<h3>If you input substitute notation in text area below, true notation is rendered.</h3>
@@ -1433,25 +1433,6 @@
 		<tr><td></td><td>無ｯ</td><td>null</td></tr>
 	</table>
 
-	<h3>Bitmap notation</h3>
-	<p >Since substitutions cannot accurately represent the shape, this is used to accurately represent the shape.</p>
-	<p>▒{<br>
-		(Bitmap)<br>
-		(Name (Option))<br>
-		}
-	</p>
-	<p>例: Extended kana しｬ</p>
-	<p>
-		▒{<br>
-		▗ ▖<br>
-		▌▗▙<br>
-		▌▚▘▌<br>
-		▚ ▞<br>
-		(Extended kana しｬ)<br>
-		}
-	</p>
-	<p >You can use it by simply pasting the bitmap output here. <a href="../BitmapToText">ビットマップをテキストに</a></p>
-
 	<h3>Colinor script</h3>
 	<p>Characters showing color information, not using color.</p>
 	<p >By adding this letter along with the color on card games, board games, and other things where color is important, people with color-blindness can be informed of the color.</p>
@@ -1571,6 +1552,25 @@
 		<tr><td></td><td>Red purple</td><td style="background-color: #800080;">　　</td><td>ｶ{＿ᴶ⏋}</td></tr>
 	</table>
 
+	<h3>Bitmap notation</h3>
+	<p >Since substitutions cannot accurately represent the shape, this is used to accurately represent the shape.</p>
+	<p>▒{<br>
+		(Bitmap)<br>
+		(Name (Option))<br>
+		}
+	</p>
+	<p>例: Extended kana しｬ</p>
+	<p>
+		▒{<br>
+		▗ ▖<br>
+		▌▗▙<br>
+		▌▚▘▌<br>
+		▚ ▞<br>
+		(Extended kana しｬ)<br>
+		}
+	</p>
+	<p >You can use it by simply pasting the bitmap output here. <a href="../BitmapToText">ビットマップをテキストに</a></p>
+
 	<h3>External chatacters of DWPI Mincho, Nishiki teki, Mkana+, Jigmo</h3>
 	<p>these are notation for display external chatacters of DWPI Mincho, Nishiki teki, Mkana+, Jigmo,</p>
 	<ul>
@@ -1591,6 +1591,8 @@
 		<li>Hong Kong: &hk-￭￭￭￭￭￭;</li>
 	</ul>
 
+	<script src="chr.js"></script>
+	<script src="ExtJzanteiIDS.js"></script>
 	<script src="SubstituteRendererEN.js"></script>
 </body>
 </html>
