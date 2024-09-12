@@ -60,11 +60,11 @@ function inputText() {
 	while ((u = /ﾕg([\dA-Fa-f]{4})/.exec(s)) !== null) {
 		s = s.replace(u[0], String.fromCodePoint(parseInt(`10${u[1]}`, 16)));
 	}
-	for (i = 0; i < chr.length; i++) {
-		s = s.replace(new RegExp(chr[i][0], "gu"), chr[i][1]);
-	}
 	for (i = 0; i < extJzanteiIDS.length; i++) {
 		s = s.replace(new RegExp(extJzanteiIDS[i][0], "gu"), extJzanteiIDS[i][1]);
+	}
+	for (i = 0; i < chr.length; i++) {
+		s = s.replace(new RegExp(chr[i][0], "gu"), chr[i][1]);
 	}
 
 	var f = document.createDocumentFragment();
