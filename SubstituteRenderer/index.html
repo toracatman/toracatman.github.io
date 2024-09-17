@@ -116,6 +116,13 @@
 		</form>
 	</details>
 	<details>
+		<summary>太字、斜体</summary>
+		<p>
+			<input type="button" value="太字" onclick="insert2('ﾌ{', '}')">
+			<input type="button" value="斜体" onclick="insert2('ﾅ{', '}')">
+		</p>
+	</details>
+	<details>
 		<summary>色付きの 図形</summary>
 		<p>
 			<input type="button" value="🔴" onclick="insert('🔴')">
@@ -293,15 +300,15 @@
 		<p>
 			<input type="button" value="" onclick="insert('すﾒ')"><input type="button" value="" onclick="insert('ずﾒ')">
 			<input type="button" value="" onclick="insert('ちﾒ')"><input type="button" value="" onclick="insert('ぢﾒ')">
-			<input type="button" value="" onclick="insert('す゚ﾒ')"><input type="button" value="" onclick="insert('すˠﾒ')">
-			<input type="button" value="" onclick="insert('ち゚ﾒ')"><input type="button" value="" onclick="insert('ちˠﾒ')">
+			<input type="button" value="" onclick="insert('す゚ﾒ')"><input type="button" value="" onclick="insert('すﾒˠ')">
+			<input type="button" value="" onclick="insert('ち゚ﾒ')"><input type="button" value="" onclick="insert('ちﾒˠ')">
 			<input type="button" value="" onclick="insert('ち‌̣ﾒ')"><input type="button" value="" onclick="insert('ち゚‌̣ﾒ')">
 		</p>
 		<p>
 			<input type="button" value="" onclick="insert('シﾒ')"><input type="button" value="" onclick="insert('ジﾒ')">
 			<input type="button" value="" onclick="insert('ツﾒ')"><input type="button" value="" onclick="insert('ヅﾒ')">
-			<input type="button" value="" onclick="insert('シ゚ﾒ')"><input type="button" value="" onclick="insert('シˠﾒ')">
-			<input type="button" value="" onclick="insert('ツ゚ﾒ')"><input type="button" value="" onclick="insert('ツˠﾒ')">
+			<input type="button" value="" onclick="insert('シ゚ﾒ')"><input type="button" value="" onclick="insert('シﾒˠ')">
+			<input type="button" value="" onclick="insert('ツ゚ﾒ')"><input type="button" value="" onclick="insert('ツﾒˠ')">
 			<input type="button" value="" onclick="insert('ツ‌̣ﾒ')"><input type="button" value="" onclick="insert('ツ゚‌̣ﾒ')">
 		</p>
 		<p>
@@ -1160,7 +1167,7 @@
 	</details>
 
 	<details>
-		<summary>ビットマップ表記</summary>
+		<summary>ビットマップ外字</summary>
 		<p><label>行<input type="text" value="8" id="rows" onchange="makeBitmap()"></label></p>
 		<p><label>列<input type="text" value="8" id="cols" onchange="makeBitmap()"></label></p>
 		<div id="error"></div>
@@ -1289,64 +1296,64 @@
 	<p>こちらは，設定で 無効にすることも，テキストエリアごと 変換することも できます。</p>
 	<div class="yoko-wrapper">
 		<table border="1" class="yoko">
-			<tr><th></th><th>x</th><th>2x</th><th>3x</th></tr>
-			<tr><th>A</th><td>Ə</td><td>Æ</td><td>A̩</td></tr>
-			<tr><th>B</th><td>Ð</td><td>Ƅ</td><td></td></tr>
-			<tr><th>C</th><td>Ĉ</td><td></td><td>Ꞓ</td></tr>
-			<tr><th>D</th><td>D̂</td><td></td><td></td></tr>
-			<tr><th>E</th><td>Ɛ</td><td>Ƹ</td><td></td></tr>
-			<tr><th>F</th><td>F̂</td><td></td><td></td></tr>
-			<tr><th>G</th><td>Ĝ</td><td></td><td>Ɣ</td></tr>
-			<tr><th>H</th><td>Ĥ</td><td></td><td></td></tr>
-			<tr><th>I</th><td>Ɨ</td><td></td><td></td></tr>
-			<tr><th>J</th><td>Ĵ</td><td></td><td>Ɉ</td></tr>
-			<tr><th>K</th><td>X</td><td></td><td></td></tr>
-			<tr><th>L</th><td></td><td>L̂</td><td></td></tr>
-			<tr><th>M</th><td></td><td></td><td></td></tr>
-			<tr><th>N</th><td>Ŋ</td><td>Ñ</td><td></td></tr>
-			<tr><th>O</th><td>Ɔ</td><td>Ø</td><td>Ơ</td></tr>
-			<tr><th>P</th><td>Þ</td><td></td><td></td></tr>
-			<tr><th>Q</th><td>Ɂ</td><td>Q̂</td><td></td></tr>
-			<tr><th>R</th><td></td><td>R̂</td><td>Ɍ</td></tr>
-			<tr><th>S</th><td>Ŝ</td><td>ẞ</td><td></td></tr>
-			<tr><th>T</th><td></td><td></td><td></td></tr>
-			<tr><th>U</th><td>Ɯ</td><td></td><td></td></tr>
-			<tr><th>V</th><td>Ꞟ</td><td></td><td></td></tr>
-			<tr><th>W</th><td>Ŭ</td><td>Ꝡ</td><td></td></tr>
-			<tr><th>Y</th><td></td><td>Ɥ</td><td>ꜛ</td></tr>
-			<tr><th>Z</th><td></td><td>ẞ̂</td><td>ꜜ</td></tr>
+			<tr><th></th><th>x</th><th>2x</th><th>3x</th><th>4x</th></tr>
+			<tr><th>A</th><td>Ə</td><td>Æ</td><td>A̩</td><td></td></tr>
+			<tr><th>B</th><td>Ð</td><td>Ƅ</td><td></td><td></td></tr>
+			<tr><th>C</th><td>Ĉ</td><td></td><td>Ꞓ</td><td></td></tr>
+			<tr><th>D</th><td>D̂</td><td></td><td></td><td></td></tr>
+			<tr><th>E</th><td>Ɛ</td><td>Ƹ</td><td></td><td></td></tr>
+			<tr><th>F</th><td>F̂</td><td></td><td></td><td></td></tr>
+			<tr><th>G</th><td>Ĝ</td><td></td><td>Ɣ</td><td></td></tr>
+			<tr><th>H</th><td>Ĥ</td><td></td><td></td><td></td></tr>
+			<tr><th>I</th><td>Ɨ</td><td></td><td></td><td></td></tr>
+			<tr><th>J</th><td>Ĵ</td><td></td><td>Ɉ</td><td></td></tr>
+			<tr><th>K</th><td>X</td><td></td><td></td><td></td></tr>
+			<tr><th>L</th><td></td><td>L̂</td><td></td><td></td></tr>
+			<tr><th>M</th><td></td><td></td><td></td><td></td></tr>
+			<tr><th>N</th><td>Ŋ</td><td>Ñ</td><td></td><td></td></tr>
+			<tr><th>O</th><td>Ɔ</td><td>Ø</td><td>Ơ</td><td></td></tr>
+			<tr><th>P</th><td>Þ</td><td></td><td></td><td></td></tr>
+			<tr><th>Q</th><td>Ɂ</td><td>Q̂</td><td></td><td></td></tr>
+			<tr><th>R</th><td></td><td>R̂</td><td>Ɍ</td><td>Ꝛ</td></tr>
+			<tr><th>S</th><td>Ŝ</td><td>ẞ</td><td></td><td></td></tr>
+			<tr><th>T</th><td></td><td></td><td></td><td></td></tr>
+			<tr><th>U</th><td>Ɯ</td><td></td><td></td><td></td></tr>
+			<tr><th>V</th><td>Ꞟ</td><td></td><td></td><td></td></tr>
+			<tr><th>W</th><td>Ŭ</td><td>Ꝡ</td><td></td><td></td></tr>
+			<tr><th>Y</th><td></td><td>Ɥ</td><td>ꜛ</td><td></td></tr>
+			<tr><th>Z</th><td></td><td>ẞ̂</td><td>ꜜ</td><td></td></tr>
 		</table>
 		<table border="1" class="yoko">
-			<tr><th></th><th>x</th><th>2x</th><th>3x</th></tr>
-			<tr><th>a</th><td>ə</td><td>æ</td><td>a̩</td></tr>
-			<tr><th>b</th><td>ð</td><td>ƅ</td><td> ̍</td></tr>
-			<tr><th>c</th><td>ĉ</td><td>ʗ</td><td>ꞓ</td></tr>
-			<tr><th>d</th><td>d̂</td><td> ̥</td><td></td></tr>
-			<tr><th>e</th><td>ɛ</td><td>ƹ</td><td></td></tr>
-			<tr><th>f</th><td>f̂</td><td>ᶠ</td><td></td></tr>
-			<tr><th>g</th><td>ĝ</td><td>ˁ</td><td>ɣ</td></tr>
-			<tr><th>h</th><td>ĥ</td><td> ̔</td><td></td></tr>
-			<tr><th>i</th><td>ɨ</td><td> ̩</td><td></td></tr>
-			<tr><th>j</th><td>ĵ</td><td>ʲ</td><td>ɟ</td></tr>
-			<tr><th>k</th><td>x※1</td><td>ˀ</td><td> ̂</td></tr>
-			<tr><th>l</th><td> ̄</td><td>l̂</td><td>ᴸ</td></tr>
-			<tr><th>m</th><td>※2</td><td> ̃</td><td> ̼</td></tr>
-			<tr><th>n</th><td>ŋ</td><td>ñ</td><td></td></tr>
-			<tr><th>o</th><td>ɔ</td><td>ø</td><td>ơ</td></tr>
-			<tr><th>p</th><td>þ</td><td>ʼ</td><td> ̩</td></tr>
-			<tr><th>q</th><td>ɂ</td><td>q̂</td><td></td></tr>
-			<tr><th>r</th><td> ̢</td><td>r̂</td><td>ɍ</td></tr>
-			<tr><th>s</th><td>ŝ</td><td>ß</td><td>˥</td></tr>
-			<tr><th>t</th><td></td><td>￭</td><td>˩˥</td></tr>
-			<tr><th>u</th><td>ɯ</td><td>ᵘ</td><td>˩</td></tr>
-			<tr><th>v</th><td>ꞟ</td><td> ̆</td><td>˥˩</td></tr>
-			<tr><th>w</th><td>ŭ</td><td>ꝡ</td><td>꜊</td></tr>
-			<tr><th>y</th><td>ʸ</td><td>ɥ</td><td> ́</td></tr>
-			<tr><th>z</th><td>※3</td><td>ß̂</td><td> ̀</td></tr>
+			<tr><th></th><th>x</th><th>2x</th><th>3x</th><th>4x</th></tr>
+			<tr><th>a</th><td>ə</td><td>æ</td><td>a̩</td><td></td></tr>
+			<tr><th>b</th><td>ð</td><td>ƅ</td><td> ̍</td><td></td></tr>
+			<tr><th>c</th><td>ĉ</td><td>ʗ</td><td>ꞓ</td><td></td></tr>
+			<tr><th>d</th><td>d̂</td><td> ̥</td><td></td><td></td></tr>
+			<tr><th>e</th><td>ɛ</td><td>ƹ</td><td></td><td></td></tr>
+			<tr><th>f</th><td>f̂</td><td>ᶠ</td><td></td><td></td></tr>
+			<tr><th>g</th><td>ĝ</td><td>ˁ</td><td>ɣ</td><td></td></tr>
+			<tr><th>h</th><td>ĥ</td><td> ̔</td><td></td><td></td></tr>
+			<tr><th>i</th><td>ɨ</td><td> ̩</td><td></td><td></td></tr>
+			<tr><th>j</th><td>ĵ</td><td>ʲ</td><td>ɟ</td><td></td></tr>
+			<tr><th>k</th><td>x※1</td><td>ˀ</td><td> ̂</td><td></td></tr>
+			<tr><th>l</th><td> ̄</td><td>l̂</td><td>ᴸ</td><td></td></tr>
+			<tr><th>m</th><td>※2</td><td> ̃</td><td> ̼</td><td></td></tr>
+			<tr><th>n</th><td>ŋ</td><td>ñ</td><td></td><td></td></tr>
+			<tr><th>o</th><td>ɔ</td><td>ø</td><td>ơ</td><td></td></tr>
+			<tr><th>p</th><td>þ</td><td>ʼ</td><td> ̩</td><td></td></tr>
+			<tr><th>q</th><td>ɂ</td><td>q̂</td><td></td><td></td></tr>
+			<tr><th>r</th><td> ̢</td><td>r̂</td><td>ɍ</td><td>ꝛ</td></tr>
+			<tr><th>s</th><td>ŝ</td><td>ß</td><td>˥</td><td></td></tr>
+			<tr><th>t</th><td></td><td>￭</td><td>˩˥</td><td></td></tr>
+			<tr><th>u</th><td>ɯ</td><td>ᵘ</td><td>˩</td><td></td></tr>
+			<tr><th>v</th><td>ꞟ</td><td> ̆</td><td>˥˩</td><td></td></tr>
+			<tr><th>w</th><td>ŭ</td><td>ꝡ</td><td>꜊</td><td></td></tr>
+			<tr><th>y</th><td>ʸ</td><td>ɥ</td><td> ́</td><td></td></tr>
+			<tr><th>z</th><td>※3</td><td>ß̂</td><td> ̀</td><td></td></tr>
 		</table>
 	</div>
 	<p>※1:「x」そのものを 表すのに 使います。ゼロ幅スペースを 置いて，置換を 防ぎます。投稿時に ゼロ幅スペースは 削除されます。</p>
-	<p>※2:「mx￭￭￭￭」で 4桁、「mxs￭￭￭￭￭」で 5桁、「mxg￭￭￭￭」で U+10￭￭￭￭ の コードポイントの Unicode 文字を 表します。</p>
+	<p>※2:「mx￭￭￭￭」で 4桁、「mxs￭￭￭￭￭」で 5桁、「mxg￭￭￭￭」で U+10￭￭￭￭ の コードポイントの Unicode 文字を 表します。「ﾕ」に なります。</p>
 	<p>※3: 「￭zx」で 拡張算用数字を 表します。「ｫ」に なります。</p>
 
 	<h3>ルビの テキスト表記</h3>
@@ -1541,11 +1548,11 @@
 		<tr><td></td><td>赤紫</td><td style="background-color: #800080;">　　</td><td>ｶ{＿ᴶ⏋}</td></tr>
 	</table>
 
-	<h3>ビットマップ表記</h3>
-	<p>代用表記では 形を 正確に 表せないので，形を 正確に 表すために ビットマップ表記を 使います。</p>
+	<h3>ビットマップ外字</h3>
+	<p>代用表記では 形を 正確に 表せないので，形を 正確に 表すために ビットマップ外字を 使います。</p>
 	<p>▒{<br>
-		（ビットマップ）<br>
-		(文字の 名前（任意）)<br>
+		[ブロック要素]<br>
+		([文字の 名前 オプション])<br>
 		}
 	</p>
 	<p>例: 拡張かナ文字 しｬ</p>
@@ -1573,12 +1580,24 @@
 	<p>という 表記を します。</p>
 	<p>註: DWPI明朝の 外字は 最初 設定で OFFになっていますが，DWPI明朝は Webフォントに できないので，DWPI明朝の インストールが 必要です。</p>
 
-	<h3>簡体字、繁体字、香港の フォント</h3>
-	<p>簡体字（中国）、繁体字（台湾）、香港の フォントで 表示ために，</p>
+	<h3>国によって 形が 違う フォント</h3>
+	<p>簡体字（中国）、繁体字（台湾）、香港、日本、韓国、絵文字の フォントで 表示ために，</p>
 	<ul>
 		<li>簡体字: &sc-￭￭￭￭￭￭;</li>
 		<li>繁体字: &tc-￭￭￭￭￭￭;</li>
 		<li>香港: &hk-￭￭￭￭￭￭;</li>
+		<li>日本: &jp-￭￭￭￭￭￭;</li>
+		<li>韓国: &kr-￭￭￭￭￭￭;</li>
+		<li>絵文字: &em-￭￭￭￭￭￭;</li>
+	</ul>
+	<p>という 表記を します。</p>
+
+	<h3>Unicode 文字</h3>
+	<p>Unicode 文字を コードポイントで 表すために，</p>
+	<ul>
+		<li>ﾕ￭￭￭￭（4桁）</li>
+		<li>ﾕs￭￭￭￭￭（5桁）</li>
+		<li>ﾕg￭￭￭￭（U+10￭￭￭￭）</li>
 	</ul>
 	<p>という 表記を します。</p>
 

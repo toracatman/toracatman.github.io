@@ -1,3 +1,4 @@
+var lang = document.documentElement.lang;
 var i;
 var text = document.getElementById("text");
 var render = document.getElementById("render");
@@ -45,7 +46,7 @@ function inputText() {
 		c += p > 0xFF ? 2 : 1;
 		if (p > 0xFFFF) i++;
 	}
-	count.textContent = `${c >> 1}/140`;
+	count.textContent = lang == "ja" ? `${c >> 1}/140` : `${c}/280`;
 	if (c > 280)	count.classList.add("error");
 	else			count.classList.remove("error");
 
@@ -140,6 +141,18 @@ function textProcess(d) {
 		return span;
 	}
 
+	if (s.slice(i, i + 2) == "ﾌ{" || s.slice(i, i + 2) == "ﾅ{" ) {
+		var span = document.createElement(s[i] == "ﾌ" ? "b" : "i");
+		i += 2;
+		while (s[i] != "}") {
+			var e = textProcess(d);
+			span.appendChild(e);
+			i++;
+			if (i >= s.length) break;
+		}
+		return span;
+	}
+
 	if (s.slice(i, i + 2) == "ﾙ{") {
 		i += 2;
 		var ruby = document.createElement("ruby");
@@ -172,10 +185,10 @@ function textProcess(d) {
 			}
 		}
 		var rp1 = document.createElement("rp");
-		rp1.textContent = "（";
+		rp1.textContent = lang == "ja" ? "（" : " (";
 		rt.before(rp1);
 		var rp2 = document.createElement("rp");
-		rp2.textContent = "）";
+		rp2.textContent = lang == "ja" ? "）" : ") ";
 		rt.after(rp2);
 		return ruby;
 	}
@@ -206,7 +219,10 @@ function textProcess(d) {
 		s.slice(i, i + 4) == "&ni-" || s.slice(i, i + 4) == "&mk-" ||
 		s.slice(i, i + 4) == "&jg-" || s.slice(i, i + 4) == "&j2-" ||
 		s.slice(i, i + 4) == "&j3-" || s.slice(i, i + 4) == "&sc-" ||
-		s.slice(i, i + 4) == "&tc-" || s.slice(i, i + 4) == "&hk-") {
+		s.slice(i, i + 4) == "&tc-" || s.slice(i, i + 4) == "&hk-" ||
+		s.slice(i, i + 4) == "&jp-" || s.slice(i, i + 4) == "&kr-" ||
+		s.slice(i, i + 4) == "&em-"
+		) {
 		var span = document.createElement("span");
 		if (s.slice(i, i + 4) == "&dw-") span.classList.add("dwpi");
 		else if (s.slice(i, i + 4) == "&ni-") span.classList.add("nishiki");
@@ -224,6 +240,13 @@ function textProcess(d) {
 		else if (s.slice(i, i + 4) == "&hk-") {
 			span.classList.add("zh-hk");
 			span.lang = "zh-hk";
+		}
+		else if (s.slice(i, i + 4) == "&kr-") {
+			span.classList.add("ko");
+			span.lang = "ko";
+		}
+		else if (s.slice(i, i + 4) == "&em-") {
+			span.classList.add("em");
 		}
 		i += 4;
 		var p = "";
@@ -410,24 +433,22 @@ function insertColor() {
 
 function insertRuby() {
 	if (text.selectionStart == text.selectionEnd) {
-		var kanjxi = prompt("漢字");
+		var kanjxi = prompt(lang == "ja" ? "漢字" : "Body");
 		if (kanjxi == null || kanjxi == "") return;
-		var ruby = prompt("ルビ（なければ 空欄）");
-		if (ruby == null) return;
-		var boucxuu = prompt("傍註（なければ 空欄）");
-		if (boucxuu == null) return;
-		if (boucxuu != "") boucxuu = `|${boucxuu}`;
-
-		insert(`ﾙ{${ruby}|${kanjxi}${boucxuu}}`);
 	}
 
-	else {
-		var ruby = prompt("ルビ（なければ 空欄）");
-		if (ruby == null) return;
-		var boucxuu = prompt("傍註（なければ 空欄）");
-		if (boucxuu == null) return;
-		if (boucxuu != "") boucxuu = `|${boucxuu}`;
+	var ruby = prompt(lang == "ja" ?
+		"ルビ（なければ 空欄）" : "Top (Empty for no Top)");
+	if (ruby == null) return;
+	var boucxuu = prompt(lang == "ja" ?
+		"傍註（なければ 空欄）" : "Bottom (Empty for no Bottom)");
+	if (boucxuu == null) return;
+	if (boucxuu != "") boucxuu = `|${boucxuu}`;
 
+	if (text.selectionStart == text.selectionEnd) {
+		insert(`ﾙ{${ruby}|${kanjxi}${boucxuu}}`);
+	}
+	else {
 		insert2(`ﾙ{${ruby}|`, `${boucxuu}}`);
 	}
 }
@@ -445,7 +466,7 @@ function misskeyButton() {
 	window.open(`https://misskey-hub.net/share?text=${encodeURIComponent(old_s)}&manualInstance=misskey.io`);
 }
 function messageActive() {
-	message.textContent = "コピーしました！";
+	message.textContent = lang == "ja" ? "コピーしました！" : "Copied!";
 }
 function copyToClipboard() {
 	if (navigator.clipboard) {
@@ -489,30 +510,42 @@ function makeBitmap() {
 	error = false;
 	e_error.textContent = "";
 	if (!(/^\d+$/.test(e_rows.value))) {
-		e_error.textContent += "行は 整数を 指定してください。";
+		e_error.textContent += lang == "ja" ?
+			"行は 整数を 指定してください。" :
+			"Set Row even from 2 to 32.";
 		error = true;
 	}
 	rows = Number(e_rows.value);
 	if (rows & 1) {
-		e_error.textContent += "行は 偶数を 指定してください。";
+		e_error.textContent += lang == "ja" ?
+			"行は 偶数を 指定してください。" :
+			"Set Row even from 2 to 32.";
 		error = true;
 	}
 	else if (rows < 2 || rows > 32) {
-		e_error.textContent += "行は 2〰︎32を 指定してください。";
+		e_error.textContent += lang == "ja" ?
+			"行は 2〰︎32を 指定してください。" :
+			"Set Row even from 2 to 32.";
 		error = true;
 	}
 
 	if (!(/^\d+$/.test(e_cols.value))) {
-		e_error.textContent += "列は 整数を 指定してください。";
+		e_error.textContent += lang == "ja" ?
+			"列は 整数を 指定してください。" :
+			"Set Column even from 2 to 32.";
 		error = true;
 	}
 	cols = Number(e_cols.value);
 	if (cols & 1) {
-		e_error.textContent += "列は 偶数を 指定してください。";
+		e_error.textContent += lang == "ja" ?
+			"列は 偶数を 指定してください。" :
+			"Set Column even from 2 to 32.";
 		error = true;
 	}
 	else if (cols < 2 || cols > 32) {
-		e_error.textContent += "列は 2〰︎32を 指定してください。";
+		e_error.textContent += lang == "ja" ?
+			"列は 2〰︎32を 指定してください。" :
+			"Set Column even from 2 to 32.";
 		error = true;
 	}
 

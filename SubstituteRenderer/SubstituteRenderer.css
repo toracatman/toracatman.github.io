@@ -326,6 +326,12 @@ ruby > rtc {
 .zh-hk {
 	font-family: "Noto Sans HK";
 }
+.ko {
+	font-family: "Noto Sans KR";
+}
+.em {
+	font-family: "Noto Color Emoji";
+}
 
 @media screen and (min-width: 768px) {
 	#text {

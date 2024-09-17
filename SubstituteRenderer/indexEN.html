@@ -116,6 +116,13 @@
 		</form>
 	</details>
 	<details>
+		<summary>Bold, Italic</summary>
+		<p>
+			<input type="button" value="Bold" onclick="insert2('ﾌ{', '}')">
+			<input type="button" value="Italic" onclick="insert2('ﾅ{', '}')">
+		</p>
+	</details>
+	<details>
 		<summary>Colored shapes</summary>
 		<p>
 			<input type="button" value="🔴" onclick="insert('🔴')">
@@ -293,15 +300,15 @@
 		<p>
 			<input type="button" value="" onclick="insert('すﾒ')"><input type="button" value="" onclick="insert('ずﾒ')">
 			<input type="button" value="" onclick="insert('ちﾒ')"><input type="button" value="" onclick="insert('ぢﾒ')">
-			<input type="button" value="" onclick="insert('す゚ﾒ')"><input type="button" value="" onclick="insert('すˠﾒ')">
-			<input type="button" value="" onclick="insert('ち゚ﾒ')"><input type="button" value="" onclick="insert('ちˠﾒ')">
+			<input type="button" value="" onclick="insert('す゚ﾒ')"><input type="button" value="" onclick="insert('すﾒˠ')">
+			<input type="button" value="" onclick="insert('ち゚ﾒ')"><input type="button" value="" onclick="insert('ちﾒˠ')">
 			<input type="button" value="" onclick="insert('ち‌̣ﾒ')"><input type="button" value="" onclick="insert('ち゚‌̣ﾒ')">
 		</p>
 		<p>
 			<input type="button" value="" onclick="insert('シﾒ')"><input type="button" value="" onclick="insert('ジﾒ')">
 			<input type="button" value="" onclick="insert('ツﾒ')"><input type="button" value="" onclick="insert('ヅﾒ')">
-			<input type="button" value="" onclick="insert('シ゚ﾒ')"><input type="button" value="" onclick="insert('シˠﾒ')">
-			<input type="button" value="" onclick="insert('ツ゚ﾒ')"><input type="button" value="" onclick="insert('ツˠﾒ')">
+			<input type="button" value="" onclick="insert('シ゚ﾒ')"><input type="button" value="" onclick="insert('シﾒˠ')">
+			<input type="button" value="" onclick="insert('ツ゚ﾒ')"><input type="button" value="" onclick="insert('ツﾒˠ')">
 			<input type="button" value="" onclick="insert('ツ‌̣ﾒ')"><input type="button" value="" onclick="insert('ツ゚‌̣ﾒ')">
 		</p>
 		<p>
@@ -1160,7 +1167,7 @@
 	</details>
 
 	<details>
-		<summary>Bitmap notation</summary>
+		<summary>Bitmap external characters</summary>
 		<p><label>Row<input type="text" value="8" id="rows" onchange="makeBitmap()"></label></p>
 		<p><label>Column<input type="text" value="8" id="cols" onchange="makeBitmap()"></label></p>
 		<div id="error"></div>
@@ -1300,65 +1307,65 @@
 	<p  style="display: none">こちらは，設定で 無効にすることも，テキストエリアごと 変換することも できます。</p>
 	<div class="yoko-wrapper">
 		<table border="1" class="yoko">
-			<tr><th></th><th>x</th><th>2x</th><th>3x</th></tr>
-			<tr><th>A</th><td>Ə</td><td>Æ</td><td>A̩</td></tr>
-			<tr><th>B</th><td>Ð</td><td>Ƅ</td><td></td></tr>
-			<tr><th>C</th><td>Ĉ</td><td></td><td>Ꞓ</td></tr>
-			<tr><th>D</th><td>D̂</td><td></td><td></td></tr>
-			<tr><th>E</th><td>Ɛ</td><td>Ƹ</td><td></td></tr>
-			<tr><th>F</th><td>F̂</td><td></td><td></td></tr>
-			<tr><th>G</th><td>Ĝ</td><td></td><td>Ɣ</td></tr>
-			<tr><th>H</th><td>Ĥ</td><td></td><td></td></tr>
-			<tr><th>I</th><td>Ɨ</td><td></td><td></td></tr>
-			<tr><th>J</th><td>Ĵ</td><td></td><td>Ɉ</td></tr>
-			<tr><th>K</th><td>X</td><td></td><td></td></tr>
-			<tr><th>L</th><td></td><td>L̂</td><td></td></tr>
-			<tr><th>M</th><td></td><td></td><td></td></tr>
-			<tr><th>N</th><td>Ŋ</td><td>Ñ</td><td></td></tr>
-			<tr><th>O</th><td>Ɔ</td><td>Ø</td><td>Ơ</td></tr>
-			<tr><th>P</th><td>Þ</td><td></td><td></td></tr>
-			<tr><th>Q</th><td>Ɂ</td><td>Q̂</td><td></td></tr>
-			<tr><th>R</th><td></td><td>R̂</td><td>Ɍ</td></tr>
-			<tr><th>S</th><td>Ŝ</td><td>ẞ</td><td></td></tr>
-			<tr><th>T</th><td></td><td></td><td></td></tr>
-			<tr><th>U</th><td>Ɯ</td><td></td><td></td></tr>
-			<tr><th>V</th><td>Ꞟ</td><td></td><td></td></tr>
-			<tr><th>W</th><td>Ŭ</td><td>Ꝡ</td><td></td></tr>
-			<tr><th>Y</th><td></td><td>Ɥ</td><td>ꜛ</td></tr>
-			<tr><th>Z</th><td></td><td>ẞ̂</td><td>ꜜ</td></tr>
+			<tr><th></th><th>x</th><th>2x</th><th>3x</th><th>4x</th></tr>
+			<tr><th>A</th><td>Ə</td><td>Æ</td><td>A̩</td><td></td></tr>
+			<tr><th>B</th><td>Ð</td><td>Ƅ</td><td></td><td></td></tr>
+			<tr><th>C</th><td>Ĉ</td><td></td><td>Ꞓ</td><td></td></tr>
+			<tr><th>D</th><td>D̂</td><td></td><td></td><td></td></tr>
+			<tr><th>E</th><td>Ɛ</td><td>Ƹ</td><td></td><td></td></tr>
+			<tr><th>F</th><td>F̂</td><td></td><td></td><td></td></tr>
+			<tr><th>G</th><td>Ĝ</td><td></td><td>Ɣ</td><td></td></tr>
+			<tr><th>H</th><td>Ĥ</td><td></td><td></td><td></td></tr>
+			<tr><th>I</th><td>Ɨ</td><td></td><td></td><td></td></tr>
+			<tr><th>J</th><td>Ĵ</td><td></td><td>Ɉ</td><td></td></tr>
+			<tr><th>K</th><td>X</td><td></td><td></td><td></td></tr>
+			<tr><th>L</th><td></td><td>L̂</td><td></td><td></td></tr>
+			<tr><th>M</th><td></td><td></td><td></td><td></td></tr>
+			<tr><th>N</th><td>Ŋ</td><td>Ñ</td><td></td><td></td></tr>
+			<tr><th>O</th><td>Ɔ</td><td>Ø</td><td>Ơ</td><td></td></tr>
+			<tr><th>P</th><td>Þ</td><td></td><td></td><td></td></tr>
+			<tr><th>Q</th><td>Ɂ</td><td>Q̂</td><td></td><td></td></tr>
+			<tr><th>R</th><td></td><td>R̂</td><td>Ɍ</td><td>Ꝛ</td></tr>
+			<tr><th>S</th><td>Ŝ</td><td>ẞ</td><td></td><td></td></tr>
+			<tr><th>T</th><td></td><td></td><td></td><td></td></tr>
+			<tr><th>U</th><td>Ɯ</td><td></td><td></td><td></td></tr>
+			<tr><th>V</th><td>Ꞟ</td><td></td><td></td><td></td></tr>
+			<tr><th>W</th><td>Ŭ</td><td>Ꝡ</td><td></td><td></td></tr>
+			<tr><th>Y</th><td></td><td>Ɥ</td><td>ꜛ</td><td></td></tr>
+			<tr><th>Z</th><td></td><td>ẞ̂</td><td>ꜜ</td><td></td></tr>
 		</table>
 		<table border="1" class="yoko">
-			<tr><th></th><th>x</th><th>2x</th><th>3x</th></tr>
-			<tr><th>a</th><td>ə</td><td>æ</td><td>a̩</td></tr>
-			<tr><th>b</th><td>ð</td><td>ƅ</td><td> ̍</td></tr>
-			<tr><th>c</th><td>ĉ</td><td>ʗ</td><td>ꞓ</td></tr>
-			<tr><th>d</th><td>d̂</td><td> ̥</td><td></td></tr>
-			<tr><th>e</th><td>ɛ</td><td>ƹ</td><td></td></tr>
-			<tr><th>f</th><td>f̂</td><td>ᶠ</td><td></td></tr>
-			<tr><th>g</th><td>ĝ</td><td>ˁ</td><td>ɣ</td></tr>
-			<tr><th>h</th><td>ĥ</td><td> ̔</td><td></td></tr>
-			<tr><th>i</th><td>ɨ</td><td> ̩</td><td></td></tr>
-			<tr><th>j</th><td>ĵ</td><td>ʲ</td><td>ɟ</td></tr>
-			<tr><th>k</th><td>x※1</td><td>ˀ</td><td> ̂</td></tr>
-			<tr><th>l</th><td> ̄</td><td>l̂</td><td>ᴸ</td></tr>
-			<tr><th>m</th><td>※2</td><td> ̃</td><td> ̼</td></tr>
-			<tr><th>n</th><td>ŋ</td><td>ñ</td><td></td></tr>
-			<tr><th>o</th><td>ɔ</td><td>ø</td><td>ơ</td></tr>
-			<tr><th>p</th><td>þ</td><td>ʼ</td><td> ̩</td></tr>
-			<tr><th>q</th><td>ɂ</td><td>q̂</td><td></td></tr>
-			<tr><th>r</th><td> ̢</td><td>r̂</td><td>ɍ</td></tr>
-			<tr><th>s</th><td>ŝ</td><td>ß</td><td>˥</td></tr>
-			<tr><th>t</th><td></td><td>￭</td><td>˩˥</td></tr>
-			<tr><th>u</th><td>ɯ</td><td>ᵘ</td><td>˩</td></tr>
-			<tr><th>v</th><td>ꞟ</td><td> ̆</td><td>˥˩</td></tr>
-			<tr><th>w</th><td>ŭ</td><td>ꝡ</td><td>꜊</td></tr>
-			<tr><th>y</th><td>ʸ</td><td>ɥ</td><td> ́</td></tr>
-			<tr><th>z</th><td>※3</td><td>ß̂</td><td> ̀</td></tr>
+			<tr><th></th><th>x</th><th>2x</th><th>3x</th><th>4x</th></tr>
+			<tr><th>a</th><td>ə</td><td>æ</td><td>a̩</td><td></td></tr>
+			<tr><th>b</th><td>ð</td><td>ƅ</td><td> ̍</td><td></td></tr>
+			<tr><th>c</th><td>ĉ</td><td>ʗ</td><td>ꞓ</td><td></td></tr>
+			<tr><th>d</th><td>d̂</td><td> ̥</td><td></td><td></td></tr>
+			<tr><th>e</th><td>ɛ</td><td>ƹ</td><td></td><td></td></tr>
+			<tr><th>f</th><td>f̂</td><td>ᶠ</td><td></td><td></td></tr>
+			<tr><th>g</th><td>ĝ</td><td>ˁ</td><td>ɣ</td><td></td></tr>
+			<tr><th>h</th><td>ĥ</td><td> ̔</td><td></td><td></td></tr>
+			<tr><th>i</th><td>ɨ</td><td> ̩</td><td></td><td></td></tr>
+			<tr><th>j</th><td>ĵ</td><td>ʲ</td><td>ɟ</td><td></td></tr>
+			<tr><th>k</th><td>x※1</td><td>ˀ</td><td> ̂</td><td></td></tr>
+			<tr><th>l</th><td> ̄</td><td>l̂</td><td>ᴸ</td><td></td></tr>
+			<tr><th>m</th><td>※2</td><td> ̃</td><td> ̼</td><td></td></tr>
+			<tr><th>n</th><td>ŋ</td><td>ñ</td><td></td><td></td></tr>
+			<tr><th>o</th><td>ɔ</td><td>ø</td><td>ơ</td><td></td></tr>
+			<tr><th>p</th><td>þ</td><td>ʼ</td><td> ̩</td><td></td></tr>
+			<tr><th>q</th><td>ɂ</td><td>q̂</td><td></td><td></td></tr>
+			<tr><th>r</th><td> ̢</td><td>r̂</td><td>ɍ</td><td>ꝛ</td></tr>
+			<tr><th>s</th><td>ŝ</td><td>ß</td><td>˥</td><td></td></tr>
+			<tr><th>t</th><td></td><td>￭</td><td>˩˥</td><td></td></tr>
+			<tr><th>u</th><td>ɯ</td><td>ᵘ</td><td>˩</td><td></td></tr>
+			<tr><th>v</th><td>ꞟ</td><td> ̆</td><td>˥˩</td><td></td></tr>
+			<tr><th>w</th><td>ŭ</td><td>ꝡ</td><td>꜊</td><td></td></tr>
+			<tr><th>y</th><td>ʸ</td><td>ɥ</td><td> ́</td><td></td></tr>
+			<tr><th>z</th><td>※3</td><td>ß̂</td><td> ̀</td><td></td></tr>
 		</table>
 	</div>
 	<p  >※1: Express “x”.</p>
-	<p  >※2: “mx￭￭￭￭” for 4 digits, “mxs￭￭￭￭￭” for 5 digits, ”mxg￭￭￭￭“ for U+10￭￭￭￭ code point Unicode character.</p>
-	<p  >※3: “￭zx” for extended arabic numerals. “zx” become “ｫ”.</p>
+	<p  >※2: “mx￭￭￭￭” for 4 digits, “mxs￭￭￭￭￭” for 5 digits, ”mxg￭￭￭￭“ for U+10￭￭￭￭ code point Unicode character. “mx” becomes “ﾕ”.</p>
+	<p  >※3: “￭zx” for extended arabic numerals. “zx” becomes “ｫ”.</p>
 
 	<h3>Text notation of ruby</h3>
 	<p>ﾙ{Top|Body} → <ruby><rb>Body</rb><rp> (</rp><rt>Top</rt><rp>) </rp></ruby></p>
@@ -1552,14 +1559,14 @@
 		<tr><td></td><td>Red purple</td><td style="background-color: #800080;">　　</td><td>ｶ{＿ᴶ⏋}</td></tr>
 	</table>
 
-	<h3>Bitmap notation</h3>
+	<h3>Bitmap external characters</h3>
 	<p >Since substitutions cannot accurately represent the shape, this is used to accurately represent the shape.</p>
 	<p>▒{<br>
-		(Bitmap)<br>
-		(Name (Option))<br>
+		[Block elements]<br>
+		([Name option])<br>
 		}
 	</p>
-	<p>例: Extended kana しｬ</p>
+	<p>Example: Extended kana しｬ</p>
 	<p>
 		▒{<br>
 		▗ ▖<br>
@@ -1583,16 +1590,27 @@
 	</ul>
 	<p>Note: External characters of DWPI Mincho is disabled by config default. DWPI Mincho can't convert web font, so you have to install this.</p>
 
-	<h3>Simplified Chinese, Traditional Chinese, Hong Kong font</h3>
-	<p>for display Simplified Chinese, Traditional Chinese, Hong Kong font,</p>
+	<h3>Simplified Chinese, Traditional Chinese, Hong Kong, Japan, Korea, Emoji font</h3>
+	<p>for display Simplified Chinese, Traditional Chinese, Hong Kong, Japan, Korea, Emoji font,</p>
 	<ul>
 		<li>Simplified Chinese: &sc-￭￭￭￭￭￭;</li>
 		<li>Traditional Chinese: &tc-￭￭￭￭￭￭;</li>
 		<li>Hong Kong: &hk-￭￭￭￭￭￭;</li>
+		<li>Japan: &jp-￭￭￭￭￭￭;</li>
+		<li>Korea: &kr-￭￭￭￭￭￭;</li>
+		<li>Emoji: &em-￭￭￭￭￭￭;</li>
+	</ul>
+
+	<h3>Unicode characters</h3>
+	<p>For express a Unicode character by code point,</p>
+	<ul>
+		<li>ﾕ￭￭￭￭（4 digits）</li>
+		<li>ﾕs￭￭￭￭￭（5 digits）</li>
+		<li>ﾕg￭￭￭￭（U+10￭￭￭￭）</li>
 	</ul>
 
 	<script src="chr.js"></script>
 	<script src="ExtJzanteiIDS.js"></script>
-	<script src="SubstituteRendererEN.js"></script>
+	<script src="SubstituteRenderer.js"></script>
 </body>
 </html>
