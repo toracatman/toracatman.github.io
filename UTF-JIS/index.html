@@ -458,7 +458,7 @@
 							var lsb = (mkt[1] - 16) * 94 + mkt[2] - 1;
 
 							var c = msb << 10 | lsb;
-							s += mj ? `dw-10${c.toString(16).padStart(4, "0")};` : String.fromCodePoint(c);
+							s += mj ? `&dw-10${c.toString(16).padStart(4, "0")};` : String.fromCodePoint(c);
 
 							//先頭[普]
 							if (t == 93) i += 5;
