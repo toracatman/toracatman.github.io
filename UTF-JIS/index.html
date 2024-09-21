@@ -27,7 +27,7 @@
 			文字列<br>
 			<textarea name="textarea1" onchange="encodeJIS()">本当は，Shift_JIS から UTF-8 へ 移行できれば いいのですが，できない 場合は，Shift_JIS を 拡張して，Unicode 文字を 扱える 文字コード（双漢代碼）を 使ってみては どうでしょう？　　　　　　　　 
 チコちゃんに𠮟られる　　　
-瑜󠄂 𩸽󠄁 dw-100000; dw-10ffff; 
+瑜󠄂 𩸽󠄁 􀀀 􏿿 &dw-100000; &dw-10ffff; 
 \ ~ ‾ ¥</textarea>
 		</div>
 		<div>
@@ -152,7 +152,7 @@
 
 				//MJ+
 				var re;
-				if ((re = /dw-10([\dA-Fa-f]{4});/.exec(s.slice(i, i + 10))) !== null) {
+				if ((re = /&dw-10([\dA-Fa-f]{4});/.exec(s.slice(i, i + 11))) !== null) {
 					var msb = parseInt(re[1], 16) >>> 10;
 					var lsb = parseInt(re[1], 16) & 0x3FF;
 
@@ -166,7 +166,7 @@
 
 					bs = bs.concat(getByte(1, 8, 93), mb, lb);
 
-					i += 9;
+					i += 10;
 					continue;
 				}
 
@@ -189,12 +189,12 @@
 				}
 
 				//声調記号、サロゲートペア
-				/*else if (c == "˩˥" || c == "˥˩" || p > 65535) {
+				else if (/*c == "˩˥" || c == "˥˩" || */p > 65535) {
 					i++;
 				}
 
 				//半濁点
-				else if (p2 == 0x309A) {
+				/*else if (p2 == 0x309A) {
 					var cc = "かきくけこカキクケコセツトㇷ";
 					if (cc.indexOf(c[0]) !== -1) {
 						i++;
