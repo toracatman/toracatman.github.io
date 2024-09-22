@@ -70,7 +70,7 @@ html {
 }
 body {
 	font-size: 1.6rem;
-	font-family: "My Mkana+", "My MgenKana+", "Noto Color Emoji", sans-serif, "Noto Sans KR", "Noto Serif Hentaigana", "Jigmo", "Jigmo2", "Jigmo3" !important;
+	font-family: "My Mkana+", "My MgenKana+", "Noto Color Emoji", "Noto Sans KR", "Noto Serif Hentaigana", "Jigmo", "Jigmo2", "Jigmo3", sans-serif !important;
 }
 table {
 	border-collapse: collapse;
