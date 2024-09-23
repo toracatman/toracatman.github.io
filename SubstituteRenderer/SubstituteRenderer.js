@@ -598,7 +598,7 @@ function makeOutput() {
 	if (e_name.value != "") s += `(${e_name.value})
 `;
 	s += "}";
-	insert(s.replace(/ +$/gm, ""));
+	insert(s);
 }
 
 (function() {
