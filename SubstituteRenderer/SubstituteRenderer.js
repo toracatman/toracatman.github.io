@@ -51,6 +51,20 @@ function inputText() {
 	else			count.classList.remove("error");
 
 	old_s = s;
+	if (!document.form1.dwpi.checked) {
+		for (i = 0; i < DWPIsubstitute.length; i++) {
+			s = s.replace(new RegExp(`&dw-${DWPIsubstitute[i][0].toString(16)};`, "gi"), DWPIsubstitute[i][2]);
+			s = s.replace(new RegExp(`&GJ0*${DWPIsubstitute[i][1]};`, "g"), DWPIsubstitute[i][2]);
+		}
+	}
+	else {
+		for (i = 0; i < DWPIsubstitute.length; i++) {
+			s = s.replace(new RegExp(`&GJ0*${DWPIsubstitute[i][1]};`, "g"), `&dw-${DWPIsubstitute[i][0].toString(16)};`);
+		}
+	}
+	for (i = 0; i < tolxyolxkanjxi_converter.length; i++) {
+		s = s.replace(new RegExp(tolxyolxkanjxi_converter[i][0], "gu"), tolxyolxkanjxi_converter[i][1]);
+	}
 	var u;
 	while ((u = /ﾕ([\dA-Fa-f]{4})/.exec(s)) !== null) {
 		s = s.replace(u[0], String.fromCodePoint(parseInt(u[1], 16)));
