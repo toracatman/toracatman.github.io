@@ -229,7 +229,7 @@ function textProcess(d) {
 		return div;
 	}
 
-	if ((s.slice(i, i + 4) == "&dw-" && document.form1.dwpi.checked) ||
+	if (s.slice(i, i + 4) == "&dw-" ||
 		s.slice(i, i + 4) == "&ni-" || s.slice(i, i + 4) == "&mk-" ||
 		s.slice(i, i + 4) == "&jg-" || s.slice(i, i + 4) == "&j2-" ||
 		s.slice(i, i + 4) == "&j3-" || s.slice(i, i + 4) == "&sc-" ||
@@ -238,7 +238,13 @@ function textProcess(d) {
 		s.slice(i, i + 4) == "&em-"
 		) {
 		var span = document.createElement("span");
-		if (s.slice(i, i + 4) == "&dw-") span.classList.add("dwpi");
+		if (s.slice(i, i + 4) == "&dw-") {
+			if (document.form1.dwpi.checked) {
+				span.classList.add("dwpi");
+			} else {
+				span.classList.add("jigmo");
+			}
+		}
 		else if (s.slice(i, i + 4) == "&ni-") span.classList.add("nishiki");
 		else if (s.slice(i, i + 4) == "&jg-") span.classList.add("jigmo");
 		else if (s.slice(i, i + 4) == "&j2-") span.classList.add("jigmo2");
