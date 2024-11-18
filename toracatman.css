@@ -5,28 +5,28 @@
 	src: url("/fonts/mkanaplus.woff2") format("woff2"),
 	     url("/fonts/mkanaplus.woff") format("woff");
 	font-display: swap;
-	unicode-range: U+0-F8FF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23-FA24, U+FA27-FA29, U+FB00-1B001, U+1B006, U+1B039, U+1B043, U+1B06D, U+1B11F-2F7FF, U+2FA20-10FFFF;
+	unicode-range: U+0-F8FF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23-FA24, U+FA27-FA29, U+FB00-2F7FF, U+2FA20-10FFFF;
 }
 @font-face {
 	font-family: "My MgenKana+";
 	src: url("/fonts/mgenkanaplus.woff2") format("woff2"),
 	     url("/fonts/mgenkanaplus.woff") format("woff");
 	font-display: swap;
-	unicode-range: U+0-F8FF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23-FA24, U+FA27-FA29, U+FB00-1B001, U+1B006, U+1B039, U+1B043, U+1B06D, U+1B11F-2F7FF, U+2FA20-10FFFF;
+	unicode-range: U+0-F8FF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23-FA24, U+FA27-FA29, U+FB00-2F7FF, U+2FA20-10FFFF;
 }
 @font-face {
 	font-family: "My Ricty Kana";
 	src: url("/fonts/RictyKana.woff2") format("woff2"),
 	     url("/fonts/RictyKana.woff") format("woff");
 	font-display: swap;
-	unicode-range: U+0-F8FF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23-FA24, U+FA27-FA29, U+FB00-1B001, U+1B006, U+1B039, U+1B043, U+1B06D, U+1B11F-2F7FF, U+2FA20-10FFFF;
+	unicode-range: U+0-F8FF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23-FA24, U+FA27-FA29, U+FB00-2F7FF, U+2FA20-10FFFF;
 }
 @font-face {
 	font-family: "My Ricty ShinKana";
 	src: url("/fonts/RictyShinKana.woff2") format("woff2"),
 	     url("/fonts/RictyShinKana.woff") format("woff");
 	font-display: swap;
-	unicode-range: U+0-F8FF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23-FA24, U+FA27-FA29, U+FB00-1B001, U+1B006, U+1B039, U+1B043, U+1B06D, U+1B11F-2F7FF, U+2FA20-10FFFF;
+	unicode-range: U+0-F8FF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23-FA24, U+FA27-FA29, U+FB00-2F7FF, U+2FA20-10FFFF;
 }
 @font-face {
 	font-family: "Noto Serif Hentaigana";
