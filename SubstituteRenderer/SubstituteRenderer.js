@@ -40,9 +40,10 @@ function inputText() {
 	var height = String(Math.max(96, text.scrollHeight - sh));
 	text.style.height = `${height.slice(0, -1)}.${height.slice(-1)}rem`;
 
+	old_s = s.replace(//g, "Kʷ").replace(//g, "kʷ").replace(//g, "Gʷ").replace(//g, "gʷ");
 	var c = 0;
-	for (i = 0; i < s.length; i++) {
-		var p = s.codePointAt(i);
+	for (i = 0; i < old_s.length; i++) {
+		var p = old_s.codePointAt(i);
 		c += p > 0xFF ? 2 : 1;
 		if (p > 0xFFFF) i++;
 	}
@@ -50,7 +51,6 @@ function inputText() {
 	if (c > 280)	count.classList.add("error");
 	else			count.classList.remove("error");
 
-	old_s = s;
 	if (!document.form1.dwpi.checked) {
 		for (i = 0; i < DWPIsubstitute.length; i++) {
 			s = s.replace(new RegExp(`&dw-${DWPIsubstitute[i][0].toString(16)};`, "gi"), DWPIsubstitute[i][2]);
