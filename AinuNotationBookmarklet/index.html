@@ -24,44 +24,44 @@
 	<form name="form1">
 		<p>文字</p>
 		<p>
-			<label><input type="radio" name="letter" value="0" onchange="changeLetter();" checked>アコㇿイタㇰ</label>
-			<label><input type="radio" name="letter" value="1" onchange="changeLetter();">拡張カタカナ</label>
-			<label><input type="radio" name="letter" value="2" onchange="changeLetter();">拡張ひらがな</label>
-			<label><input type="radio" name="letter" value="3" onchange="changeLetter();">キリル文字</label>
+			<label><input type="radio" name="letter" value="0" onchange="change();" checked>カタカナ</label>
+			<label><input type="radio" name="letter" value="1" onchange="change();">拡張カタカナ</label>
+			<label><input type="radio" name="letter" value="2" onchange="change();">拡張ひらがな</label>
+			<label><input type="radio" name="letter" value="3" onchange="change();">キリル文字</label>
 		</p>
-		<div id="akoritak">
+		<div id="kana">
 			<p>tu</p>
 			<p>
-				<label><input type="radio" name="tu" value="0" checked>トゥ</label>
-				<label><input type="radio" name="tu" value="1">ト゚</label>
-				<label><input type="radio" name="tu" value="2">ツ゚</label>
+				<label><input type="radio" name="tu" value="0" onchange="change();" checked>トゥ</label>
+				<label><input type="radio" name="tu" value="1" onchange="change();">ト゚</label>
+				<label><input type="radio" name="tu" value="2" onchange="change();">ツ゚</label>
 			</p>
 			<p>ce</p>
 			<p>
-				<label><input type="radio" name="ce" value="0" checked>チェ</label>
-				<label><input type="radio" name="ce" value="1">セ゚</label>
+				<label><input type="radio" name="ce" value="0" onchange="change();" checked>チェ</label>
+				<label><input type="radio" name="ce" value="1" onchange="change();">セ゚</label>
 			</p>
 			<p>-y, -w</p>
 			<p>
-				<label><input type="radio" name="yw" value="0" checked>イ、ウ</label>
-				<label><input type="radio" name="yw" value="1">ィ、ゥ</label>
+				<label><input type="radio" name="yw" value="0" onchange="change();" checked>イ、ウ</label>
+				<label><input type="radio" name="yw" value="1" onchange="change();">ィ、ゥ</label>
 			</p>
 			<p>子音の連続</p>
 			<p>
-				<label><input type="radio" name="renzoku" value="0" checked>ッにする</label>
-				<label><input type="radio" name="renzoku" value="1">ッにしない</label>
+				<label><input type="radio" name="renzoku" value="0" onchange="change();" checked>ッにする</label>
+				<label><input type="radio" name="renzoku" value="1" onchange="change();">ッにしない</label>
 			</p>
 			<p>b、m、pの前のn</p>
 			<p>
-				<label><input type="radio" name="nm" value="0" checked>ン</label>
-				<label><input type="radio" name="nm" value="1">ㇺ</label>
+				<label><input type="radio" name="nm" value="0" onchange="change();" checked>ン</label>
+				<label><input type="radio" name="nm" value="1" onchange="change();">ㇺ</label>
 			</p>
 		</div>
+		<textarea name="output"></textarea>
 		<p>
-			<input type="button" value="表示してクリップボードにコピー" onclick="display();">
+			<input type="button" value="クリップボードにコピー" onclick="copyToClipboard();">
 			<span id="message"></span>
 		</p>
-		<textarea name="output"></textarea>
 	</form>
 	<script src="bookmarklet.js"></script>
 </body>

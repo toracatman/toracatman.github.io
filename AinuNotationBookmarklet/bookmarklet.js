@@ -1,4 +1,4 @@
-var akoritak = document.getElementById("akoritak");
+var kana = document.getElementById("kana");
 var message = document.getElementById("message");
 
 var bookmarklet = [
@@ -8,20 +8,11 @@ var bookmarklet = [
 	`javascript:(function(){var e,t="data-convert",r="true",l=[["\xc1","Á"],["\xe1","á"],["\xcd","Í"],["\xed","í"],["\xda","Ú"],["\xfa","ú"],["\xc9","É"],["\xe9","é"],["\xd3","Ó"],["\xf3","ó"],["A","А"],["a","а"],["I","И"],["i","и"],["U","У"],["u","у"],["E","Э"],["e","э"],["O","О"],["o","о"],["K","К"],["k","к"],["G","Г"],["g","г"],["S","С"],["s","с"],["Z","З"],["z","з"],["Ṡ","С̇"],["ṡ","с̇"],["Ż","З̇"],["ż","з̇"],["Ş","Ш"],["ş","ш"],["J","Ж"],["J","ж"],["C","Ч"],["c","ч"],["Ċ","Ц"],["ċ","ц"],["T","Т"],["t","т"],["D","Д"],["d","д"],["N","Н"],["n","н"],["Ḣ","Х̇"],["ḣ","х̇"],["[HX]","Х"],["[hx]","х"],["P","П"],["p","п"],["B","Б"],["b","б"],["M","М"],["m","м"],["Y","Й"],["y","й"],["R","Р"],["r","р"],["W","Ў"],["w","ў"],["V","В"],["v","в"],["F","Ф"],["f","ф"]];if(null!=(e=document.querySelectorAll('style,.mw-parser-output [lang]:not([lang^="ain"]),.mw-parser-output [lang]:not([lang^="ain"]) *,.mw-editsection *,.external,pre')))for(var n=0;n<e.length;n++)e[n].getAttribute(t)!=r&&e[n].setAttribute(t,r);if(null!=(e=document.querySelectorAll(".mw-parser-output *,#mw-panel-toc-list :nth-child(n+2) *,#firstHeading *,#catlinks ul *,.mw-prefixindex-list *,.mw-allpages-chunk *,.mw-category *"))){for(var n=0;n<e.length;n++)if(e[n].getAttribute(t)!=r&&(e[n].setAttribute(t,r),e[n].hasChildNodes())){var a=e=>{for(var t=e.split(" | "),r=0;r<l.length;r++)t[0]=t[0].replace(RegExp(l[r][0],"g"),l[r][1]);return t.join(" | ")};if(0==e[n].childElementCount)e[n].textContent=a(e[n].textContent);else{var i=e[n],o=document.createTextNode("");i.replaceWith(o);for(var p=document.createDocumentFragment(),d=i.firstElementChild;null!=d;)d.replaceWith(document.createTextNode("\\x1a")),p.appendChild(d),d=i.firstElementChild;var u=a(i.textContent).split("\\x1a");i.textContent="",i.appendChild(document.createTextNode(u[0]));for(var c=1;c<u.length;c++)i.appendChild(p.firstElementChild),i.appendChild(document.createTextNode(u[c]));o.replaceWith(i)}}}})();`,
 ];
 
-function changeLetter() {
-	var l = Number(document.form1.letter.value);
-	if (l == 0) {
-		akoritak.classList.remove("none");
-	}
-	else {
-		akoritak.classList.add("none");
-	}
-}
-
-function display() {
+function change() {
 	var l = Number(document.form1.letter.value);
 	var b = bookmarklet[l];
 	if (l == 0) {
+		kana.classList.remove("none");
 		switch (document.form1.tu.value) {
 		case "1":
 			b = b.replace("トゥ", "ト゚");
@@ -44,8 +35,11 @@ function display() {
 			b = b.replace('["m(?=[bmp])","ン"],', "");
 		}
 	}
+	else {
+		kana.classList.add("none");
+	}
+
 	document.form1.output.value = b;
-	copyToClipboard();
 }
 
 function messageActive() {
@@ -64,3 +58,7 @@ function copyToClipboard() {
 		messageActive();
 	}
 }
+
+(function() {
+	change();
+})();
