@@ -53,8 +53,8 @@ function inputText() {
 
 	if (!document.form1.dwpi.checked) {
 		for (i = 0; i < DWPIsubstitute.length; i++) {
-			s = s.replace(new RegExp(`&dw-${DWPIsubstitute[i][0].toString(16)};`, "gi"), DWPIsubstitute[i][2]);
-			s = s.replace(new RegExp(`&GJ0*${DWPIsubstitute[i][1]};`, "g"), DWPIsubstitute[i][2]);
+			s = s.replace(new RegExp(`&dw-${DWPIsubstitute[i][0].toString(16)};`, "gi"), DWPIsubstitute[i][2])
+				.replace(new RegExp(`&GJ0*${DWPIsubstitute[i][1]};`, "g"), DWPIsubstitute[i][2]);
 		}
 	}
 	else {
@@ -65,16 +65,9 @@ function inputText() {
 	for (i = 0; i < tolxyolxkanjxi_converter.length; i++) {
 		s = s.replace(new RegExp(tolxyolxkanjxi_converter[i][0], "gu"), tolxyolxkanjxi_converter[i][1]);
 	}
-	var u;
-	while ((u = /ﾕ([\dA-Fa-f]{4})/.exec(s)) !== null) {
-		s = s.replace(u[0], String.fromCodePoint(parseInt(u[1], 16)));
-	}
-	while ((u = /ﾕs([\dA-Fa-f]{5})/.exec(s)) !== null) {
-		s = s.replace(u[0], String.fromCodePoint(parseInt(u[1], 16)));
-	}
-	while ((u = /ﾕg([\dA-Fa-f]{4})/.exec(s)) !== null) {
-		s = s.replace(u[0], String.fromCodePoint(parseInt(`10${u[1]}`, 16)));
-	}
+	s = s.replace(/ﾕ([\dA-Fa-f]{4})/g, (_, p) => String.fromCodePoint(parseInt(p, 16)))
+		.replace(/ﾕs([\dA-Fa-f]{5})/g, (_, p) => String.fromCodePoint(parseInt(p, 16)))
+		.replace(/ﾕg([\dA-Fa-f]{4})/g, (_, p) => String.fromCodePoint(parseInt(`10${p}`, 16)));
 	for (i = 0; i < extJzanteiIDS.length; i++) {
 		s = s.replace(new RegExp(extJzanteiIDS[i][0], "gu"), extJzanteiIDS[i][1]);
 	}
