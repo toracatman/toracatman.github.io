@@ -8,7 +8,7 @@ var s;
 var old_s;
 var sh = text.scrollHeight - 96;
 
-(function() {
+(() => {
 	var url = new URL(window.location.href);
 	var str = url.searchParams.get("text");
 	text.value = str;
@@ -490,7 +490,7 @@ function messageActive() {
 }
 function copyToClipboard() {
 	if (navigator.clipboard) {
-		return navigator.clipboard.writeText(old_s).then(function() {
+		return navigator.clipboard.writeText(old_s).then(() => {
 			messageActive();
 		});
 	}
@@ -621,6 +621,6 @@ function makeOutput() {
 	insert(s);
 }
 
-(function() {
+(() => {
 	makeBitmap();
 })();
