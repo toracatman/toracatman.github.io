@@ -56,6 +56,32 @@ input[type="text"]:active {
 .dark input[type="text"]:active {
 	background-color: #000;
 }
+.share-button-wrapper {
+	font-size: 0;
+}
+.share-button,
+.share-button:hover,
+.share-button:active {
+	margin: 8px;
+	padding: 4px;
+	font-size: 0;
+	border: 0;
+	border-radius: 4px;
+}
+.share-button svg {
+	padding: 0;
+}
+.tweet-button {
+	color: #fff;
+	background-color: #1DA1F2 !important;
+}
+.misskey-button {
+	color: #fff;
+	background-color: #A1CA03 !important;
+}
+#message {
+	font-size: 1.6rem;
+}
 td {
 	text-align: center;
 	vertical-align: top;
