@@ -1,5 +1,7 @@
 var lang = document.documentElement.lang;
 var i;
+var custom_theme = document.getElementById("custom-theme");
+var custom_linegap = document.getElementById("custom-linegap");
 var text = document.getElementById("text");
 var render = document.getElementById("render");
 var count = document.getElementById("count");
@@ -17,7 +19,8 @@ var sh = text.scrollHeight - 96;
 })();
 
 function inputText() {
-	message.textContent = "";
+	changeTheme();
+	changeLineGap();
 	s = text.value;
 	if (document.form1.latin.value != "no") {
 		var back = 0;
@@ -83,6 +86,10 @@ function inputText() {
 	f.normalize();
 	render.innerHTML = "";
 	render.appendChild(f);
+	var width2x = document.getElementsByClassName("width2x");
+	for (i = 0; i < width2x.length; i++) {
+		width2x[i].style.width = `${width2x[i].clientWidth * 2}px`;
+	}
 }
 
 function textProcess(d) {
@@ -148,8 +155,21 @@ function textProcess(d) {
 		return span;
 	}
 
-	if (s.slice(i, i + 2) == "ﾌ{" || s.slice(i, i + 2) == "ﾅ{" ) {
-		var span = document.createElement(s[i] == "ﾌ" ? "b" : "i");
+	if (s.slice(i, i + 2) == "ﾌ{" || s.slice(i, i + 2) == "ﾅ{" || s.slice(i, i + 2) == "ｱ{") {
+		var span = document.createElement(s[i] == "ﾌ" ? "b" : (s[i] == "ﾅ" ? "i" : "u"));
+		i += 2;
+		while (s[i] != "}") {
+			var e = textProcess(d);
+			span.appendChild(e);
+			i++;
+			if (i >= s.length) break;
+		}
+		return span;
+	}
+
+	if (s.slice(i, i + 2) == "ﾆ{") {
+		var span = document.createElement("span");
+		span.classList.add("width2x");
 		i += 2;
 		while (s[i] != "}") {
 			var e = textProcess(d);
@@ -466,20 +486,90 @@ function insertRuby() {
 	}
 }
 
-function changeTheme(theme) {
-	document.body.className = "";
-	if (theme == 1)			document.body.classList.add("beige");
-	else if (theme == 2)	document.body.classList.add("dark");
+function changeTheme() {
+	document.body.removeAttribute("class");
+	custom_theme.textContent = "";
+	switch (document.form1.theme.value) {
+	case "dark":
+		document.body.classList.add("dark");
+		break;
+	case "custom":
+		custom_theme.textContent = `body,input,input[type="button"],button,select,textarea {
+	color: ${document.form1.fg.value};
+	background-color: ${document.form1.bg.value};
+}`;
+		break;
+	}
+}
+function changeColor() {
+	document.form1.theme.value = "custom";
+	changeTheme();
+}
+function changeLineGap() {
+	render.removeAttribute("class");
+	var line_height;
+	switch (document.form1.linegap.value) {
+	case "nogap":
+		line_height = "1";
+		break;
+	case "normal":
+		line_height = "1.2";
+		break;
+	case "custom":
+		line_height = document.form1.lineheight.value;
+		break;
+	}
+	if (document.form1.autoexpand.checked) render.classList.add("autoexpand");
+	var top = ((Number(line_height) - 1) * 1.6).toFixed(1);
+	custom_linegap.textContent = `#render {
+	line-height: ${line_height};
+}
+#render>.part,#render>.bitmap {
+	top: ${top}rem;
+}`;
+}
+function changeLineHeight() {
+	document.form1.linegap.value = "custom";
+	changeLineGap();
 }
 
-function tweetButton() {
-	window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(old_s)}`);
+function twitterButton() {
+	window.open(`https://x.com/share?text=${encodeURIComponent(old_s)}`);
+}
+function blueskyButton() {
+	window.open(`https://bsky.app/intent/compose?text=${encodeURIComponent(old_s)}`);
+}
+function threadsButton() {
+	window.open(`https://www.threads.net/intent/post?text=${encodeURIComponent(old_s)}`);
+}
+function mastodonButton() {
+	var instance = prompt("Mastodonの インスタンス", "https://mstdn.jp");
+	if (instance == "" || instance == null) return;
+	if (instance.slice(0, 8) != "https://") instance = `https://${instance}`;
+	if (instance.slice(-1) == "/") instance = instance.slice(0, -1);
+	window.open(`${instance}/share?text=${encodeURIComponent(old_s)}`);
 }
 function misskeyButton() {
 	window.open(`https://misskey-hub.net/share?text=${encodeURIComponent(old_s)}&manualInstance=misskey.io`);
 }
+function facebookButton() {
+	var url = encodeURIComponent(`https://toracatman.github.io/SubstituteRenderer?text=old_s`);
+	window.open(`http://www.facebook.com/share.php?u=${url}`);
+}
+function lineButton() {
+	if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
+		window.open(`https://line.me/R/share?text=${encodeURIComponent(old_s)}`);
+	}
+	else {
+		window.open(`https://social-plugins.line.me/lineit/share?text=${encodeURIComponent(old_s)}`);
+	}
+}
+function fiicenButton() {
+	window.open(`https://fiicen.jp`);
+}
 function messageActive() {
 	message.textContent = lang == "ja" ? "コピーしました！" : "Copied!";
+	setTimeout(() => { message.textContent = ""; }, 1000);
 }
 function copyToClipboard() {
 	if (navigator.clipboard) {

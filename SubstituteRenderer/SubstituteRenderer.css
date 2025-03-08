@@ -1,83 +1,73 @@
-button {
-	font-family: inherit;
-}
-.beige {
-	background-color: beige;
-}
 input,
-button {
-	color: #000;
-	background-color: #e0e0e0;
-	border: 0.1rem solid #808080;
-}
-input[type="text"] {
-	background-color: #fff;
-}
-select {
+button,
+select,
+textarea {
 	font-family: inherit;
-	color: #000;
-	border: 0.1rem solid #808080;
+	border-width: 0.1rem;
 }
-input:hover,
-button:hover,
-select:hover {
-	border: 0.1rem solid #000;
+input[type="button"],
+button {
+	background-color: #e0e0e0;
 }
-input:active,
-button:active {
-	background-color: #c0c0c0;
-	border: 0.1rem solid #808080;
-}
-input[type="text"]:active {
-	background-color: #fff;
-}
+
 .dark,
-.dark #text,
 .dark input,
 .dark button,
-.dark select {
+.dark select,
+.dark textarea {
 	color: #fff;
 	background-color: #000;
 }
-.dark input,
-.dark button,
-.dark select {
-	border: 0.1rem solid #808080;
-}
-.dark input:hover,
-.dark button:hover,
-.dark select:hover {
-	border: 0.1rem solid #fff;
-}
-.dark input:active,
-.dark button:active {
-	border: 0.1rem solid #808080;
-}
-.dark input[type="text"]:active {
-	background-color: #000;
-}
+
 .share-button-wrapper {
 	font-size: 0;
 }
 .share-button,
 .share-button:hover,
 .share-button:active {
-	margin: 8px;
-	padding: 4px;
+	margin: 16px;
+	padding: 6px;
 	font-size: 0;
-	border: 0;
-	border-radius: 4px;
+	border-width: 0;
+	border-radius: 6px;
 }
 .share-button svg {
 	padding: 0;
 }
-.tweet-button {
+.twitter-button {
 	color: #fff;
 	background-color: #1DA1F2 !important;
+}
+.bluesky-button {
+	color: #fff;
+	background-color: #0285FF !important;
+}
+.threads-button {
+	color: #fff;
+	background-color: #000 !important;
+}
+.mastodon-button {
+	color: #fff;
+	background-color: #6364FF !important;
 }
 .misskey-button {
 	color: #fff;
 	background-color: #A1CA03 !important;
+}
+.facebook-button {
+	color: #fff;
+	background-color: #0866FF !important;
+}
+.line-button {
+	color: #fff;
+	background-color: #06C755 !important;
+}
+.fiicen-button {
+	background: linear-gradient(#00c0ff, #c000ff) !important;
+}
+.fiicen-button img {
+	width: 24px;
+	height: 24px;
 }
 #message {
 	font-size: 1.6rem;
@@ -86,7 +76,7 @@ td {
 	text-align: center;
 	vertical-align: top;
 }
-#text {
+textarea {
 	width: 100%;
 	height: 9.6rem;
 	font-size: 2rem;
@@ -94,13 +84,15 @@ td {
 div {
 	vertical-align: top;
 }
+.nogap {
+	line-height: 1;
+}
 #render {
 	margin: 6.4rem 0;
 	font-size: 3.2rem;
-	line-height: 1;
 	white-space: pre-wrap;
 }
-#render:has(rtc) {
+#render.autoexpand:has(rtc) {
 	line-height: 2.5;
 }
 .part,
@@ -109,15 +101,12 @@ div {
 	position: relative;
 	line-height: 1;
 }
-#render:has(rtc) .part,
-#render:has(rtc) .bitmap {
+#render.autoexpand:has(rtc)>.part,
+#render.autoexpand:has(rtc)>.bitmap {
 	top: 2.4rem;
 }
 .bitmap {
 	text-align: left;
-}
-#render:has(rtc) .part-inner .part {
-	top: 0;
 }
 .part {
 	width: 3.2rem;
@@ -277,6 +266,12 @@ div {
 
 .error { color: #f00; }
 
+.width2x {
+	display: inline-block;
+	transform: scale(200%, 100%);
+	transform-origin: top left;
+}
+
 ruby {
 	position: relative;
 }
@@ -360,7 +355,7 @@ ruby > rtc {
 }
 
 @media screen and (min-width: 768px) {
-	#text {
+	textarea {
 		width: 60rem;
 	}
 	#render {
