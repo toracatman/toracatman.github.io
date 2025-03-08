@@ -534,7 +534,7 @@ function changeLineHeight() {
 }
 
 function twitterButton() {
-	window.open(`https://x.com/share?text=${encodeURIComponent(old_s)}`);
+	window.open(`https://x.com/intent/post?text=${encodeURIComponent(old_s)}`);
 }
 function blueskyButton() {
 	window.open(`https://bsky.app/intent/compose?text=${encodeURIComponent(old_s)}`);
