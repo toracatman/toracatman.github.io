@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>ビットマップをテキストに</title>
+	<link rel="stylesheet" href="/toracatman.css">
+	<style>
+		textarea {
+			white-space: pre;
+		}
+		#input {
+			width: 48rem;
+			height: 48rem;
+			font-size: 1.6rem;
+			line-height: 1.6rem;
+		}
+		#error {
+			color: #f00;
+		}
+		#bitmap {
+			border-bottom: 0.1rem solid #808080;
+			border-right: 0.1rem solid #808080;
+		}
+		.bitmap-dot {
+			width: 3.1rem;
+			height: 3.1rem;
+			float: left;
+			border-top: 0.1rem solid #808080;
+			border-left: 0.1rem solid #808080;
+		}
+		.bitmap-row:after {
+			content: "";
+			display: block;
+			clear: both;
+		}
+		.black {
+			background-color: #000;
+		}
+		.block {
+			font-size: 2.4rem;
+			width: 2.4rem;
+		}
+		#output {
+			width: 32rem;
+			height: 32rem;
+			font-size: 2.4rem;
+			line-height: 2.4rem;
+		}
+	</style>
+</head>
+<body>
+	<p>ビットマップから テキストを 生成します。</p>
+
+	<p>入力</p>
+	<p>
+		<label>白<input type="text" value="□" id="wc" onchange="makeInput()"></label>
+		<label>黒<input type="text" value="■" id="bc" onchange="makeInput()"></label>
+	</p>
+	<textarea id="input" onchange="updateBitmap()"></textarea>
+
+	<p>ビットマップ</p>
+	<p>
+		<label>行<input type="text" value="8" id="rows" onchange="makeBitmap()"></label>
+		<label>列<input type="text" value="8" id="cols" onchange="makeBitmap()"></label>
+	</p>
+
+	<div id="error"></div>
+
+	<div id="bitmap"></div>
+	<canvas id="bitmapa"></canvas>
+
+	<script>
+		var block = [
+			[" ", "▘", "▝", "▀"],
+			["▖", "▌", "▞", "▛"],
+			["▗", "▚", "▐", "▜"],
+			["▄", "▙", "▟", "█"]
+		];
+
+		(() => {
+			var table = document.createElement("table");
+			document.body.appendChild(table);
+			table.border = "1";
+			{
+				var tr = document.createElement("tr");
+				table.appendChild(tr);
+				{
+					var th = document.createElement("th");
+					tr.appendChild(th);
+				}
+				for (var j = 0; j < 4; j++) {
+					var th = document.createElement("th");
+					tr.appendChild(th);
+					th.textContent = j;
+				}
+			}
+			for (var i = 0; i < 4; i++) {
+				var tr = document.createElement("tr");
+				table.appendChild(tr);
+				{
+					var th = document.createElement("th");
+					tr.appendChild(th);
+					th.textContent = i;
+				}
+				for (var j = 0; j < 4; j++) {
+					var td = document.createElement("td");
+					tr.appendChild(td);
+					var t = document.createElement("input");
+					td.appendChild(t);
+					t.type = "text";
+					t.value = block[i][j];
+					t.className = "block";
+					t.setAttribute("data-bottom", String(i));
+					t.setAttribute("data-top", String(j));
+				}
+			}
+		})();
+	</script>
+
+	<p>文字の 名前</p>
+	<input type="text" id="name" onchange="makeOutput()">
+
+	<p>出力</p>
+	<textarea id="output" onchange="decodeBitmap()"></textarea>
+
+	<script>
+		var e_wc = document.getElementById("wc");
+		var e_bc = document.getElementById("bc");
+		var e_input = document.getElementById("input");
+
+		var e_rows = document.getElementById("rows");
+		var e_cols = document.getElementById("cols");
+		var rows;
+		var cols;
+
+		var e_error = document.getElementById("error");
+		var error;
+
+		var e_bitmap = document.getElementById("bitmap");
+		var e_bitmapa = document.getElementById("bitmapa");
+		e_bitmapa.addEventListener("mousedown", (e) => {
+			console.log(e);
+		});
+		var ctx = e_bitmapa.getContext("2d");
+		var bitmap;
+
+		var e_name = document.getElementById("name");
+
+		var e_output = document.getElementById("output");
+
+		function drawLine(x1, y1, x2, y2, t, c) {
+			ctx.beginPath();
+			ctx.lineWidth = t;
+			ctx.strokeStyle = c;
+			ctx.moveTo(x1 + 0.5, y1 + 0.5);
+			ctx.lineTo(x2 + 0.5, y2 + 0.5);
+			ctx.stroke();
+		}
+
+		function makeBitmap() {
+			error = false;
+			e_error.textContent = "";
+			if (!(/^\d+$/.test(e_rows.value))) {
+				e_error.textContent += "行は 整数を 指定してください。";
+				error = true;
+			}
+			rows = Number(e_rows.value);
+			if (rows & 1) {
+				e_error.textContent += "行は 偶数を 指定してください。";
+				error = true;
+			}
+			else if (rows < 2 || rows > 32) {
+				e_error.textContent += "行は 2〰︎32を 指定してください。";
+				error = true;
+			}
+
+			if (!(/^\d+$/.test(e_cols.value))) {
+				e_error.textContent += "列は 整数を 指定してください。";
+				error = true;
+			}
+			cols = Number(e_cols.value);
+			if (cols & 1) {
+				e_error.textContent += "列は 偶数を 指定してください。";
+				error = true;
+			}
+			else if (cols < 2 || cols > 32) {
+				e_error.textContent += "列は 2〰︎32を 指定してください。";
+				error = true;
+			}
+
+			if (error) return;
+
+			var w = cols * 32;
+			var ws = String(w);
+			e_bitmap.style.width = `${ws.slice(0, -1)}.${ws.slice(-1)}rem`;
+			var h = rows * 32;
+			var hs = String(h);
+			e_bitmap.style.height = `${hs.slice(0, -1)}.${hs.slice(-1)}rem`;
+			e_bitmap.innerHTML = "";
+			bitmap = Array(rows).fill().map(() => Array(cols).fill(0));
+
+			bitmapa.width = w + 1;
+			bitmapa.height = h + 1;
+			bitmapa.style.display = "none";
+
+			for (var i = 0; i < rows; i++) {
+				var r = document.createElement("div");
+				e_bitmap.appendChild(r);
+				r.className = "bitmap-row";
+				for (var j = 0; j < cols; j++) {
+					var d = document.createElement("div");
+					r.appendChild(d);
+					d.id = `bitmap${i}-${j}`;
+					d.className = "bitmap-dot";
+					d.addEventListener("click", function() {
+						this.classList.toggle("black");
+						makeOutput();
+					});
+				}
+			}
+			for (var i = 0; i < rows + 1; i++) {
+				drawLine(0, i * 32, w, i * 32, 1, "#808080");
+			}
+			for (var i = 0; i < cols; i++) {
+				drawLine(i * 32, 0, i * 32, h, 1, "#808080");
+			}
+			drawLine(w, 0, w, h + 1, 1, "#808080");
+			
+			makeInput();
+		}
+
+		function updateBitmap() {
+			if (error) return;
+			var s = e_input.value.split("\n");
+			if (s.length != rows) return;
+			for (var i = 0; i < rows; i++) {
+				for (var j = 0; j < cols; j++) {
+					bitmap[i][j] = s[i][j] == e_bc.value ? 1 : 0;
+					var d = document.getElementById(`bitmap${i}-${j}`);
+					if (d == null) continue;
+					if (bitmap[i][j] == 1) {
+						d.classList.add("black");
+					}
+					else {
+						d.classList.remove("black");
+					}
+				}
+			}
+			makeOutput();
+		}
+
+		function makeInput() {
+			if (error) return;
+			var s = "";
+			for (var i = 0; i < rows; i++) {
+				for (var j = 0; j < cols; j++) {
+					s += bitmap[i][j] == 1 ? e_bc.value : e_wc.value;
+				}
+				if (i < rows - 1) s += "\n";
+			}
+			e_input.value = s;
+		}
+
+		function makeOutput() {
+			if (error) return;
+			for (var i = 0; i < rows; i++) {
+				for (var j = 0; j < cols; j++) {
+					bitmap[i][j] = document.getElementById(`bitmap${i}-${j}`).classList.contains("black") ? 1 : 0;
+				}
+			}
+			var s = "▒{\n";
+
+			var r = rows / 2;
+			var c = cols / 2;
+			for (var i = 0; i < r; i++) {
+				for (var j = 0; j < c; j++) {
+					var b = bitmap[i * 2 + 1][j * 2] + bitmap[i * 2 + 1][j * 2 + 1] * 2;
+					var t = bitmap[i * 2][j * 2] + bitmap[i * 2][j * 2 + 1] * 2;
+					s += block[b][t];
+				}
+				s += "\n";
+			}
+			if (e_name.value != "") s += `(${e_name.value})
+`;
+			s += "}";
+			e_output.value = s;
+
+			makeInput();
+		}
+
+		function decodeBitmap() {
+			var ss = e_output.value.replace(/^▒\{\n/, "").replace(/(\n\(.*\))?\n\}$/, "").split("\n");
+
+			var r = ss.length;
+			rows = r * 2;
+			e_rows.value = rows;
+			var c = 0;
+			for (var i = 0; i < ss.length; i++) {
+				var l = ss[i].length;
+				if (c < l) c = l;
+			}
+			cols = c * 2;
+			e_cols.value = cols;
+
+			for (var i = 0; i < r; i++) {
+				for (var j = 0; j < c; j++) {
+					for (var b = 0; b < 4; b++) {
+						for (var t = 0; t < 4; t++) {
+							if (false) {
+							}
+						}
+					}
+				}
+			}
+		}
+
+		(function() {
+			var e_blocks = document.getElementsByClassName("block");
+			for (var i = 0; i < e_blocks.length; i++) {
+				e_blocks[i].addEventListener("change", function() {
+					console.log(this);
+					var b = Number(this.getAttribute("data-bottom"));
+					var t = Number(this.getAttribute("data-top"));
+					block[b][t] = this.value;
+					makeOutput();
+				});
+			}
+
+			makeBitmap();
+		})();
+	</script>
+</body>
+</html>

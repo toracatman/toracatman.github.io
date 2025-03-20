@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>双漢代碼</title>
+	<link rel="stylesheet" href="/toracatman.css">
+	<style>
+		div {
+			display: inline-block;
+		}
+		textarea {
+			font-size: 1.8rem;
+			width: 88rem;
+			height: 40rem;
+		}
+		textarea[name="textarea2"] {
+			font-family: "My Ricty Kana", "My Ricty ShinKana";
+		}
+	</style>
+	<script src="jis_x_0208.js"></script>
+</head>
+<body>
+	<p>双漢代碼の テストです。</p>
+	<form name="form1">
+		<div>
+			文字列<br>
+			<textarea name="textarea1" onchange="encodeJIS()">本当は，Shift_JIS から UTF-8 へ 移行できれば いいのですが，できない 場合は，Shift_JIS を 拡張して，Unicode 文字を 扱える 文字コード（双漢代碼）を 使ってみては どうでしょう？　　　　　　　　 
+チコちゃんに𠮟られる　　　
+瑜󠄂 𩸽󠄁 􀀀 􏿿 &dw-100000; &dw-10ffff; 
+\ ~ ‾ ¥</textarea>
+		</div>
+		<div>
+			双漢代碼 バイト列<br>
+			<textarea name="textarea2" onchange="decodeJIS()"></textarea>
+		</div>
+
+		</p>
+		<p>
+			改行コード<br>
+			<label><input type="radio" name="radio1" value="crlf" onchange="encodeJIS()" checked>CRLF</label>
+			<label><input type="radio" name="radio1" value="cr" onchange="encodeJIS()">CR</label>
+			<label><input type="radio" name="radio1" value="lf" onchange="encodeJIS()">LF</label>
+		</p>
+		<p>
+			<input type="text" name="text1" onchange="encodeJIS()">バイトごとに 改行
+		</p>
+		<p>
+			<label><input type="checkbox" name="checkbox1" onchange="encodeJIS()">拡張算用数字を 使う</label><br>
+			<label><input type="checkbox" name="checkbox2" onchange="decodeJIS()">双漢代碼を 表示する</label><br>
+			<label><input type="checkbox" name="checkbox3" onchange="encodeJIS()">BOM を つける</label>
+		</p>
+	</form>
+
+	<script>
+		function getChar1(p) {
+			if (p <= 0x1F || p == 0x7F) return String.fromCodePoint(p);
+			return jis1[p];
+		}
+		function getChar(m, k, t) {
+			if (!checkJIS(m, k, t)) return "不正な 面区点番号です。";
+			return jis[m - 1][k - 1][t - 1];
+		}
+
+		function findChar(c) {
+			var p = c.codePointAt();
+			if (p <= 0x1F || p == 0x7F) {
+				return p;
+			}
+			p = jis1.indexOf(c);
+			if (p !== -1) {
+				return p;
+			}
+			for (var i = 0; i < jis.length; i++) {
+				for (var j = 0; j < jis[i].length; j++) {
+					var k = jis[i][j].indexOf(c);
+					if (k !== -1) {
+						return [i + 1, j + 1, k + 1];
+					}
+				}
+			}
+			return false;
+		}
+
+		function getByte(m, k, t) {
+			if (!checkJIS(m, k, t)) return "不正な 面区点番号です。";
+
+			var s1;
+			var s2;
+
+			if (m == 1) {
+				if (k <= 62) {
+					s1 = (k + 257) / 2 | 0;
+				}
+				else {
+					s1 = (k + 385) / 2 | 0;
+				}
+			}
+			else {
+				if (k <= 15) {
+					s1 = ((k + 479) / 2 | 0) - (k / 8 | 0) * 3;
+				}
+				else {
+					s1 = (k + 411) / 2 | 0;
+				}
+			}
+
+			if (k & 1) {
+				if (t <= 63) {
+					s2 = t + 63;
+				}
+				else {
+					s2 = t + 64;
+				}
+			}
+			else {
+				s2 = t + 158;
+			}
+
+			return [s1, s2];
+			return `${s1.toString(16).toUpperCase()} ${s2.toString(16).toUpperCase()}`;
+		}
+
+		function checkJIS(m, k, t) {
+			if (m < 1 || m > 2) return false;
+			if (k < 1 || k > 94) return false;
+			if (t < 1 || t > 94) return false;
+			return true;
+		}
+
+		function encodeJIS() {
+			var s = document.form1.textarea1.value;
+			var bs = [];
+			for (var i = 0; i < s.length; i++) {
+				//先頭ユニット
+				if (document.form1.checkbox2.checked) {
+					if (s.slice(i, i + 7) == "[先頭[普]]") {
+						bs = bs.concat(getByte(1, 8, 93));
+						i += 6;
+						continue;
+					}
+					else if (s.slice(i, i + 7) == "[先頭[異]]") {
+						bs = bs.concat(getByte(1, 8, 94));
+						i += 6;
+						continue;
+					}
+				}
+
+				var c = s.slice(i, i + 2);
+				var p = c.codePointAt();
+				var p2 = c.codePointAt(1);
+
+				//MJ+
+				var re;
+				if ((re = /&dw-10([\dA-Fa-f]{4});/.exec(s.slice(i, i + 11))) !== null) {
+					var msb = parseInt(re[1], 16) >>> 10;
+					var lsb = parseInt(re[1], 16) & 0x3FF;
+
+					var mkt;
+
+					mkt = getMKTfromMSB_MJ(msb);
+					var mb = getByte(mkt[0], mkt[1], mkt[2]);
+
+					mkt = getMKTfromLSB(lsb);
+					var lb = getByte(mkt[0], mkt[1], mkt[2]);
+
+					bs = bs.concat(getByte(1, 8, 93), mb, lb);
+
+					i += 10;
+					continue;
+				}
+
+				//異体字セレクタ
+				else if ((p >= 0xFE00 && p <= 0xFE0F) || (p >= 0xE0100 && p <= 0xE01FF)) {
+					var l = bs.length;
+					if (bs.slice(l - 6, l - 4).toString() == getByte(1, 8, 93).toString()) {
+						var b = getByte(1, 8, 94);
+						bs[l - 6] = b[0];
+						bs[l - 5] = b[1];
+					}
+					else {
+						bs = bs.concat(getByte(1, 8, 93));
+					}
+
+					var mkt = (p >= 0xFE00 && p <= 0xFE0F) ? getMKTfromSVS(p) : getMKTfromIVS(p);
+					bs = bs.concat(getByte(mkt[0], mkt[1], mkt[2]));
+					i++;
+					continue;
+				}
+
+				//声調記号、サロゲートペア
+				else if (/*c == "˩˥" || c == "˥˩" || */p > 65535) {
+					i++;
+				}
+
+				//半濁点
+				/*else if (p2 == 0x309A) {
+					var cc = "かきくけこカキクケコセツトㇷ";
+					if (cc.indexOf(c[0]) !== -1) {
+						i++;
+					}
+					else {
+						c = c[0];
+					}
+				}
+
+				//グレイヴ、アキュート
+				else if (p2 >= 0x0300 && p2 <= 0x0301) {
+					var cc = "ɔʌəɚ";
+					if (cc.indexOf(c[0]) !== -1) {
+						i++;
+					}
+					else if (p2 == 0x0300 && c[0] == "æ") {
+						i++;
+					}
+					else {
+						c = c[0];
+					}
+				}*/
+
+				//その他
+				else {
+					c = c[0];
+				}
+
+				var mkt = findChar(c);
+				var b;
+				var t = typeof mkt;
+				if (t === "number") {
+					if (mkt == 0x0A) {
+						switch (document.form1.radio1.value) {
+						case "crlf":
+							b = [0x0D, 0x0A];
+							break;
+						case "cr":
+							b = 0x0D;
+							break;
+						case "lf":
+							b = 0x0A;
+							break;
+						}
+					}
+					else {
+						b = mkt;
+					}
+				}
+				else if (t === "object") {
+					b = getByte(mkt[0], mkt[1], mkt[2]);
+				}
+				else {
+					var msb = p >>> 10;
+					var lsb = p & 0x3FF;
+
+					var mkt;
+
+					mkt = getMKTfromMSB(msb);
+					var mb = getByte(mkt[0], mkt[1], mkt[2]);
+
+					mkt = getMKTfromLSB(lsb);
+					var lb = getByte(mkt[0], mkt[1], mkt[2]);
+
+					b = getByte(1, 8, 93).concat(mb, lb);
+				}
+				bs = bs.concat(b);
+			}
+			if (document.form1.checkbox3.checked) bs = [0x84, 0xFB, 0x8E, 0x80, 0x8C, 0xAE].concat(bs);
+
+			bs = bs.map((num) => num.toString(16).toUpperCase().padStart(2, "0"));
+			var t = "";
+			for (var i = 0; i < bs.length; i++) {
+				t += bs[i];
+				if (document.form1.text1.value != "" && !isNaN(document.form1.text1.value)) {
+					if (i % document.form1.text1.value == document.form1.text1.value - 1) {
+						t += "\n";
+					}
+					else {
+						t += " ";
+					}
+				}
+				else {
+					t += " ";
+				}
+			}
+			if (document.form1.checkbox1.checked) {
+				t = t.replace(/A/g, "↊").replace(/B/g, "↋").replace(/C/g, "↌")
+					.replace(/D/g, "↍").replace(/E/g, "↎").replace(/F/g, "↏");
+			}
+			document.form1.textarea2.value = t.trim();
+		}
+
+		function getMKTfromMSB(msb) {
+			var m = 1;
+			var k = (msb / 94 | 0) + 27;
+			var t = msb % 94 + 1;
+			return [m, k, t];
+		}
+		function getMKTfromLSB(lsb) {
+			var m = 1;
+			var k = (lsb / 94 | 0) + 16;
+			var t = lsb % 94 + 1;
+			return [m, k, t];
+		}
+		function getMKTfromMSB_MJ(msb) {
+			var m = 1;
+			var k = 43;
+			var t = msb + 1;
+			return [m, k, t];
+		}
+		function getMKTfromIVS(p) {
+			p -= 0xE0100;
+			var m = 1;
+			var k = (p / 94 | 0) + 44;
+			var t = p % 94 + 1;
+			return [m, k, t];
+		}
+		function getMKTfromSVS(p) {
+			var m = 1;
+			var k = 47;
+			var t = p - 0xFE00 + 1;
+			return [m, k, t];
+		}
+		function getMKTfromByte(s1, s2) {
+			if (!((s2 >= 0x40 && s2 <= 0x7E) || (s2 >= 0x80 && s2 <= 0xFC))) {
+				return false;
+			}
+
+			var m;
+			var k;
+			var t;
+			if (s1 <= 0xEF) {
+				m = 1;
+				if (s1 <= 0x9F)	k = s1 * 2 - 257;
+				else			k = s1 * 2 - 385;
+				if (s2 >= 0x9F) k++;
+			}
+			else {
+				m = 2;
+				var f = s2 < 0x9F;
+				switch (s1) {
+				case 0xF0:
+					k = f ? 1 : 8;
+					break;
+				case 0xF1:
+					k = f ? 3 : 4;
+					break;
+				case 0xF2:
+					k = f ? 5 : 12;
+					break;
+				case 0xF3:
+					k = f ? 13 : 14;
+					break;
+				case 0xF4:
+					k = f ? 15 : 78;
+					break;
+				default:
+					k = s1 * 2 - 411;
+					if (!f) k++;
+				}
+			}
+			if (k & 1) {
+				if (s2 <= 0x7E)	t = s2 - 63;
+				else			t = s2 - 64;
+			}
+			else {
+				t = s2 - 158;
+			}
+			return [m, k, t];
+		}
+
+		function decodeJIS() {
+			var bs = document.form1.textarea2.value
+				.replace(/↊/g, "A").replace(/↋/g, "B").replace(/↌/g, "C")
+				.replace(/↍/g, "D").replace(/↎/g, "E").replace(/↏/g, "F").trim();
+			if (bs == "") {
+				document.form1.textarea1.value = "";
+				return;
+			}
+			else if (!/^([\dA-Fa-f]{1,2}[\t\n ]+)*[\dA-Fa-f]{1,2}$/.test(bs)) {
+				document.form1.textarea1.value = "不正な バイト列です。";
+				return;
+			}
+			bs = bs.split(/[\t\n ]+/).map((num) => parseInt(num, 16));
+
+			var s = "";
+			for (var i = 0; i < bs.length; i++) {
+				//1バイト文字
+				if (!((bs[i] >= 0x81 && bs[i] <= 0x9F) || (bs[i] >= 0xE0 && bs[i] <= 0xFC))) {
+					if (bs[i] == 0x0D) {
+						s += "\n";
+						if (i < bs.length - 1 && bs[i + 1] == 0x0A) i++;
+					}
+					else {
+						s += getChar1(bs[i]);
+					}
+				}
+
+				//2バイト文字
+				else {
+					if (i >= bs.length - 1) {
+						s += "不正な バイトです。";
+						break;
+					}
+
+					var s1 = bs[i];
+					var s2 = bs[i + 1];
+					var mkt = getMKTfromByte(s1, s2);
+					if (mkt === false) {
+						s += "不正な バイトです。";
+						continue;
+					}
+					var m = mkt[0];
+					var k = mkt[1];
+					var t = mkt[2];
+
+					if (!(m == 1 && k == 8 && t >= 93 && t <= 94)) {
+						s += getChar(m, k, t);
+						i++;
+					}
+
+					//Unicode文字
+					else {
+						if (document.form1.checkbox2.checked) {
+							s += `[先頭[${t == 93 ? "普" : "異"}]]`;
+							i++;
+							continue;
+						}
+
+						mkt = getMKTfromByte(bs[i + 2], bs[i + 3]);
+
+						var back = (t == 93 ? (mkt[1] >= 44 && mkt[1] <= 47 ? 3 : 5) : 7);
+						if (i >= bs.length - back) {
+							s += "不正な バイトです。";
+							break;
+						}
+
+						//IVS
+						if (mkt[1] >= 44 && mkt[1] <= 46) {
+							var c = 0xE0100 + (mkt[1] - 44) * 94 + mkt[2] - 1;
+							s += String.fromCodePoint(c);
+							i += 3;
+						}
+						
+						//SVS
+						else if (mkt[1] == 47) {
+							var c = 0xFE00 + mkt[2] - 1;
+							s += String.fromCodePoint(c);
+							i += 3;
+						}
+
+						//その他
+						else {
+							//MJ+
+							var mj = mkt[1] == 43;
+
+							var msb = (mkt[1] - (mj ? 43 : 27)) * 94 + mkt[2] - 1;
+
+							mkt = getMKTfromByte(bs[i + 4], bs[i + 5]);
+							var lsb = (mkt[1] - 16) * 94 + mkt[2] - 1;
+
+							var c = msb << 10 | lsb;
+							s += mj ? `&dw-10${c.toString(16).padStart(4, "0")};` : String.fromCodePoint(c);
+
+							//先頭[普]
+							if (t == 93) i += 5;
+
+							//先頭[異]
+							else {
+								mkt = getMKTfromByte(bs[i + 6], bs[i + 7]);
+
+								//IVS
+								if (mkt[1] >= 44 && mkt[1] <= 46) {
+									var c = 0xE0100 + (mkt[1] - 44) * 94 + mkt[2] - 1;
+									s += String.fromCodePoint(c);
+								}
+						
+								//SVS
+								else if (mkt[1] == 47) {
+									var c = 0xFE00 + mkt[2] - 1;
+									s += String.fromCodePoint(c);
+								}
+								i += 7;
+							}
+						}
+					}
+				}
+			}
+			if (s.codePointAt(0) == 0xFEFF) s = s.slice(1);
+			document.form1.textarea1.value = s;
+		}
+
+		encodeJIS();
+	</script>
+</body>
+</html>

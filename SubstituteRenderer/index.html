@@ -1,0 +1,1936 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>代用表記レンダラー</title>
+	<link rel="stylesheet" href="/toracatman.css">
+	<link rel="stylesheet" href="SubstituteRenderer.css">
+	<style id="custom-theme"></style>
+	<style id="custom-linegap"></style>
+</head>
+<body>
+	<details>
+		<summary>設定</summary>
+		<p>言語 JA/<del><a href="indexEN.html">EN</a></del>（英語版は 更新停止中）</p>
+		<form name="form1">
+			<h4>テーマ</h4>
+			<p>
+				<label><input type="radio" name="theme" value="light" checked onchange="changeTheme()">ライト テーマ</label>
+				<label><input type="radio" name="theme" value="dark" onchange="changeTheme()">ダーク テーマ</label>
+				<label><input type="radio" name="theme" value="custom" onchange="changeTheme()">カスタム テーマ</label>
+				<label>文字色<input type="color" name="fg" value="#000000" onchange="changeColor()">
+				<label>背景色<input type="color" name="bg" value="#ffffff" onchange="changeColor()">
+			</p>
+
+			<h4>行間</h4>
+			<p>
+				<label><input type="radio" name="linegap" value="nogap" checked onchange="changeLineGap()">なし</label>
+				<label><input type="radio" name="linegap" value="normal" onchange="changeLineGap()">標準</label>
+				<label><input type="radio" name="linegap" value="custom" onchange="changeLineGap()">カスタム</label>
+				<label>行の 高さ<input type="text" name="lineheight" value="1" onchange="changeLineHeight()"></label>
+				<label><input type="checkbox" name="autoexpand" onchange="changeLineGap()" checked>下ルビが あるとき，行間を 広げる</label>
+			</p>
+
+			<h4>色の 設定</h4>
+			<p>
+				緑の 図形💚🟢🟩
+				<label><input type="radio" name="green" value="green" checked onchange="inputText()">緑<span class="green">■</span></label>
+				<label><input type="radio" name="green" value="lime" onchange="inputText()">黄緑<span class="lime">■</span></label>
+			</p>
+			<p>
+				水色の 図形🩵
+				<label><input type="radio" name="lightblue" value="aqua" checked onchange="inputText()">シアン<span class="aqua">■</span></label>
+				<label><input type="radio" name="lightblue" value="skyblue" onchange="inputText()">空色<span class="skyblue">■</span></label>
+			</p>
+			<p>
+				ピンクの 図形🩷
+				<label><input type="radio" name="pink" value="fuchsia" checked onchange="inputText()">マゼンタ<span class="fuchsia">■</span></label>
+				<label><input type="radio" name="pink" value="pink" onchange="inputText()">ピンク<span class="pink">■</span></label>
+			</p>
+
+			<h3>ラテン文字の 代用表記</h3>
+			<p>
+				<label><input type="radio" name="latin" value="no" onchange="inputText()">変換しない</label>
+				<label><input type="radio" name="latin" value="render" checked onchange="inputText()">レンダリング</label>
+				<label><input type="radio" name="latin" value="henkan" onchange="inputText()">自動変換</label>
+			</p>
+
+			<h3>フォント</h3>
+			<p>
+				<label><input type="checkbox" name="dwpi" onchange="inputText()">DWPI明朝の 外字を 有効にする（DWPI明朝の インストールが 必要です、無効でも 既存の フォントの 合成で レンダリングされます）</label>
+			</p>
+		</form>
+	</details>
+
+	<h3>ソフト キーボード</h3>
+	<details>
+		<summary>漢字構成記述文字</summary>
+		<p>
+			<input type="button" value="⬚" onclick="insert('⬚')">
+			<input type="button" value="⿰" onclick="insert('⿰')">
+			<input type="button" value="⿱" onclick="insert('⿱')">
+			<input type="button" value="⿲" onclick="insert('⿲')">
+			<input type="button" value="⿳" onclick="insert('⿳')">
+			<input type="button" value="⿴" onclick="insert('⿴')">
+			<input type="button" value="⿵" onclick="insert('⿵')">
+			<input type="button" value="⿶" onclick="insert('⿶')">
+			<input type="button" value="⿷" onclick="insert('⿷')">
+			<input type="button" value="⿸" onclick="insert('⿸')">
+			<input type="button" value="⿹" onclick="insert('⿹')">
+			<input type="button" value="⿺" onclick="insert('⿺')">
+			<input type="button" value="⿻" onclick="insert('⿻')">
+			<input type="button" value="⿼" onclick="insert('コｯ')">
+			<input type="button" value="⿽" onclick="insert('Jｯ')">
+			<input type="button" value="⿾" onclick="insert('↔ｯ')">
+			<input type="button" value="⿿" onclick="insert('↩ｯ')">
+			<input type="button" value="㇯" onclick="insert('−ｯ')">
+			<input type="button" value="" onclick="insert('⤵ｯ')">
+			<input type="button" value="" onclick="insert('⤴ｯ')">
+		</p>
+	</details>
+	<details>
+		<summary>部首</summary>
+		<p>
+			<input type="button" value="⽉" onclick="insert('月🌃ｯ')">
+			<input type="button" value="⺼" onclick="insert('月🍖ｯ')">
+			<input type="button" value="􁙷" onclick="insert('月⛵️ｯ')">
+			<input type="button" value="月" onclick="insert('月ｯ')">
+			<input type="button" value="⼆" onclick="insert('二ｯ')">
+			<input type="button" value="" onclick="insert('三ｯ')">
+		</p>
+	</details>
+	<details>
+		<summary>色付きの 文字</summary>
+		<form name="form2">
+			<select name="color">
+				<option value="❤">赤❤</option>
+				<option value="🧡">オレンジ🧡</option>
+				<option value="💛">黄色💛</option>
+				<option value="🍐">黄緑🍐</option>
+				<option value="💚">緑💚</option>
+				<option value="🩵">水色🩵</option>
+				<option value="💙">青💙</option>
+				<option value="💜">紫💜</option>
+				<option value="🩷">ピンク🩷</option>
+				<option value="🤎">茶色🤎</option>
+				<option value="🖤">黒🖤</option>
+				<option value="🩶">灰色🩶</option>
+				<option value="🤍">白🤍</option>
+				<option value="📀">金色📀</option>
+				<option value="💿">銀色💿</option>
+			</select>
+			<input type="button" value="色付きの 文字" onclick="insertColor()">
+			<p>
+				色の 位置
+				<label><input type="radio" name="icxi" value="mae" checked>前</label>
+				<label><input type="radio" name="icxi" value="usxiro">後ろ</label>
+			</p>
+		</form>
+	</details>
+	<details>
+		<summary>太字、斜体、倍角、下線</summary>
+		<p>
+			<input type="button" value="太字" onclick="insert2('ﾌ{', '}')">
+			<input type="button" value="斜体" onclick="insert2('ﾅ{', '}')">
+			<input type="button" value="倍角" onclick="insert2('ﾆ{', '}')">
+			<input type="button" value="下線" onclick="insert2('ｱ{', '}')">
+		</p>
+	</details>
+	<details>
+		<summary>色付きの 図形</summary>
+		<p>
+			<input type="button" value="🔴" onclick="insert('🔴')">
+			<input type="button" value="🟠" onclick="insert('🟠')">
+			<input type="button" value="🟡" onclick="insert('🟡')">
+			<input type="button" value="🟢" onclick="insert('🟢')">
+			<input type="button" value="🔵" onclick="insert('🔵')">
+			<input type="button" value="🟣" onclick="insert('🟣')">
+			<input type="button" value="🟤" onclick="insert('🟤')">
+			<input type="button" value="⚫" onclick="insert('⚫')">
+			<input type="button" value="⚪" onclick="insert('⚪')">
+		</p>
+		<p>
+			<input type="button" value="🟥" onclick="insert('🟥')">
+			<input type="button" value="🟧" onclick="insert('🟧')">
+			<input type="button" value="🟨" onclick="insert('🟨')">
+			<input type="button" value="🟩" onclick="insert('🟩')">
+			<input type="button" value="🟦" onclick="insert('🟦')">
+			<input type="button" value="🟪" onclick="insert('🟪')">
+			<input type="button" value="🟫" onclick="insert('🟫')">
+			<input type="button" value="⬛" onclick="insert('⬛')">
+			<input type="button" value="⬜" onclick="insert('⬜')">
+		</p>
+	</details>
+	<details>
+		<summary>ルビの テキスト表記</summary>
+		<p>
+			<input type="button" value="ルビの テキスト表記" onclick="insertRuby()">
+		</p>
+	</details>
+	<details>
+		<summary>声調記号</summary>
+		<p>
+			<input type="button" value="˥" onclick="insert('˥')">
+			<input type="button" value="˦" onclick="insert('˦')">
+			<input type="button" value="˧" onclick="insert('˧')">
+			<input type="button" value="˨" onclick="insert('˨')">
+			<input type="button" value="˩" onclick="insert('˩')">
+			<input type="button" value="˩˥" onclick="insert('˩˥')">
+			<input type="button" value="˧˥" onclick="insert('˧˥')">
+			<input type="button" value="˩˧" onclick="insert('˩˧')">
+			<input type="button" value="˥˩" onclick="insert('˥˩')">
+			<input type="button" value="˥˧" onclick="insert('˥˧')">
+			<input type="button" value="˧˩" onclick="insert('˧˩')">
+			<input type="button" value="˦˥˦" onclick="insert('˦˥˦')">
+			<input type="button" value="˦˥˦˥" onclick="insert('˦˥˦˥')">
+			<input type="button" value="˨˩˨" onclick="insert('˨˩˨')">
+			<input type="button" value="꜊" onclick="insert('꜊')">
+			<input type="button" value="ꜛ" onclick="insert('ꜛ')">
+			<input type="button" value="ꜜ" onclick="insert('ꜜ')">
+		</p>
+	</details>
+	<details>
+		<summary>かナ文字に つける 記号</summary>
+		<p>
+			<input type="button" value="゙" onclick="insert('゙')">
+			<input type="button" value="゚" onclick="insert('゚')">
+			<input type="button" value="" onclick="insert('ˠ')">
+			<input type="button" value=" ̑" onclick="insert('‌̑')">
+			<input type="button" value=" ̣" onclick="insert('‌̣')">
+			<input type="button" value=" ̬" onclick="insert('‌̬')">
+			<input type="button" value=" ̃" onclick="insert('‌̃')">
+			<input type="button" value=" ̐" onclick="insert('‌̐')">
+			<input type="button" value=" ̉" onclick="insert('‌̉')">
+			<input type="button" value=" ̾" onclick="insert('‌̾')">
+			<input type="button" value=" ̱" onclick="insert('‌̱')">
+			<input type="button" value=" ̼" onclick="insert('‌̼')">
+			<input type="button" value=" ̆" onclick="insert('‌̆')">
+			<input type="button" value=" ̶" onclick="insert('‌̶')">
+			<input type="button" value=" ̫" onclick="insert('‌̫')">
+			<input type="button" value=" ̡" onclick="insert('‌̡')">
+			<input type="button" value=" ̢" onclick="insert('‌̢')">
+			<input type="button" value=" ᷥ" onclick="insert('‌ᷥ')">
+			<input type="button" value=" ̯" onclick="insert('‌̯')">
+			<input type="button" value="" onclick="insert('‌̂')">
+			<input type="button" value="" onclick="insert('‌̗')">
+			<input type="button" value="" onclick="insert('‌̖')">
+			<input type="button" value="" onclick="insert('‌͡')">
+		</p>
+	</details>
+	<details>
+		<summary>専名号、その他の 記号</summary>
+		<p>
+			<input type="button" value="˱" onclick="insert('˱')">
+			<input type="button" value="˲" onclick="insert('˲')">
+			<input type="button" value="﹆" onclick="insert('﹆')">
+			<input type="button" value="ʼ" onclick="insert('ʼ')">
+			<input type="button" value="・" onclick="insert('・')">
+			<input type="button" value="゠" onclick="insert('゠')">
+		</p>
+		<p>
+			<input type="button" value="、" onclick="insert('、')">
+			<input type="button" value="。" onclick="insert('。')">
+			<input type="button" value="，" onclick="insert('，')">
+			<input type="button" value="．" onclick="insert('．')">
+			<input type="button" value="'" onclick="insert('\'')">
+			<input type="button" value="&" onclick="insert('&')">
+			<input type="button" value="☆" onclick="insert('☆')">
+			<input type="button" value="〜" onclick="insert('〜')">
+			<input type="button" value="ﾇ" onclick="insert('ﾇ')">
+			<input type="button" value="ﾋ" onclick="insert('ﾋ')">
+			<input type="button" value="〱" onclick="insert('くｯ')">
+			<input type="button" value="〲" onclick="insert('ぐｯ')">
+			<input type="button" value="〱゚" onclick="insert('く゚ｯ')">
+		</p>
+	</details>
+	<details>
+		<summary>小書きひらがな</summary>
+		<p>
+			<input type="button" value="ぁ" onclick="insert('ぁ')">
+			<input type="button" value="ぃ" onclick="insert('ぃ')">
+			<input type="button" value="ぅ" onclick="insert('ぅ')">
+			<input type="button" value="ぇ" onclick="insert('ぇ')">
+			<input type="button" value="ぉ" onclick="insert('ぉ')">
+			<input type="button" value="" onclick="insert('ぃｩ')">
+		</p>
+		<p>
+			<input type="button" value="ゕ" onclick="insert('ゕ')"><input type="button" value="ゕ゙" onclick="insert('ゕ゙')">
+			<input type="button" value="𛄰" onclick="insert('ﾁき')"><input type="button" value="𛄰゙" onclick="insert('ﾁぎ')">
+			<input type="button" value="𛄱" onclick="insert('ﾁく')"><input type="button" value="𛄱゙" onclick="insert('ﾁぐ')">
+			<input type="button" value="ゖ" onclick="insert('ゖ')"><input type="button" value="ゖ゙" onclick="insert('ゖ゙')">
+			<input type="button" value="𛄲" onclick="insert('ﾁこ')"><input type="button" value="𛄲゙" onclick="insert('ﾁご')">
+			<input type="button" value="" onclick="insert('ﾁきｩ')"><input type="button" value="゙" onclick="insert('ﾁぎｩ')">
+		</p>
+		<p>
+			<input type="button" value="𛄳" onclick="insert('ﾁさ')"><input type="button" value="𛄳゙" onclick="insert('ﾁざ')">
+			<input type="button" value="" onclick="insert('ﾁすｨ')"><input type="button" value="゙" onclick="insert('ﾁずｨ')">
+			<input type="button" value="𛄵" onclick="insert('ﾁす')"><input type="button" value="𛄵゙" onclick="insert('ﾁず')">
+			<input type="button" value="𛄶" onclick="insert('ﾁせ')"><input type="button" value="𛄶゙" onclick="insert('ﾁぜ')">
+			<input type="button" value="𛄷" onclick="insert('ﾁそ')"><input type="button" value="𛄷゙" onclick="insert('ﾁぞ')">
+			<input type="button" value="" onclick="insert('ﾁすｨｩ')"><input type="button" value="゙" onclick="insert('ﾁずｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ﾁしｬ')"><input type="button" value="゙" onclick="insert('ﾁじｬ')">
+			<input type="button" value="𛄴" onclick="insert('ﾁし')"><input type="button" value="𛄴゙" onclick="insert('ﾁじ')">
+			<input type="button" value="" onclick="insert('ﾁしｭ')"><input type="button" value="゙" onclick="insert('ﾁじｭ')">
+			<input type="button" value="" onclick="insert('ﾁしｪ')"><input type="button" value="゙" onclick="insert('ﾁじｪ')">
+			<input type="button" value="" onclick="insert('ﾁしｮ')"><input type="button" value="゙" onclick="insert('ﾁじｮ')">
+			<input type="button" value="" onclick="insert('ﾁしｩ')"><input type="button" value="゙" onclick="insert('ﾁじｩ')">
+		</p>
+		<p>
+			<input type="button" value="𛄸" onclick="insert('ﾁた')"><input type="button" value="𛄸゙" onclick="insert('ﾁだ')">
+			<input type="button" value="" onclick="insert('ﾁてｨ')"><input type="button" value="゙" onclick="insert('ﾁでｨ')">
+			<input type="button" value="" onclick="insert('ﾁとｩ')"><input type="button" value="゙" onclick="insert('ﾁどｩ')">
+			<input type="button" value="𛄺" onclick="insert('ﾁて')"><input type="button" value="𛄺゙" onclick="insert('ﾁで')">
+			<input type="button" value="𛄻" onclick="insert('ﾁと')"><input type="button" value="𛄻゙" onclick="insert('ﾁど')">
+			<input type="button" value="" onclick="insert('ﾁてｨｩ')"><input type="button" value="゙" onclick="insert('ﾁでｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ﾁちｬ')"><input type="button" value="゙" onclick="insert('ﾁぢｬ')">
+			<input type="button" value="𛄹" onclick="insert('ﾁち')"><input type="button" value="𛄹゙" onclick="insert('ﾁぢ')">
+			<input type="button" value="" onclick="insert('ﾁちｭ')"><input type="button" value="゙" onclick="insert('ﾁぢｭ')">
+			<input type="button" value="" onclick="insert('ﾁちｪ')"><input type="button" value="゙" onclick="insert('ﾁぢｪ')">
+			<input type="button" value="" onclick="insert('ﾁちｮ')"><input type="button" value="゙" onclick="insert('ﾁぢｮ')">
+			<input type="button" value="" onclick="insert('ﾁちｩ')"><input type="button" value="゙" onclick="insert('ﾁぢｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('っｧ')"><input type="button" value="゙" onclick="insert('っ゙ｧ')">
+			<input type="button" value="" onclick="insert('っｨ')"><input type="button" value="゙" onclick="insert('っ゙ｨ')">
+			<input type="button" value="っ" onclick="insert('っ')"><input type="button" value="っ゙" onclick="insert('っ゙')">
+			<input type="button" value="" onclick="insert('っｪ')"><input type="button" value="゙" onclick="insert('っ゙ｪ')">
+			<input type="button" value="" onclick="insert('っｫ')"><input type="button" value="゙" onclick="insert('っ゙ｫ')">
+			<input type="button" value="" onclick="insert('っｨｩ')"><input type="button" value="゙" onclick="insert('っ゙ｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="𛄼" onclick="insert('ﾁな')">
+			<input type="button" value="𛄽" onclick="insert('ﾁに')">
+			<input type="button" value="𛄾" onclick="insert('ﾁぬ')">
+			<input type="button" value="𛄿" onclick="insert('ﾁね')">
+			<input type="button" value="𛅀" onclick="insert('ﾁの')">
+			<input type="button" value="" onclick="insert('ﾁにｩ')">
+		</p>
+		<p>
+			<input type="button" value="𛅁" onclick="insert('ﾁは')"><input type="button" value="𛅁゙" onclick="insert('ﾁば')"><input type="button" value="𛅁゚" onclick="insert('ﾁぱ')">
+			<input type="button" value="𛅂" onclick="insert('ﾁひ')"><input type="button" value="𛅂゙" onclick="insert('ﾁび')"><input type="button" value="𛅂゚" onclick="insert('ﾁぴ')">
+			<input type="button" value="𛅃" onclick="insert('ﾁふ')"><input type="button" value="𛅃゙" onclick="insert('ﾁぶ')"><input type="button" value="𛅃゚" onclick="insert('ﾁぷ')">
+			<input type="button" value="" onclick="insert('ﾁほｩ')">
+			<input type="button" value="𛅄" onclick="insert('ﾁへ')"><input type="button" value="𛅄゙" onclick="insert('ﾁべ')"><input type="button" value="𛅄゚" onclick="insert('ﾁぺ')">
+			<input type="button" value="𛅅" onclick="insert('ﾁほ')"><input type="button" value="𛅅゙" onclick="insert('ﾁぼ')"><input type="button" value="𛅅゚" onclick="insert('ﾁぽ')">
+			<input type="button" value="" onclick="insert('ﾁひｩ')"><input type="button" value="゙" onclick="insert('ﾁびｩ')"><input type="button" value="゚" onclick="insert('ﾁぴｩ')">
+		</p>
+		<p>
+			<input type="button" value="𛅆" onclick="insert('ﾁま')">
+			<input type="button" value="𛅇" onclick="insert('ﾁみ')">
+			<input type="button" value="𛅈" onclick="insert('ﾁむ')">
+			<input type="button" value="𛅉" onclick="insert('ﾁめ')">
+			<input type="button" value="𛅊" onclick="insert('ﾁも')">
+			<input type="button" value="" onclick="insert('ﾁみｩ')">
+		</p>
+		<p>
+			<input type="button" value="ゃ" onclick="insert('ゃ')">
+			<input type="button" value="𛅨" onclick="insert('ぃｨ')">
+			<input type="button" value="ゅ" onclick="insert('ゅ')">
+			<input type="button" value="𛅩" onclick="insert('ぃｪ')">
+			<input type="button" value="ょ" onclick="insert('ょ')">
+			<input type="button" value="" onclick="insert('ぃｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="𛅋" onclick="insert('ﾁら')">
+			<input type="button" value="𛅌" onclick="insert('ﾁり')">
+			<input type="button" value="𛅍" onclick="insert('ﾁる')">
+			<input type="button" value="𛅎" onclick="insert('ﾁれ')">
+			<input type="button" value="𛅏" onclick="insert('ﾁろ')">
+			<input type="button" value="" onclick="insert('ﾁりｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ﾁるｧ')">
+			<input type="button" value="" onclick="insert('ﾁるｨ')">
+			<input type="button" value="" onclick="insert('ﾁるｩ')">
+			<input type="button" value="" onclick="insert('ﾁるｪ')">
+			<input type="button" value="" onclick="insert('ﾁるｫ')">
+			<input type="button" value="" onclick="insert('ﾁるｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="ゎ" onclick="insert('ゎ')"><input type="button" value="ゎ゙" onclick="insert('ゎ゙')"><input type="button" value="ゎ゚" onclick="insert('ゎ゚')">
+			<input type="button" value="𛅐" onclick="insert('ぅｨ')"><input type="button" value="𛅐゙" onclick="insert('ぅ゙ｨ')"><input type="button" value="𛅐゚" onclick="insert('ぅ゚ｨ')">
+			<input type="button" value="𛅪" onclick="insert('ぅｩ')"><input type="button" value="𛅪゙" onclick="insert('ぅ゙ｩ')"><input type="button" value="𛅪゚" onclick="insert('ぅ゚ｩ')">
+			<input type="button" value="𛅑" onclick="insert('ぅｪ')"><input type="button" value="𛅑゙" onclick="insert('ぅ゙ｪ')"><input type="button" value="𛅑゚" onclick="insert('ぅ゚ｪ')">
+			<input type="button" value="𛅒" onclick="insert('ぅｫ')"><input type="button" value="𛅒゙" onclick="insert('ぅ゙ｫ')"><input type="button" value="𛅒゚" onclick="insert('ぅ゚ｫ')">
+			<input type="button" value="" onclick="insert('ぅｨｩ')"><input type="button" value="゙" onclick="insert('ぅ゙ｨｩ')"><input type="button" value="゚" onclick="insert('ぅ゚ｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="𛅓" onclick="insert('ﾁん')">
+			<input type="button" value="" onclick="insert('ﾁふﾝ')">
+			<input type="button" value="" onclick="insert('ﾁｷち')">
+			<input type="button" value="" onclick="insert('ﾁはｼ')">
+			<input type="button" value="" onclick="insert('ﾁすﾒ')">
+			<input type="button" value="" onclick="insert('ﾁちﾒ')">
+			<input type="button" value="" onclick="insert('ﾁちｭｯ')">
+			<input type="button" value="" onclick="insert('ﾁちｯ')">
+			<input type="button" value="" onclick="insert('ﾁちｬｯ')">
+			<input type="button" value="" onclick="insert('ﾁちｼ')">
+			<input type="button" value="" onclick="insert('ﾁちﾗ')">
+		</p>
+	</details>
+	<details>
+		<summary>小書きカタカナ</summary>
+		<p>
+			<input type="button" value="ァ" onclick="insert('ァ')">
+			<input type="button" value="ィ" onclick="insert('ィ')">
+			<input type="button" value="ゥ" onclick="insert('ゥ')">
+			<input type="button" value="ェ" onclick="insert('ェ')">
+			<input type="button" value="ォ" onclick="insert('ォ')">
+			<input type="button" value="" onclick="insert('ィｩ')">
+		</p>
+		<p>
+			<input type="button" value="ヵ" onclick="insert('ヵ')"><input type="button" value="ヵ゙" onclick="insert('ヵ゙')">
+			<input type="button" value="𛅔" onclick="insert('ﾁキ')"><input type="button" value="𛅔゙" onclick="insert('ﾁギ')">
+			<input type="button" value="ㇰ" onclick="insert('ㇰ')"><input type="button" value="ㇰ゙" onclick="insert('ㇰ゙')">
+			<input type="button" value="ヶ" onclick="insert('ヶ')"><input type="button" value="ヶ゙" onclick="insert('ヶ゙')">
+			<input type="button" value="𛅕" onclick="insert('ﾁコ')"><input type="button" value="𛅕゙" onclick="insert('ﾁゴ')">
+			<input type="button" value="" onclick="insert('ﾁキｩ')"><input type="button" value="゙" onclick="insert('ﾁギｩ')">
+		</p>
+		<p>
+			<input type="button" value="𛅖" onclick="insert('ﾁサ')"><input type="button" value="𛅖゙" onclick="insert('ﾁザ')">
+			<input type="button" value="" onclick="insert('ㇲｨ')"><input type="button" value="゙" onclick="insert('ㇲ゙ｨ')">
+			<input type="button" value="ㇲ" onclick="insert('ㇲ')"><input type="button" value="ㇲ゙" onclick="insert('ㇲ゙')">
+			<input type="button" value="𛅗" onclick="insert('ﾁセ')"><input type="button" value="𛅗゙" onclick="insert('ﾁゼ')">
+			<input type="button" value="𛅘" onclick="insert('ﾁソ')"><input type="button" value="𛅘゙" onclick="insert('ﾁゾ')">
+			<input type="button" value="" onclick="insert('ㇲｨｩ')"><input type="button" value="゙" onclick="insert('ㇲ゙ｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ㇱｬ')"><input type="button" value="゙" onclick="insert('ㇱ゙ｬ')">
+			<input type="button" value="ㇱ" onclick="insert('ㇱ')"><input type="button" value="ㇱ゙" onclick="insert('ㇱ゙')">
+			<input type="button" value="" onclick="insert('ㇱｭ')"><input type="button" value="゙" onclick="insert('ㇱ゙ｭ')">
+			<input type="button" value="" onclick="insert('ㇱｪ')"><input type="button" value="゙" onclick="insert('ㇱ゙ｪ')">
+			<input type="button" value="" onclick="insert('ㇱｮ')"><input type="button" value="゙" onclick="insert('ㇱ゙ｮ')">
+			<input type="button" value="" onclick="insert('ㇱｩ')"><input type="button" value="゙" onclick="insert('ㇱ゙ｩ')">
+		</p>
+		<p>
+			<input type="button" value="𛅙" onclick="insert('ﾁタ')"><input type="button" value="𛅙゙" onclick="insert('ﾁダ')">
+			<input type="button" value="" onclick="insert('ﾁテｨ')"><input type="button" value="゙" onclick="insert('ﾁデｨ')">
+			<input type="button" value="" onclick="insert('ㇳｩ')"><input type="button" value="゙" onclick="insert('ㇳ゙ｩ')">
+			<input type="button" value="𛅛" onclick="insert('ﾁテ')"><input type="button" value="𛅛゙" onclick="insert('ﾁデ')">
+			<input type="button" value="ㇳ" onclick="insert('ㇳ')"><input type="button" value="ㇳ゙" onclick="insert('ㇳ゙')">
+			<input type="button" value="" onclick="insert('ﾁテｨｩ')"><input type="button" value="゙" onclick="insert('ﾁデｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ﾁチｬ')"><input type="button" value="゙" onclick="insert('ﾁヂｬ')">
+			<input type="button" value="𛅚" onclick="insert('ﾁチ')"><input type="button" value="𛅚゙" onclick="insert('ﾁヂ')">
+			<input type="button" value="" onclick="insert('ﾁチｭ')"><input type="button" value="゙" onclick="insert('ﾁヂｭ')">
+			<input type="button" value="" onclick="insert('ﾁチｪ')"><input type="button" value="゙" onclick="insert('ﾁヂｪ')">
+			<input type="button" value="" onclick="insert('ﾁチｮ')"><input type="button" value="゙" onclick="insert('ﾁヂｮ')">
+			<input type="button" value="" onclick="insert('ﾁチｩ')"><input type="button" value="゙" onclick="insert('ﾁヂｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ッｧ')"><input type="button" value="゙" onclick="insert('ッ゙ｧ')">
+			<input type="button" value="" onclick="insert('ッｨ')"><input type="button" value="゙" onclick="insert('ッ゙ｨ')">
+			<input type="button" value="ッ" onclick="insert('ッ')"><input type="button" value="ッ゙" onclick="insert('ッ゙')">
+			<input type="button" value="" onclick="insert('ッｪ')"><input type="button" value="゙" onclick="insert('ッ゙ｪ')">
+			<input type="button" value="" onclick="insert('ッｫ')"><input type="button" value="゙" onclick="insert('ッ゙ｫ')">
+			<input type="button" value="" onclick="insert('ッｨｩ')"><input type="button" value="゙" onclick="insert('ッ゙ｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="𛅜" onclick="insert('ﾁナ')">
+			<input type="button" value="𛅝" onclick="insert('ﾁニ')">
+			<input type="button" value="ㇴ" onclick="insert('ㇴ')">
+			<input type="button" value="𛅞" onclick="insert('ﾁネ')">
+			<input type="button" value="𛅟" onclick="insert('ﾁノ')">
+			<input type="button" value="" onclick="insert('ﾁニｩ')">
+		</p>
+		<p>
+			<input type="button" value="ㇵ" onclick="insert('ㇵ')"><input type="button" value="ㇵ゙" onclick="insert('ㇵ゙')"><input type="button" value="ㇵ゚" onclick="insert('ㇵ゚')">
+			<input type="button" value="ㇶ" onclick="insert('ㇶ')"><input type="button" value="ㇶ゙" onclick="insert('ㇶ゙')"><input type="button" value="ㇶ゚" onclick="insert('ㇶ゚')">
+			<input type="button" value="ㇷ" onclick="insert('ㇷ')"><input type="button" value="ㇷ゙" onclick="insert('ㇷ゙')"><input type="button" value="ㇷ゚" onclick="insert('ㇷ゚')">
+			<input type="button" value="" onclick="insert('ㇹｩ')">
+			<input type="button" value="ㇸ" onclick="insert('ㇸ')"><input type="button" value="ㇸ゙" onclick="insert('ㇸ゙')"><input type="button" value="ㇸ゚" onclick="insert('ㇸ゚')">
+			<input type="button" value="ㇹ" onclick="insert('ㇹ')"><input type="button" value="ㇹ゙" onclick="insert('ㇹ゙')"><input type="button" value="ㇹ゚" onclick="insert('ㇹ゚')">
+			<input type="button" value="" onclick="insert('ㇶｩ')"><input type="button" value="゙" onclick="insert('ㇶ゙ｩ')"><input type="button" value="゚" onclick="insert('ㇶ゚ｩ')">
+		</p>
+		<p>
+			<input type="button" value="𛅠" onclick="insert('ﾁマ')">
+			<input type="button" value="𛅡" onclick="insert('ﾁミ')">
+			<input type="button" value="ㇺ" onclick="insert('ㇺ')">
+			<input type="button" value="𛅢" onclick="insert('ﾁメ')">
+			<input type="button" value="𛅣" onclick="insert('ﾁモ')">
+			<input type="button" value="" onclick="insert('ﾁミｩ')">
+		</p>
+		<p>
+			<input type="button" value="ャ" onclick="insert('ャ')">
+			<input type="button" value="𛅫" onclick="insert('ィｨ')">
+			<input type="button" value="ュ" onclick="insert('ュ')">
+			<input type="button" value="𛅬" onclick="insert('ィｪ')">
+			<input type="button" value="ョ" onclick="insert('ョ')">
+			<input type="button" value="" onclick="insert('ィｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="ㇻ" onclick="insert('ㇻ')">
+			<input type="button" value="ㇼ" onclick="insert('ㇼ')">
+			<input type="button" value="ㇽ" onclick="insert('ㇽ')">
+			<input type="button" value="ㇾ" onclick="insert('ㇾ')">
+			<input type="button" value="ㇿ" onclick="insert('ㇿ')">
+			<input type="button" value="" onclick="insert('ㇼｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ㇽｧ')">
+			<input type="button" value="" onclick="insert('ㇽｨ')">
+			<input type="button" value="" onclick="insert('ㇽｩ')">
+			<input type="button" value="" onclick="insert('ㇽｪ')">
+			<input type="button" value="" onclick="insert('ㇽｫ')">
+			<input type="button" value="" onclick="insert('ㇽｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="ヮ" onclick="insert('ヮ')"><input type="button" value="ヮ゙" onclick="insert('ヮ゙')"><input type="button" value="ヮ゚" onclick="insert('ヮ゚')">
+			<input type="button" value="𛅤" onclick="insert('ゥｨ')"><input type="button" value="𛅤゙" onclick="insert('ゥ゙ｨ')"><input type="button" value="𛅤゚" onclick="insert('ゥ゚ｨ')">
+			<input type="button" value="𛅭" onclick="insert('ゥｩ')"><input type="button" value="𛅭゙" onclick="insert('ゥ゙ｩ')"><input type="button" value="𛅭゚" onclick="insert('ゥ゚ｩ')">
+			<input type="button" value="𛅥" onclick="insert('ゥｪ')"><input type="button" value="𛅥゙" onclick="insert('ゥ゙ｪ')"><input type="button" value="𛅥゚" onclick="insert('ゥ゚ｪ')">
+			<input type="button" value="𛅦" onclick="insert('ゥｫ')"><input type="button" value="𛅦゙" onclick="insert('ゥ゙ｫ')"><input type="button" value="𛅦゚" onclick="insert('ゥ゚ｫ')">
+			<input type="button" value="" onclick="insert('ゥｨｩ')"><input type="button" value="゙" onclick="insert('ゥ゙ｨｩ')"><input type="button" value="゚" onclick="insert('ゥ゚ｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="𛅧" onclick="insert('ﾁン')">
+			<input type="button" value="" onclick="insert('ㇷﾝ')">
+			<input type="button" value="" onclick="insert('ﾁｷチ')">
+			<input type="button" value="" onclick="insert('ㇵｼ')">
+			<input type="button" value="" onclick="insert('ㇱﾒ')">
+			<input type="button" value="" onclick="insert('ッﾒ')">
+			<input type="button" value="" onclick="insert('ﾁチｭｯ')">
+			<input type="button" value="" onclick="insert('ﾁチｯ')">
+			<input type="button" value="" onclick="insert('ﾁチｬｯ')">
+			<input type="button" value="" onclick="insert('ﾁチｼ')">
+			<input type="button" value="" onclick="insert('ﾁチﾗ')">
+		</p>
+	</details>
+	<details>
+		<summary>ケセン語かナ、子音のみの -y、-w、ひらがな カタカナ 共通</summary>
+		<p>
+			<input type="button" value="" onclick="insert('すﾒ')"><input type="button" value="" onclick="insert('ずﾒ')">
+			<input type="button" value="" onclick="insert('ちﾒ')"><input type="button" value="" onclick="insert('ぢﾒ')">
+			<input type="button" value="" onclick="insert('す゚ﾒ')"><input type="button" value="" onclick="insert('すﾒˠ')">
+			<input type="button" value="" onclick="insert('ち゚ﾒ')"><input type="button" value="" onclick="insert('ちﾒˠ')">
+			<input type="button" value="" onclick="insert('ち‌̣ﾒ')"><input type="button" value="" onclick="insert('ち゚‌̣ﾒ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('シﾒ')"><input type="button" value="" onclick="insert('ジﾒ')">
+			<input type="button" value="" onclick="insert('ツﾒ')"><input type="button" value="" onclick="insert('ヅﾒ')">
+			<input type="button" value="" onclick="insert('シ゚ﾒ')"><input type="button" value="" onclick="insert('シﾒˠ')">
+			<input type="button" value="" onclick="insert('ツ゚ﾒ')"><input type="button" value="" onclick="insert('ツﾒˠ')">
+			<input type="button" value="" onclick="insert('ツ‌̣ﾒ')"><input type="button" value="" onclick="insert('ツ゚‌̣ﾒ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ぃ‌̣')"><input type="button" value="" onclick="insert('ぅ‌̣')">
+			<input type="button" value="" onclick="insert('ィ‌̣')"><input type="button" value="" onclick="insert('ゥ‌̣')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('〆ｯ')">
+			<input type="button" value="" onclick="insert('るｯ')">
+			<input type="button" value="ー" onclick="insert('ー')">
+		</p>
+	</details>
+	<details>
+		<summary>拡張ひらがな</summary>
+		<p>
+			<input type="button" value="" onclick="insert('あ‌̣')">
+			<input type="button" value="" onclick="insert('い‌̣')">
+			<input type="button" value="" onclick="insert('う‌̣')">
+			<input type="button" value="" onclick="insert('え‌̣')">
+			<input type="button" value="" onclick="insert('お‌̣')">
+			<input type="button" value="" onclick="insert('いｩ')"><input type="button" value="" onclick="insert('い‌̣ｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('か゚')">
+			<input type="button" value="" onclick="insert('き゚')">
+			<input type="button" value="" onclick="insert('く゚')">
+			<input type="button" value="" onclick="insert('け゚')">
+			<input type="button" value="" onclick="insert('こ゚')">
+			<input type="button" value="" onclick="insert('きｩ')"><input type="button" value="" onclick="insert('ぎｩ')"><input type="button" value="" onclick="insert('き゚ｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('さ゚')"><input type="button" value="" onclick="insert('さˠ')">
+			<input type="button" value="" onclick="insert('すｨ')"><input type="button" value="" onclick="insert('ずｨ')"><input type="button" value="" onclick="insert('す゚ｨ')"><input type="button" value="" onclick="insert('すˠｨ')">
+			<input type="button" value="" onclick="insert('す゚')"><input type="button" value="" onclick="insert('すˠ')">
+			<input type="button" value="" onclick="insert('せ゚')"><input type="button" value="" onclick="insert('せˠ')">
+			<input type="button" value="" onclick="insert('そ゚')"><input type="button" value="" onclick="insert('そˠ')">
+			<input type="button" value="" onclick="insert('すｨｩ')"><input type="button" value="" onclick="insert('ずｨｩ')"><input type="button" value="" onclick="insert('す゚ｨｩ')"><input type="button" value="" onclick="insert('すˠｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="𛁃" onclick="insert('しｬ')"><input type="button" value="" onclick="insert('じｬ')">
+			<input type="button" value="" onclick="insert('しｭ')"><input type="button" value="" onclick="insert('じｭ')">
+			<input type="button" value="" onclick="insert('しｪ')"><input type="button" value="" onclick="insert('じｪ')">
+			<input type="button" value="" onclick="insert('しｮ')"><input type="button" value="" onclick="insert('じｮ')">
+			<input type="button" value="" onclick="insert('しｩ')"><input type="button" value="" onclick="insert('じｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('てｨ')"><input type="button" value="" onclick="insert('でｨ')">
+			<input type="button" value="𛁭" onclick="insert('とｩ')"><input type="button" value="" onclick="insert('どｩ')">
+			<input type="button" value="" onclick="insert('てｨｩ')"><input type="button" value="" onclick="insert('でｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ちｬ')"><input type="button" value="" onclick="insert('ぢｬ')">
+			<input type="button" value="" onclick="insert('ちｭ')"><input type="button" value="" onclick="insert('ぢｭ')">
+			<input type="button" value="" onclick="insert('ちｪ')"><input type="button" value="" onclick="insert('ぢｪ')">
+			<input type="button" value="" onclick="insert('ちｮ')"><input type="button" value="" onclick="insert('ぢｮ')">
+			<input type="button" value="" onclick="insert('ちｩ')"><input type="button" value="" onclick="insert('ぢｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('つｧ')"><input type="button" value="" onclick="insert('づｧ')">
+			<input type="button" value="" onclick="insert('つｨ')"><input type="button" value="" onclick="insert('づｨ')">
+			<input type="button" value="" onclick="insert('つｪ')"><input type="button" value="" onclick="insert('づｪ')">
+			<input type="button" value="" onclick="insert('つｫ')"><input type="button" value="" onclick="insert('づｫ')">
+			<input type="button" value="" onclick="insert('つｨｩ')"><input type="button" value="" onclick="insert('づｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('にｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('は‌̣')">
+			<input type="button" value="" onclick="insert('ひ‌̣')">
+			<input type="button" value="𛀹" onclick="insert('ほｩ')"><input type="button" value="" onclick="insert('ほ‌̣ｩ')">
+			<input type="button" value="" onclick="insert('へ‌̣')">
+			<input type="button" value="" onclick="insert('ほ‌̣')">
+			<input type="button" value="" onclick="insert('ひｩ')"><input type="button" value="" onclick="insert('びｩ')"><input type="button" value="" onclick="insert('ぴｩ')"><input type="button" value="" onclick="insert('ひｩ‌̣')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('みｩ')">
+		</p>
+		<p>
+			<input type="button" value="𛀆" onclick="insert('いｨ')">
+			<input type="button" value="𛀁" onclick="insert('いｪ')">
+			<input type="button" value="" onclick="insert('いｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ら゚')">
+			<input type="button" value="" onclick="insert('り゚')">
+			<input type="button" value="" onclick="insert('る゚')">
+			<input type="button" value="" onclick="insert('れ゚')">
+			<input type="button" value="" onclick="insert('ろ゚')">
+			<input type="button" value="" onclick="insert('りｩ')"><input type="button" value="" onclick="insert('り゚ｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('るｧ')">
+			<input type="button" value="" onclick="insert('るｨ')">
+			<input type="button" value="" onclick="insert('るｩ')">
+			<input type="button" value="" onclick="insert('るｪ')">
+			<input type="button" value="" onclick="insert('るｫ')">
+			<input type="button" value="" onclick="insert('るｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('わ゙')"><input type="button" value="" onclick="insert('わ゚')">
+			<input type="button" value="" onclick="insert('ゐ゙')"><input type="button" value="" onclick="insert('ゐ゚')">
+			<input type="button" value="𛄟" onclick="insert('うｩ')"><input type="button" value="" onclick="insert('ゔｩ')"><input type="button" value="" onclick="insert('う゚ｩ')">
+			<input type="button" value="" onclick="insert('ゑ゙')"><input type="button" value="" onclick="insert('ゑ゚')">
+			<input type="button" value="" onclick="insert('を゙')"><input type="button" value="" onclick="insert('を゚')">
+			<input type="button" value="" onclick="insert('ゐｩ')"><input type="button" value="" onclick="insert('ゐ゙ｩ')"><input type="button" value="" onclick="insert('ゐ゚ｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ふﾝ')">
+			<input type="button" value="" onclick="insert('ぶﾝ')">
+			<input type="button" value="" onclick="insert('ｷち')"><input type="button" value="" onclick="insert('ｷぢ')">
+			<input type="button" value="" onclick="insert('はｼ')"><input type="button" value="" onclick="insert('ばｼ')">
+			<input type="button" value="" onclick="insert('ちｭｯ')">
+			<input type="button" value="" onclick="insert('ちｯ')">
+			<input type="button" value="" onclick="insert('ちｬｯ')">
+			<input type="button" value="" onclick="insert('ちｼ')">
+			<input type="button" value="" onclick="insert('ちﾗ')">
+		</p>
+	</details>
+	<details>
+		<summary>拡張カタカナ</summary>
+		<p>
+			<input type="button" value="" onclick="insert('ア‌̣')">
+			<input type="button" value="" onclick="insert('イ‌̣')">
+			<input type="button" value="" onclick="insert('ウ‌̣')">
+			<input type="button" value="" onclick="insert('エ‌̣')">
+			<input type="button" value="" onclick="insert('オ‌̣')">
+			<input type="button" value="" onclick="insert('イｩ')"><input type="button" value="" onclick="insert('イ‌̣ｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('カ゚')">
+			<input type="button" value="" onclick="insert('キ゚')">
+			<input type="button" value="" onclick="insert('ク゚')">
+			<input type="button" value="" onclick="insert('ケ゚')">
+			<input type="button" value="" onclick="insert('コ゚')">
+			<input type="button" value="" onclick="insert('キｩ')"><input type="button" value="" onclick="insert('ギｩ')"><input type="button" value="" onclick="insert('キ゚ｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('サ゚')"><input type="button" value="" onclick="insert('サˠ')">
+			<input type="button" value="" onclick="insert('スｨ')"><input type="button" value="" onclick="insert('ズｨ')"><input type="button" value="" onclick="insert('ス゚ｨ')"><input type="button" value="" onclick="insert('スˠｨ')">
+			<input type="button" value="" onclick="insert('ス゚')"><input type="button" value="" onclick="insert('スˠ')">
+			<input type="button" value="" onclick="insert('セ゚')"><input type="button" value="" onclick="insert('セˠ')">
+			<input type="button" value="" onclick="insert('ソ゚')"><input type="button" value="" onclick="insert('ソˠ')">
+			<input type="button" value="" onclick="insert('スｨｩ')"><input type="button" value="" onclick="insert('ズｨｩ')"><input type="button" value="" onclick="insert('ス゚ｨｩ')"><input type="button" value="" onclick="insert('スˠｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('シｬ')"><input type="button" value="" onclick="insert('ジｬ')">
+			<input type="button" value="" onclick="insert('シｭ')"><input type="button" value="" onclick="insert('ジｭ')">
+			<input type="button" value="" onclick="insert('シｪ')"><input type="button" value="" onclick="insert('ジｪ')">
+			<input type="button" value="" onclick="insert('シｮ')"><input type="button" value="" onclick="insert('ジｮ')">
+			<input type="button" value="" onclick="insert('シｩ')"><input type="button" value="" onclick="insert('ジｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('テｨ')"><input type="button" value="" onclick="insert('デｨ')">
+			<input type="button" value="" onclick="insert('トｩ')"><input type="button" value="" onclick="insert('ドｩ')">
+			<input type="button" value="" onclick="insert('テｨｩ')"><input type="button" value="" onclick="insert('デｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('チｬ')"><input type="button" value="" onclick="insert('ヂｬ')">
+			<input type="button" value="" onclick="insert('チｭ')"><input type="button" value="" onclick="insert('ヂｭ')">
+			<input type="button" value="" onclick="insert('チｪ')"><input type="button" value="" onclick="insert('ヂｪ')">
+			<input type="button" value="" onclick="insert('チｮ')"><input type="button" value="" onclick="insert('ヂｮ')">
+			<input type="button" value="" onclick="insert('チｩ')"><input type="button" value="" onclick="insert('ヂｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ツｧ')"><input type="button" value="" onclick="insert('ヅｧ')">
+			<input type="button" value="" onclick="insert('ツｨ')"><input type="button" value="" onclick="insert('ヅｨ')">
+			<input type="button" value="" onclick="insert('ツｪ')"><input type="button" value="" onclick="insert('ヅｪ')">
+			<input type="button" value="" onclick="insert('ツｫ')"><input type="button" value="" onclick="insert('ヅｫ')">
+			<input type="button" value="" onclick="insert('ツｨｩ')"><input type="button" value="" onclick="insert('ヅｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ニｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ハ‌̣')">
+			<input type="button" value="" onclick="insert('ヒ‌̣')">
+			<input type="button" value="" onclick="insert('ホｩ')"><input type="button" value="" onclick="insert('ホ‌̣ｩ')">
+			<input type="button" value="" onclick="insert('ヘ‌̣')">
+			<input type="button" value="" onclick="insert('ホ‌̣')">
+			<input type="button" value="" onclick="insert('ヒｩ')"><input type="button" value="" onclick="insert('ビｩ')"><input type="button" value="" onclick="insert('ピｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ミｩ')">
+		</p>
+		<p>
+			<input type="button" value="𛄠" onclick="insert('イｨ')">
+			<input type="button" value="𛄡" onclick="insert('イｪ')">
+			<input type="button" value="" onclick="insert('イｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ラ゚')">
+			<input type="button" value="" onclick="insert('リ゚')">
+			<input type="button" value="" onclick="insert('ル゚')">
+			<input type="button" value="" onclick="insert('レ゚')">
+			<input type="button" value="" onclick="insert('ロ゚')">
+			<input type="button" value="" onclick="insert('リｩ')"><input type="button" value="" onclick="insert('リ゚ｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ルｧ')">
+			<input type="button" value="" onclick="insert('ルｨ')">
+			<input type="button" value="" onclick="insert('ルｩ')">
+			<input type="button" value="" onclick="insert('ルｪ')">
+			<input type="button" value="" onclick="insert('ルｫ')">
+			<input type="button" value="" onclick="insert('ルｨｩ')">
+		</p>
+		<p>
+			<input type="button" value="ヷ" onclick="insert('ヷ')"><input type="button" value="" onclick="insert('ワ゚')">
+			<input type="button" value="ヸ" onclick="insert('ヸ')"><input type="button" value="" onclick="insert('ヰ゚')">
+			<input type="button" value="𛄢" onclick="insert('ウｩ')"><input type="button" value="" onclick="insert('ヴｩ')"><input type="button" value="" onclick="insert('ウ゚ｩ')">
+			<input type="button" value="ヹ" onclick="insert('ヹ')"><input type="button" value="" onclick="insert('ヱ゚')">
+			<input type="button" value="ヺ" onclick="insert('ヺ')"><input type="button" value="" onclick="insert('ヲ゚')">
+			<input type="button" value="" onclick="insert('ヰｩ')"><input type="button" value="" onclick="insert('ヸｩ')"><input type="button" value="" onclick="insert('ヰ゚ｩ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('フﾝ')">
+			<input type="button" value="" onclick="insert('ブﾝ')">
+			<input type="button" value="" onclick="insert('ｷチ')"><input type="button" value="" onclick="insert('ｷヂ')">
+			<input type="button" value="" onclick="insert('ハｼ')"><input type="button" value="" onclick="insert('バｼ')">
+			<input type="button" value="" onclick="insert('チｭｯ')">
+			<input type="button" value="" onclick="insert('チｯ')">
+			<input type="button" value="" onclick="insert('チｬｯ')">
+			<input type="button" value="" onclick="insert('チｼ')">
+			<input type="button" value="" onclick="insert('チﾗ')">
+		</p>
+	</details>
+	<details>
+		<summary>上代特殊仮名遣</summary>
+		<p>
+			<input type="button" value="𛀦" onclick="insert('きｦ')">
+			<input type="button" value="𛀳" onclick="insert('けｦ')">
+			<input type="button" value="𛀸" onclick="insert('こｦ')">
+			<input type="button" value="𛁜" onclick="insert('そｦ')">
+			<input type="button" value="𛁷" onclick="insert('とｦ')">
+			<input type="button" value="𛂝" onclick="insert('のｦ')">
+			<input type="button" value="𛂬" onclick="insert('ひｦ')">
+			<input type="button" value="𛂹" onclick="insert('へｦ')">
+			<input type="button" value="𛃌" onclick="insert('みｦ')">
+			<input type="button" value="𛃕" onclick="insert('めｦ')">
+			<input type="button" value="𛃚" onclick="insert('もｦ')">
+			<input type="button" value="𛃢" onclick="insert('よｦ')">
+			<input type="button" value="𛄆" onclick="insert('ろｦ')">
+		</p>
+		<p>
+			<input type="button" value="𛀩" onclick="insert('きｵ')">
+			<input type="button" value="𛀵" onclick="insert('けｵ')">
+			<input type="button" value="𛀺" onclick="insert('こｵ')">
+			<input type="button" value="𛁗" onclick="insert('そｵ')">
+			<input type="button" value="𛁻" onclick="insert('とｵ')">
+			<input type="button" value="𛂛" onclick="insert('のｵ')">
+			<input type="button" value="𛂯" onclick="insert('ひｵ')">
+			<input type="button" value="𛂳" onclick="insert('へｵ')">
+			<input type="button" value="𛃏" onclick="insert('みｵ')">
+			<input type="button" value="𛃔" onclick="insert('めｵ')">
+			<input type="button" value="𛃗" onclick="insert('もｵ')">
+			<input type="button" value="𛃪" onclick="insert('よｵ')">
+			<input type="button" value="𛄂" onclick="insert('ろｵ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('キｦ')">
+			<input type="button" value="" onclick="insert('ケｦ')">
+			<input type="button" value="" onclick="insert('コｦ')">
+			<input type="button" value="" onclick="insert('ソｦ')">
+			<input type="button" value="" onclick="insert('トｦ')">
+			<input type="button" value="" onclick="insert('ノｦ')">
+			<input type="button" value="" onclick="insert('ヒｦ')">
+			<input type="button" value="" onclick="insert('ヘｦ')">
+			<input type="button" value="" onclick="insert('ミｦ')">
+			<input type="button" value="" onclick="insert('メｦ')">
+			<input type="button" value="" onclick="insert('モｦ')">
+			<input type="button" value="" onclick="insert('ヨｦ')">
+			<input type="button" value="" onclick="insert('ロｦ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('キｵ')">
+			<input type="button" value="" onclick="insert('ケｵ')">
+			<input type="button" value="" onclick="insert('コｵ')">
+			<input type="button" value="" onclick="insert('ソｵ')">
+			<input type="button" value="" onclick="insert('トｵ')">
+			<input type="button" value="" onclick="insert('ノｵ')">
+			<input type="button" value="" onclick="insert('ヒｵ')">
+			<input type="button" value="" onclick="insert('ヘｵ')">
+			<input type="button" value="" onclick="insert('ミｵ')">
+			<input type="button" value="" onclick="insert('メｵ')">
+			<input type="button" value="" onclick="insert('モｵ')">
+			<input type="button" value="" onclick="insert('ヨｵ')">
+			<input type="button" value="" onclick="insert('ロｵ')">
+		</p>
+	</details>
+	<details>
+		<summary>変体仮名</summary>
+		<p>
+			<input type="button" value="𛀂" onclick="insert('あ(安)')">
+			<input type="button" value="𛀃" onclick="insert('あ(愛)')">
+			<input type="button" value="𛀄" onclick="insert('あ(阿)')">
+			<input type="button" value="𛀅" onclick="insert('あ(惡)')">
+			<input type="button" value="𛀆" onclick="insert('い(以)')">
+			<input type="button" value="𛀇" onclick="insert('い(伊)')">
+			<input type="button" value="𛀈" onclick="insert('い(意)')">
+			<input type="button" value="𛀉" onclick="insert('い(移)')">
+			<input type="button" value="𛀊" onclick="insert('う(宇1)')">
+			<input type="button" value="𛀋" onclick="insert('う(宇2)')">
+			<input type="button" value="𛀌" onclick="insert('う(憂)')">
+			<input type="button" value="𛀍" onclick="insert('う(有)')">
+			<input type="button" value="𛀎" onclick="insert('う(雲)')">
+			<input type="button" value="𛀁" onclick="insert('え(江)')">
+			<input type="button" value="𛀏" onclick="insert('え(盈)')">
+			<input type="button" value="𛀐" onclick="insert('え(縁)')">
+			<input type="button" value="𛀑" onclick="insert('え(衣1)')">
+			<input type="button" value="𛀒" onclick="insert('え(衣2)')">
+			<input type="button" value="𛀓" onclick="insert('え(要)')">
+			<input type="button" value="𛀔" onclick="insert('お(於1)')">
+			<input type="button" value="𛀕" onclick="insert('お(於2)')">
+			<input type="button" value="𛀖" onclick="insert('お(隱)')">
+		</p>
+		<p>
+			<input type="button" value="𛀗" onclick="insert('か(佳)')">
+			<input type="button" value="𛀘" onclick="insert('か(加)')">
+			<input type="button" value="𛀙" onclick="insert('か(可1)')">
+			<input type="button" value="𛀚" onclick="insert('か(可2)')">
+			<input type="button" value="𛀛" onclick="insert('か(嘉)')">
+			<input type="button" value="𛀜" onclick="insert('か(我)')">
+			<input type="button" value="𛀝" onclick="insert('か(歟)')">
+			<input type="button" value="𛀞" onclick="insert('か(賀)')">
+			<input type="button" value="𛀟" onclick="insert('か(閑)')">
+			<input type="button" value="𛀠" onclick="insert('か(香)')">
+			<input type="button" value="𛀡" onclick="insert('か(駕)')">
+			<input type="button" value="𛀢" onclick="insert('か(家)')">
+			<input type="button" value="𛀣" onclick="insert('き(喜)')">
+			<input type="button" value="𛀤" onclick="insert('き(幾1)')">
+			<input type="button" value="𛀥" onclick="insert('き(幾2)')">
+			<input type="button" value="𛀦" onclick="insert('き(支)')">
+			<input type="button" value="𛀧" onclick="insert('き(木)')">
+			<input type="button" value="𛀨" onclick="insert('き(祈)')">
+			<input type="button" value="𛀩" onclick="insert('き(貴)')">
+			<input type="button" value="𛀪" onclick="insert('き(起)')">
+			<input type="button" value="𛀫" onclick="insert('く(久1)')">
+			<input type="button" value="𛀬" onclick="insert('く(久2)')">
+			<input type="button" value="𛀭" onclick="insert('く(九)')">
+			<input type="button" value="𛀮" onclick="insert('く(供)')">
+			<input type="button" value="𛀯" onclick="insert('く(倶)')">
+			<input type="button" value="𛀰" onclick="insert('く(具)')">
+			<input type="button" value="𛀱" onclick="insert('く(求)')">
+			<input type="button" value="𛀲" onclick="insert('け(介1)')">
+			<input type="button" value="𛀳" onclick="insert('け(介2)')">
+			<input type="button" value="𛀴" onclick="insert('け(希)')">
+			<input type="button" value="𛀵" onclick="insert('け(氣)')">
+			<input type="button" value="𛀶" onclick="insert('け(計)')">
+			<input type="button" value="𛀷" onclick="insert('け(遣)')">
+			<input type="button" value="𛀸" onclick="insert('こ(古)')">
+			<input type="button" value="𛀹" onclick="insert('こ(故)')">
+			<input type="button" value="𛀺" onclick="insert('こ(許)')">
+			<input type="button" value="𛀻" onclick="insert('こ(期)')">
+		</p>
+		<p>
+			<input type="button" value="𛀗゙" onclick="insert('が(佳)')">
+			<input type="button" value="𛀘゙" onclick="insert('が(加)')">
+			<input type="button" value="𛀙゙" onclick="insert('が(可1)')">
+			<input type="button" value="𛀚゙" onclick="insert('が(可2)')">
+			<input type="button" value="𛀛゙" onclick="insert('が(嘉)')">
+			<input type="button" value="𛀜゙" onclick="insert('が(我)')">
+			<input type="button" value="𛀝゙" onclick="insert('が(歟)')">
+			<input type="button" value="𛀞゙" onclick="insert('が(賀)')">
+			<input type="button" value="𛀟゙" onclick="insert('が(閑)')">
+			<input type="button" value="𛀠゙" onclick="insert('が(香)')">
+			<input type="button" value="𛀡゙" onclick="insert('が(駕)')">
+			<input type="button" value="𛀢゙" onclick="insert('が(家)')">
+			<input type="button" value="𛀣゙" onclick="insert('ぎ(喜)')">
+			<input type="button" value="𛀤゙" onclick="insert('ぎ(幾1)')">
+			<input type="button" value="𛀥゙" onclick="insert('ぎ(幾2)')">
+			<input type="button" value="𛀦゙" onclick="insert('ぎ(支)')">
+			<input type="button" value="𛀧゙" onclick="insert('ぎ(木)')">
+			<input type="button" value="𛀨゙" onclick="insert('ぎ(祈)')">
+			<input type="button" value="𛀩゙" onclick="insert('ぎ(貴)')">
+			<input type="button" value="𛀪゙" onclick="insert('ぎ(起)')">
+			<input type="button" value="𛀫゙" onclick="insert('ぐ(久1)')">
+			<input type="button" value="𛀬゙" onclick="insert('ぐ(久2)')">
+			<input type="button" value="𛀭゙" onclick="insert('ぐ(九)')">
+			<input type="button" value="𛀮゙" onclick="insert('ぐ(供)')">
+			<input type="button" value="𛀯゙" onclick="insert('ぐ(倶)')">
+			<input type="button" value="𛀰゙" onclick="insert('ぐ(具)')">
+			<input type="button" value="𛀱゙" onclick="insert('ぐ(求)')">
+			<input type="button" value="𛀲゙" onclick="insert('げ(介1)')">
+			<input type="button" value="𛀳゙" onclick="insert('げ(介2)')">
+			<input type="button" value="𛀴゙" onclick="insert('げ(希)')">
+			<input type="button" value="𛀵゙" onclick="insert('げ(氣)')">
+			<input type="button" value="𛀶゙" onclick="insert('げ(計)')">
+			<input type="button" value="𛀷゙" onclick="insert('げ(遣)')">
+			<input type="button" value="𛀸゙" onclick="insert('ご(古)')">
+			<input type="button" value="𛀹゙" onclick="insert('ご(故)')">
+			<input type="button" value="𛀺゙" onclick="insert('ご(許)')">
+			<input type="button" value="𛀻゙" onclick="insert('ご(期)')">
+		</p>
+		<p>
+			<input type="button" value="𛀼" onclick="insert('さ(乍)')">
+			<input type="button" value="𛀽" onclick="insert('さ(佐1)')">
+			<input type="button" value="𛀾" onclick="insert('さ(佐2)')">
+			<input type="button" value="𛀿" onclick="insert('さ(左)')">
+			<input type="button" value="𛁀" onclick="insert('さ(差)')">
+			<input type="button" value="𛁁" onclick="insert('さ(散)')">
+			<input type="button" value="𛁂" onclick="insert('さ(斜)')">
+			<input type="button" value="𛁃" onclick="insert('さ(沙)')">
+			<input type="button" value="𛁄" onclick="insert('し(之1)')">
+			<input type="button" value="𛁅" onclick="insert('し(之2)')">
+			<input type="button" value="𛁆" onclick="insert('し(事)')">
+			<input type="button" value="𛁇" onclick="insert('し(四)')">
+			<input type="button" value="𛁈" onclick="insert('し(志)')">
+			<input type="button" value="𛁉" onclick="insert('し(新)')">
+			<input type="button" value="𛁊" onclick="insert('す(受)')">
+			<input type="button" value="𛁋" onclick="insert('す(壽)')">
+			<input type="button" value="𛁌" onclick="insert('す(數1)')">
+			<input type="button" value="𛁍" onclick="insert('す(數2)')">
+			<input type="button" value="𛁎" onclick="insert('す(春1)')">
+			<input type="button" value="𛁏" onclick="insert('す(春2)')">
+			<input type="button" value="𛁐" onclick="insert('す(須1)')">
+			<input type="button" value="𛁑" onclick="insert('す(須2)')">
+			<input type="button" value="𛁒" onclick="insert('せ(世1)')">
+			<input type="button" value="𛁓" onclick="insert('せ(世2)')">
+			<input type="button" value="𛁔" onclick="insert('せ(世3)')">
+			<input type="button" value="𛁕" onclick="insert('せ(勢)')">
+			<input type="button" value="𛁖" onclick="insert('せ(聲)')">
+			<input type="button" value="𛁗" onclick="insert('そ(所1)')">
+			<input type="button" value="𛁘" onclick="insert('そ(所2)')">
+			<input type="button" value="𛁙" onclick="insert('そ(曾1)')">
+			<input type="button" value="𛁚" onclick="insert('そ(曾2)')">
+			<input type="button" value="𛁛" onclick="insert('そ(楚)')">
+			<input type="button" value="𛁜" onclick="insert('そ(蘇)')">
+			<input type="button" value="𛁝" onclick="insert('そ(處)')">
+		</p>
+		<p>
+			<input type="button" value="𛀼゙" onclick="insert('ざ(乍)')">
+			<input type="button" value="𛀽゙" onclick="insert('ざ(佐1)')">
+			<input type="button" value="𛀾゙" onclick="insert('ざ(佐2)')">
+			<input type="button" value="𛀿゙" onclick="insert('ざ(左)')">
+			<input type="button" value="𛁀゙" onclick="insert('ざ(差)')">
+			<input type="button" value="𛁁゙" onclick="insert('ざ(散)')">
+			<input type="button" value="𛁂゙" onclick="insert('ざ(斜)')">
+			<input type="button" value="" onclick="insert('ざ(沙)')">
+			<input type="button" value="𛁄゙" onclick="insert('じ(之1)')">
+			<input type="button" value="𛁅゙" onclick="insert('じ(之2)')">
+			<input type="button" value="𛁆゙" onclick="insert('じ(事)')">
+			<input type="button" value="𛁇゙" onclick="insert('じ(四)')">
+			<input type="button" value="𛁈゙" onclick="insert('じ(志)')">
+			<input type="button" value="𛁉゙" onclick="insert('じ(新)')">
+			<input type="button" value="𛁊゙" onclick="insert('ず(受)')">
+			<input type="button" value="𛁋゙" onclick="insert('ず(壽)')">
+			<input type="button" value="𛁌゙" onclick="insert('ず(數1)')">
+			<input type="button" value="𛁍゙" onclick="insert('ず(數2)')">
+			<input type="button" value="𛁎゙" onclick="insert('ず(春1)')">
+			<input type="button" value="𛁏゙" onclick="insert('ず(春2)')">
+			<input type="button" value="𛁐゙" onclick="insert('ず(須1)')">
+			<input type="button" value="𛁑゙" onclick="insert('ず(須2)')">
+			<input type="button" value="𛁒゙" onclick="insert('ぜ(世1)')">
+			<input type="button" value="𛁓゙" onclick="insert('ぜ(世2)')">
+			<input type="button" value="𛁔゙" onclick="insert('ぜ(世3)')">
+			<input type="button" value="𛁕゙" onclick="insert('ぜ(勢)')">
+			<input type="button" value="𛁖゙" onclick="insert('ぜ(聲)')">
+			<input type="button" value="𛁗゙" onclick="insert('ぞ(所1)')">
+			<input type="button" value="𛁘゙" onclick="insert('ぞ(所2)')">
+			<input type="button" value="𛁙゙" onclick="insert('ぞ(曾1)')">
+			<input type="button" value="𛁚゙" onclick="insert('ぞ(曾2)')">
+			<input type="button" value="𛁛゙" onclick="insert('ぞ(楚)')">
+			<input type="button" value="𛁜゙" onclick="insert('ぞ(蘇)')">
+			<input type="button" value="𛁝゙" onclick="insert('ぞ(處)')">
+		</p>
+		<p>
+			<input type="button" value="𛁞" onclick="insert('た(堂)')">
+			<input type="button" value="𛁟" onclick="insert('た(多1)')">
+			<input type="button" value="𛁠" onclick="insert('た(多2)')">
+			<input type="button" value="𛁡" onclick="insert('た(當)')">
+			<input type="button" value="𛁢" onclick="insert('ち(千)')">
+			<input type="button" value="𛁣" onclick="insert('ち(地)')">
+			<input type="button" value="𛁤" onclick="insert('ち(智)')">
+			<input type="button" value="𛁥" onclick="insert('ち(知1)')">
+			<input type="button" value="𛁦" onclick="insert('ち(知2)')">
+			<input type="button" value="𛁧" onclick="insert('ち(致)')">
+			<input type="button" value="𛁨" onclick="insert('ち(遲)')">
+			<input type="button" value="𛁩" onclick="insert('つ(川1)')">
+			<input type="button" value="𛁪" onclick="insert('つ(川2)')">
+			<input type="button" value="𛁫" onclick="insert('つ(津)')">
+			<input type="button" value="𛁬" onclick="insert('つ(都)')">
+			<input type="button" value="𛁭" onclick="insert('つ(徒)')">
+			<input type="button" value="𛁮" onclick="insert('て(亭)')">
+			<input type="button" value="𛁯" onclick="insert('て(低)')">
+			<input type="button" value="𛁰" onclick="insert('て(傳)')">
+			<input type="button" value="𛁱" onclick="insert('て(天1)')">
+			<input type="button" value="𛁲" onclick="insert('て(天2)')">
+			<input type="button" value="𛁳" onclick="insert('て(天3)')">
+			<input type="button" value="𛁴" onclick="insert('て(帝)')">
+			<input type="button" value="𛁵" onclick="insert('て(弖)')">
+			<input type="button" value="𛁶" onclick="insert('て(轉)')">
+			<input type="button" value="𛁷" onclick="insert('と(土)')">
+			<input type="button" value="𛁸" onclick="insert('と(度)')">
+			<input type="button" value="𛁹" onclick="insert('と(東)')">
+			<input type="button" value="𛁺" onclick="insert('と(登1)')">
+			<input type="button" value="𛁻" onclick="insert('と(登2)')">
+			<input type="button" value="𛁼" onclick="insert('と(砥)')">
+			<input type="button" value="𛁽" onclick="insert('と(等)')">
+		</p>
+		<p>
+			<input type="button" value="𛁞゙" onclick="insert('だ(堂)')">
+			<input type="button" value="𛁟゙" onclick="insert('だ(多1)')">
+			<input type="button" value="𛁠゙" onclick="insert('だ(多2)')">
+			<input type="button" value="𛁡゙" onclick="insert('だ(當)')">
+			<input type="button" value="𛁢゙" onclick="insert('ぢ(千)')">
+			<input type="button" value="𛁣゙" onclick="insert('ぢ(地)')">
+			<input type="button" value="𛁤゙" onclick="insert('ぢ(智)')">
+			<input type="button" value="𛁥゙" onclick="insert('ぢ(知1)')">
+			<input type="button" value="𛁦゙" onclick="insert('ぢ(知2)')">
+			<input type="button" value="𛁧゙" onclick="insert('ぢ(致)')">
+			<input type="button" value="𛁨゙" onclick="insert('ぢ(遲)')">
+			<input type="button" value="𛁩゙" onclick="insert('づ(川1)')">
+			<input type="button" value="𛁪゙" onclick="insert('づ(川2)')">
+			<input type="button" value="𛁫゙" onclick="insert('づ(津)')">
+			<input type="button" value="𛁬゙" onclick="insert('づ(都)')">
+			<input type="button" value="" onclick="insert('づ(徒)')">
+			<input type="button" value="𛁮゙" onclick="insert('で(亭)')">
+			<input type="button" value="𛁯゙" onclick="insert('で(低)')">
+			<input type="button" value="𛁰゙" onclick="insert('で(傳)')">
+			<input type="button" value="𛁱゙" onclick="insert('で(天1)')">
+			<input type="button" value="𛁲゙" onclick="insert('で(天2)')">
+			<input type="button" value="𛁳゙" onclick="insert('で(天3)')">
+			<input type="button" value="𛁴゙" onclick="insert('で(帝)')">
+			<input type="button" value="𛁵゙" onclick="insert('で(弖)')">
+			<input type="button" value="𛁶゙" onclick="insert('で(轉)')">
+			<input type="button" value="𛁷゙" onclick="insert('ど(土)')">
+			<input type="button" value="𛁸゙" onclick="insert('ど(度)')">
+			<input type="button" value="𛁹゙" onclick="insert('ど(東)')">
+			<input type="button" value="𛁺゙" onclick="insert('ど(登1)')">
+			<input type="button" value="𛁻゙" onclick="insert('ど(登2)')">
+			<input type="button" value="𛁼゙" onclick="insert('ど(砥)')">
+			<input type="button" value="𛁽゙" onclick="insert('ど(等)')">
+		</p>
+		<p>
+			<input type="button" value="𛁾" onclick="insert('な(南)')">
+			<input type="button" value="𛁿" onclick="insert('な(名)')">
+			<input type="button" value="𛂀" onclick="insert('な(奈1)')">
+			<input type="button" value="𛂁" onclick="insert('な(奈2)')">
+			<input type="button" value="𛂂" onclick="insert('な(奈3)')">
+			<input type="button" value="𛂃" onclick="insert('な(菜)')">
+			<input type="button" value="𛂄" onclick="insert('な(那1)')">
+			<input type="button" value="𛂅" onclick="insert('な(那2)')">
+			<input type="button" value="𛂆" onclick="insert('な(難)')">
+			<input type="button" value="𛂇" onclick="insert('に(丹)')">
+			<input type="button" value="𛂈" onclick="insert('に(二)')">
+			<input type="button" value="𛂉" onclick="insert('に(仁)')">
+			<input type="button" value="𛂊" onclick="insert('に(兒)')">
+			<input type="button" value="𛂋" onclick="insert('に(爾1)')">
+			<input type="button" value="𛂌" onclick="insert('に(爾2)')">
+			<input type="button" value="𛂍" onclick="insert('に(耳)')">
+			<input type="button" value="𛂎" onclick="insert('に(而)')">
+			<input type="button" value="𛂏" onclick="insert('ぬ(努)')">
+			<input type="button" value="𛂐" onclick="insert('ぬ(奴)')">
+			<input type="button" value="𛂑" onclick="insert('ぬ(怒)')">
+			<input type="button" value="𛂒" onclick="insert('ね(年1)')">
+			<input type="button" value="𛂓" onclick="insert('ね(年2)')">
+			<input type="button" value="𛂔" onclick="insert('ね(年3)')">
+			<input type="button" value="𛂕" onclick="insert('ね(根)')">
+			<input type="button" value="𛂖" onclick="insert('ね(熱)')">
+			<input type="button" value="𛂗" onclick="insert('ね(禰)')">
+			<input type="button" value="𛂘" onclick="insert('ね(子)')">
+			<input type="button" value="𛂙" onclick="insert('の(乃)')">
+			<input type="button" value="𛂚" onclick="insert('の(濃)')">
+			<input type="button" value="𛂛" onclick="insert('の(能1)')">
+			<input type="button" value="𛂜" onclick="insert('の(能2)')">
+			<input type="button" value="𛂝" onclick="insert('の(農)')">
+		</p>
+		<p>
+			<input type="button" value="𛂞" onclick="insert('は(八)')">
+			<input type="button" value="𛂟" onclick="insert('は(半)')">
+			<input type="button" value="𛂠" onclick="insert('は(婆)')">
+			<input type="button" value="𛂡" onclick="insert('は(波)')">
+			<input type="button" value="𛂢" onclick="insert('は(盤1)')">
+			<input type="button" value="𛂣" onclick="insert('は(盤2)')">
+			<input type="button" value="𛂤" onclick="insert('は(破)')">
+			<input type="button" value="𛂥" onclick="insert('は(者1)')">
+			<input type="button" value="𛂦" onclick="insert('は(者2)')">
+			<input type="button" value="𛂧" onclick="insert('は(葉)')">
+			<input type="button" value="𛂨" onclick="insert('は(頗)')">
+			<input type="button" value="𛂩" onclick="insert('ひ(悲)')">
+			<input type="button" value="𛂪" onclick="insert('ひ(日)')">
+			<input type="button" value="𛂫" onclick="insert('ひ(比)')">
+			<input type="button" value="𛂬" onclick="insert('ひ(避)')">
+			<input type="button" value="𛂭" onclick="insert('ひ(非)')">
+			<input type="button" value="𛂮" onclick="insert('ひ(飛1)')">
+			<input type="button" value="𛂯" onclick="insert('ひ(飛2)')">
+			<input type="button" value="𛂰" onclick="insert('ふ(不)')">
+			<input type="button" value="𛂱" onclick="insert('ふ(婦)')">
+			<input type="button" value="𛂲" onclick="insert('ふ(布)')">
+			<input type="button" value="𛂳" onclick="insert('へ(倍)')">
+			<input type="button" value="𛂴" onclick="insert('へ(弊1)')">
+			<input type="button" value="𛂵" onclick="insert('へ(弊2)')">
+			<input type="button" value="𛂶" onclick="insert('へ(遍)')">
+			<input type="button" value="𛂷" onclick="insert('へ(邊1)')">
+			<input type="button" value="𛂸" onclick="insert('へ(邊2)')">
+			<input type="button" value="𛂹" onclick="insert('へ(部)')">
+			<input type="button" value="𛂺" onclick="insert('ほ(保1)')">
+			<input type="button" value="𛂻" onclick="insert('ほ(保2)')">
+			<input type="button" value="𛂼" onclick="insert('ほ(報)')">
+			<input type="button" value="𛂽" onclick="insert('ほ(奉)')">
+			<input type="button" value="𛂾" onclick="insert('ほ(寶)')">
+			<input type="button" value="𛂿" onclick="insert('ほ(本1)')">
+			<input type="button" value="𛃀" onclick="insert('ほ(本2)')">
+			<input type="button" value="𛃁" onclick="insert('ほ(豐)')">
+		</p>
+		<p>
+			<input type="button" value="𛂞゙" onclick="insert('ば(八)')">
+			<input type="button" value="𛂟゙" onclick="insert('ば(半)')">
+			<input type="button" value="𛂠゙" onclick="insert('ば(婆)')">
+			<input type="button" value="𛂡゙" onclick="insert('ば(波)')">
+			<input type="button" value="𛂢゙" onclick="insert('ば(盤1)')">
+			<input type="button" value="𛂣゙" onclick="insert('ば(盤2)')">
+			<input type="button" value="𛂤゙" onclick="insert('ば(破)')">
+			<input type="button" value="𛂥゙" onclick="insert('ば(者1)')">
+			<input type="button" value="𛂦゙" onclick="insert('ば(者2)')">
+			<input type="button" value="𛂧゙" onclick="insert('ば(葉)')">
+			<input type="button" value="𛂨゙" onclick="insert('ば(頗)')">
+			<input type="button" value="𛂩゙" onclick="insert('び(悲)')">
+			<input type="button" value="𛂪゙" onclick="insert('び(日)')">
+			<input type="button" value="𛂫゙" onclick="insert('び(比)')">
+			<input type="button" value="𛂬゙" onclick="insert('び(避)')">
+			<input type="button" value="𛂭゙" onclick="insert('び(非)')">
+			<input type="button" value="𛂮゙" onclick="insert('び(飛1)')">
+			<input type="button" value="𛂯゙" onclick="insert('び(飛2)')">
+			<input type="button" value="𛂰゙" onclick="insert('ぶ(不)')">
+			<input type="button" value="𛂱゙" onclick="insert('ぶ(婦)')">
+			<input type="button" value="𛂲゙" onclick="insert('ぶ(布)')">
+			<input type="button" value="𛂳゙" onclick="insert('べ(倍)')">
+			<input type="button" value="𛂴゙" onclick="insert('べ(弊1)')">
+			<input type="button" value="𛂵゙" onclick="insert('べ(弊2)')">
+			<input type="button" value="𛂶゙" onclick="insert('べ(遍)')">
+			<input type="button" value="𛂷゙" onclick="insert('べ(邊1)')">
+			<input type="button" value="𛂸゙" onclick="insert('べ(邊2)')">
+			<input type="button" value="𛂹゙" onclick="insert('べ(部)')">
+			<input type="button" value="𛂺゙" onclick="insert('ぼ(保1)')">
+			<input type="button" value="𛂻゙" onclick="insert('ぼ(保2)')">
+			<input type="button" value="𛂼゙" onclick="insert('ぼ(報)')">
+			<input type="button" value="𛂽゙" onclick="insert('ぼ(奉)')">
+			<input type="button" value="𛂾゙" onclick="insert('ぼ(寶)')">
+			<input type="button" value="𛂿゙" onclick="insert('ぼ(本1)')">
+			<input type="button" value="𛃀゙" onclick="insert('ぼ(本2)')">
+			<input type="button" value="𛃁゙" onclick="insert('ぼ(豐)')">
+		</p>
+		<p>
+			<input type="button" value="𛂞゚" onclick="insert('ぱ(八)')">
+			<input type="button" value="𛂟゚" onclick="insert('ぱ(半)')">
+			<input type="button" value="𛂠゚" onclick="insert('ぱ(婆)')">
+			<input type="button" value="𛂡゚" onclick="insert('ぱ(波)')">
+			<input type="button" value="𛂢゚" onclick="insert('ぱ(盤1)')">
+			<input type="button" value="𛂣゚" onclick="insert('ぱ(盤2)')">
+			<input type="button" value="𛂤゚" onclick="insert('ぱ(破)')">
+			<input type="button" value="𛂥゚" onclick="insert('ぱ(者1)')">
+			<input type="button" value="𛂦゚" onclick="insert('ぱ(者2)')">
+			<input type="button" value="𛂧゚" onclick="insert('ぱ(葉)')">
+			<input type="button" value="𛂨゚" onclick="insert('ぱ(頗)')">
+			<input type="button" value="𛂩゚" onclick="insert('ぴ(悲)')">
+			<input type="button" value="𛂪゚" onclick="insert('ぴ(日)')">
+			<input type="button" value="𛂫゚" onclick="insert('ぴ(比)')">
+			<input type="button" value="𛂬゚" onclick="insert('ぴ(避)')">
+			<input type="button" value="𛂭゚" onclick="insert('ぴ(非)')">
+			<input type="button" value="𛂮゚" onclick="insert('ぴ(飛1)')">
+			<input type="button" value="𛂯゚" onclick="insert('ぴ(飛2)')">
+			<input type="button" value="𛂰゚" onclick="insert('ぷ(不)')">
+			<input type="button" value="𛂱゚" onclick="insert('ぷ(婦)')">
+			<input type="button" value="𛂲゚" onclick="insert('ぷ(布)')">
+			<input type="button" value="𛂳゚" onclick="insert('ぺ(倍)')">
+			<input type="button" value="𛂴゚" onclick="insert('ぺ(弊1)')">
+			<input type="button" value="𛂵゚" onclick="insert('ぺ(弊2)')">
+			<input type="button" value="𛂶゚" onclick="insert('ぺ(遍)')">
+			<input type="button" value="𛂷゚" onclick="insert('ぺ(邊1)')">
+			<input type="button" value="𛂸゚" onclick="insert('ぺ(邊2)')">
+			<input type="button" value="𛂹゚" onclick="insert('ぺ(部)')">
+			<input type="button" value="𛂺゚" onclick="insert('ぽ(保1)')">
+			<input type="button" value="𛂻゚" onclick="insert('ぽ(保2)')">
+			<input type="button" value="𛂼゚" onclick="insert('ぽ(報)')">
+			<input type="button" value="𛂽゚" onclick="insert('ぽ(奉)')">
+			<input type="button" value="𛂾゚" onclick="insert('ぽ(寶)')">
+			<input type="button" value="𛂿゚" onclick="insert('ぽ(本1)')">
+			<input type="button" value="𛃀゚" onclick="insert('ぽ(本2)')">
+			<input type="button" value="𛃁゚" onclick="insert('ぽ(豐)')">
+		</p>
+		<p>
+			<input type="button" value="𛃂" onclick="insert('ま(万)')">
+			<input type="button" value="𛃃" onclick="insert('ま(末1)')">
+			<input type="button" value="𛃄" onclick="insert('ま(末2)')">
+			<input type="button" value="𛃅" onclick="insert('ま(滿1)')">
+			<input type="button" value="𛃆" onclick="insert('ま(滿2)')">
+			<input type="button" value="𛃇" onclick="insert('ま(萬)')">
+			<input type="button" value="𛃈" onclick="insert('ま(麻)')">
+			<input type="button" value="𛃉" onclick="insert('み(三)')">
+			<input type="button" value="𛃊" onclick="insert('み(微)')">
+			<input type="button" value="𛃋" onclick="insert('み(美1)')">
+			<input type="button" value="𛃌" onclick="insert('み(美2)')">
+			<input type="button" value="𛃍" onclick="insert('み(美3)')">
+			<input type="button" value="𛃎" onclick="insert('み(見)')">
+			<input type="button" value="𛃏" onclick="insert('み(身)')">
+			<input type="button" value="𛃐" onclick="insert('む(武)')">
+			<input type="button" value="𛃑" onclick="insert('む(無)')">
+			<input type="button" value="𛃒" onclick="insert('む(牟)')">
+			<input type="button" value="𛃓" onclick="insert('む(舞)')">
+			<input type="button" value="𛃔" onclick="insert('め(免)')">
+			<input type="button" value="𛃕" onclick="insert('め(面)')">
+			<input type="button" value="𛃖" onclick="insert('め(馬)')">
+			<input type="button" value="𛃗" onclick="insert('も(母)')">
+			<input type="button" value="𛃘" onclick="insert('も(毛1)')">
+			<input type="button" value="𛃙" onclick="insert('も(毛2)')">
+			<input type="button" value="𛃚" onclick="insert('も(毛3)')">
+			<input type="button" value="𛃛" onclick="insert('も(茂)')">
+			<input type="button" value="𛃜" onclick="insert('も(裳)')">
+		</p>
+		<p>
+			<input type="button" value="𛃝" onclick="insert('や(也1)')">
+			<input type="button" value="𛃞" onclick="insert('や(也2)')">
+			<input type="button" value="𛃟" onclick="insert('や(屋)')">
+			<input type="button" value="𛃠" onclick="insert('や(耶1)')">
+			<input type="button" value="𛃡" onclick="insert('や(耶2)')">
+			<input type="button" value="𛃢" onclick="insert('や(夜)')">
+			<input type="button" value="𛃣" onclick="insert('ゆ(游)')">
+			<input type="button" value="𛃤" onclick="insert('ゆ(由1)')">
+			<input type="button" value="𛃥" onclick="insert('ゆ(由2)')">
+			<input type="button" value="𛃦" onclick="insert('ゆ(遊)')">
+			<input type="button" value="𛃧" onclick="insert('よ(代)')">
+			<input type="button" value="𛃨" onclick="insert('よ(余)')">
+			<input type="button" value="𛃩" onclick="insert('よ(與1)')">
+			<input type="button" value="𛃪" onclick="insert('よ(與2)')">
+			<input type="button" value="𛃫" onclick="insert('よ(與3)')">
+			<input type="button" value="𛃬" onclick="insert('よ(餘)')">
+		</p>
+		<p>
+			<input type="button" value="𛃭" onclick="insert('ら(羅)')">
+			<input type="button" value="𛃮" onclick="insert('ら(良1)')">
+			<input type="button" value="𛃯" onclick="insert('ら(良2)')">
+			<input type="button" value="𛃰" onclick="insert('ら(良3)')">
+			<input type="button" value="𛃱" onclick="insert('り(利1)')">
+			<input type="button" value="𛃲" onclick="insert('り(利2)')">
+			<input type="button" value="𛃳" onclick="insert('り(李)')">
+			<input type="button" value="𛃴" onclick="insert('り(梨)')">
+			<input type="button" value="𛃵" onclick="insert('り(理)')">
+			<input type="button" value="𛃶" onclick="insert('り(里)')">
+			<input type="button" value="𛃷" onclick="insert('り(離)')">
+			<input type="button" value="𛃸" onclick="insert('る(流)')">
+			<input type="button" value="𛃹" onclick="insert('る(留1)')">
+			<input type="button" value="𛃺" onclick="insert('る(留2)')">
+			<input type="button" value="𛃻" onclick="insert('る(留3)')">
+			<input type="button" value="𛃼" onclick="insert('る(累)')">
+			<input type="button" value="𛃽" onclick="insert('る(類)')">
+			<input type="button" value="𛃾" onclick="insert('れ(禮1)')">
+			<input type="button" value="𛃿" onclick="insert('れ(禮2)')">
+			<input type="button" value="𛄀" onclick="insert('れ(連)')">
+			<input type="button" value="𛄁" onclick="insert('れ(麗)')">
+			<input type="button" value="𛄂" onclick="insert('ろ(呂1)')">
+			<input type="button" value="𛄃" onclick="insert('ろ(呂2)')">
+			<input type="button" value="𛄄" onclick="insert('ろ(婁)')">
+			<input type="button" value="𛄅" onclick="insert('ろ(樓)')">
+			<input type="button" value="𛄆" onclick="insert('ろ(路)')">
+			<input type="button" value="𛄇" onclick="insert('ろ(露)')">
+		</p>
+		<p>
+			<input type="button" value="𛄈" onclick="insert('わ(倭)')">
+			<input type="button" value="𛄉" onclick="insert('わ(和1)')">
+			<input type="button" value="𛄊" onclick="insert('わ(和2)')">
+			<input type="button" value="𛄋" onclick="insert('わ(王1)')">
+			<input type="button" value="𛄌" onclick="insert('わ(王2)')">
+			<input type="button" value="𛄍" onclick="insert('ゐ(井1)')">
+			<input type="button" value="𛄎" onclick="insert('ゐ(井2)')">
+			<input type="button" value="𛄏" onclick="insert('ゐ(居)')">
+			<input type="button" value="𛄐" onclick="insert('ゐ(爲)')">
+			<input type="button" value="𛄑" onclick="insert('ゐ(遺)')">
+			<input type="button" value="𛄒" onclick="insert('ゑ(惠)')">
+			<input type="button" value="𛄓" onclick="insert('ゑ(衞1)')">
+			<input type="button" value="𛄔" onclick="insert('ゑ(衞2)')">
+			<input type="button" value="𛄕" onclick="insert('ゑ(衞3)')">
+			<input type="button" value="𛄖" onclick="insert('を(乎1)')">
+			<input type="button" value="𛄗" onclick="insert('を(乎2)')">
+			<input type="button" value="𛄘" onclick="insert('を(尾)')">
+			<input type="button" value="𛄙" onclick="insert('を(緒)')">
+			<input type="button" value="𛄚" onclick="insert('を(越)')">
+			<input type="button" value="𛄛" onclick="insert('を(遠1)')">
+			<input type="button" value="𛄜" onclick="insert('を(遠2)')">
+			<input type="button" value="𛄝" onclick="insert('ん(无1)')">
+			<input type="button" value="𛄞" onclick="insert('ん(无2)')">
+		</p>
+		<p>
+			<input type="button" value="𛀀" onclick="insert('エ(衣)')">
+			<input type="button" value="" onclick="insert('キ(支)')">
+			<input type="button" value="" onclick="insert('キ(贵)')">
+			<input type="button" value="" onclick="insert('ケ(介)')">
+			<input type="button" value="" onclick="insert('ケ(気)')">
+			<input type="button" value="" onclick="insert('コ(古)')">
+			<input type="button" value="" onclick="insert('コ(巨)')">
+			<input type="button" value="" onclick="insert('ソ(苏)')">
+			<input type="button" value="" onclick="insert('ソ(曽)')">
+			<input type="button" value="" onclick="insert('ト(斗)')">
+			<input type="button" value="" onclick="insert('ト(登)')">
+			<input type="button" value="" onclick="insert('ノ(农)')">
+			<input type="button" value="" onclick="insert('ノ(⿰䏍长)')">
+			<input type="button" value="" onclick="insert('ヒ(氷)')">
+			<input type="button" value="" onclick="insert('ヒ(飞)')">
+			<input type="button" value="" onclick="insert('ヘ(部)')">
+			<input type="button" value="" onclick="insert('ヘ(倍)')">
+			<input type="button" value="" onclick="insert('ミ(弥)')">
+			<input type="button" value="" onclick="insert('ミ(身)')">
+			<input type="button" value="" onclick="insert('メ(面)')">
+			<input type="button" value="" onclick="insert('メ(免)')">
+			<input type="button" value="" onclick="insert('モ(毛)')">
+			<input type="button" value="" onclick="insert('モ(母)')">
+			<input type="button" value="" onclick="insert('ヨ(夜)')">
+			<input type="button" value="" onclick="insert('ヨ(与)')">
+			<input type="button" value="" onclick="insert('ロ(漏)')">
+			<input type="button" value="" onclick="insert('ロ(侶)')">
+		</p>
+	</details>
+	<details>
+		<summary>合略仮名</summary>
+		<p>
+			<input type="button" value="󷲰" onclick="insert('ｺことｳ')">
+			<input type="button" value="" onclick="insert('ｺともｳ')">
+			<input type="button" value="𪜈" onclick="insert('ｺトモｳ')">
+			<input type="button" value="𬼂" onclick="insert('ｺなりｳ')">
+			<input type="button" value="𬻿" onclick="insert('ｺナリｳ')">
+			<input type="button" value="󷲵" onclick="insert('ｺヨリｳ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ｺさまｳ')">
+			<input type="button" value="" onclick="insert('ｺそうろうｳ')">
+			<input type="button" value="" onclick="insert('ｺかしこｳ')">
+			<input type="button" value="" onclick="insert('ｺまいらせそうろうｳ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ｺイウｳ')">
+			<input type="button" value="𬼀" onclick="insert('ｺシテｳ')">
+			<input type="button" value="󷲴" onclick="insert('ｺトイウｳ')">
+			<input type="button" value="󷲲" onclick="insert('ｺトキｳ')">
+			<input type="button" value="" onclick="insert('ｺトキ2ｳ')">
+			<input type="button" value="󷲳" onclick="insert('ｺトテｳ')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ｺならｳ')">
+			<input type="button" value="" onclick="insert('ｺてもｳ')">
+			<input type="button" value="" onclick="insert('ｺしかしｳ')">
+			<input type="button" value="" onclick="insert('ｺアリｳ')">
+			<input type="button" value="" onclick="insert('ｺタイｳ')">
+			<input type="button" value="" onclick="insert('ｺなどｳ')">
+			<input type="button" value="" onclick="insert('ｺへとｳ')">
+		</p>
+	</details>
+	<details>
+		<summary>拡張算用数字</summary>
+		<p>
+			<input type="button" value="↊" onclick="insert('2ｫ')">
+			<input type="button" value="↋" onclick="insert('3ｫ')">
+			<input type="button" value="↌" onclick="insert('4ｫ')">
+			<input type="button" value="↍" onclick="insert('5ｫ')">
+			<input type="button" value="↎" onclick="insert('6ｫ')">
+			<input type="button" value="↏" onclick="insert('7ｫ')">
+			<input type="button" value="" onclick="insert('8ｫ')">
+			<input type="button" value="" onclick="insert('9ｫ')">
+			<input type="button" value="" onclick="insert('0ｫ')">
+			<input type="button" value="" onclick="insert('1ｫ')">
+		</p>
+	</details>
+	<details>
+		<summary>真偽値を 表す 文字</summary>
+		<p>
+			<input type="button" value="" onclick="insert('真ｯ')">
+			<input type="button" value="" onclick="insert('偽ｯ')">
+			<input type="button" value="" onclick="insert('無ｯ')">
+		</p>
+	</details>
+
+	<details>
+		<summary>色線文字</summary>
+		<p>
+			<input type="button" value="" onclick="insert('ｶ{⟀⎝}')">
+			<input type="button" value="" onclick="insert('ｶ{⟀ᴶ⎝}')">
+			<input type="button" value="" onclick="insert('ｶ{⟀⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{⟀ᴶ∖⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{⟀∖⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{⟀⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{⟀ᴶ⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{⟀⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{⟀ᴶ⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{⟀∖⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{⟀ᴶ∖⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{⟀ᴶ∖}')">
+			<input type="button" value="" onclick="insert('ｶ{⟀∖}')">
+			<input type="button" value="" onclick="insert('ｶ{⟀ᴶ∖⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{⟀∖⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{⟀ᴶ⏋}')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ｶ{∟⎝}')">
+			<input type="button" value="" onclick="insert('ｶ{∟ᴶ⎝}')">
+			<input type="button" value="" onclick="insert('ｶ{∟⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{∟ᴶ∖⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{∟∖⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{∟⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{∟ᴶ⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{∟⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{∟ᴶ⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{∟∖⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{∟ᴶ∖⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{∟ᴶ∖}')">
+			<input type="button" value="" onclick="insert('ｶ{∟∖}')">
+			<input type="button" value="" onclick="insert('ｶ{∟ᴶ∖⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{∟∖⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{∟ᴶ⏋}')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ｶ{∠⎝}')">
+			<input type="button" value="" onclick="insert('ｶ{∠ᴶ⎝}')">
+			<input type="button" value="" onclick="insert('ｶ{∠⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{∠ᴶ∖⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{∠∖⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{∠⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{∠ᴶ⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{∠⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{∠ᴶ⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{∠∖⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{∠ᴶ∖⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{∠ᴶ∖}')">
+			<input type="button" value="" onclick="insert('ｶ{∠∖}')">
+			<input type="button" value="" onclick="insert('ｶ{∠ᴶ∖⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{∠∖⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{∠ᴶ⏋}')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ｶ{＿⎝}')">
+			<input type="button" value="" onclick="insert('ｶ{＿ᴶ⎝}')">
+			<input type="button" value="" onclick="insert('ｶ{＿⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{＿ᴶ∖⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{＿∖⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{＿⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{＿ᴶ⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{＿⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{＿ᴶ⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{＿∖⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{＿ᴶ∖⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{＿ᴶ∖}')">
+			<input type="button" value="" onclick="insert('ｶ{＿∖}')">
+			<input type="button" value="" onclick="insert('ｶ{＿ᴶ∖⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{＿∖⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{＿ᴶ⏋}')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ｶ{⎝}')">
+			<input type="button" value="" onclick="insert('ｶ{ᴶ⎝}')">
+			<input type="button" value="" onclick="insert('ｶ{⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{ᴶ∖⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{∖⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{ᴶ⎞⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{ᴶ⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{∖⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{ᴶ∖⎞}')">
+			<input type="button" value="" onclick="insert('ｶ{ᴶ∖}')">
+			<input type="button" value="" onclick="insert('ｶ{∖}')">
+			<input type="button" value="" onclick="insert('ｶ{ᴶ∖}')">
+			<input type="button" value="" onclick="insert('ｶ{∖⏋}')">
+			<input type="button" value="" onclick="insert('ｶ{ᴶ⏋}')">
+		</p>
+		<p>
+			<input type="button" value="" onclick="insert('ｶ{⟀}')">
+			<input type="button" value="" onclick="insert('ｶ{∟}')">
+			<input type="button" value="" onclick="insert('ｶ{∠}')">
+			<input type="button" value="" onclick="insert('ｶ{＿}')">
+		</p>
+	</details>
+
+	<details>
+		<summary>ビットマップ外字</summary>
+		<p><label>行<input type="text" value="8" id="rows" onchange="makeBitmap()"></label></p>
+		<p><label>列<input type="text" value="8" id="cols" onchange="makeBitmap()"></label></p>
+		<div id="error"></div>
+		<div id="bitmap"></div>
+		<p>文字の 名前<input type="text" id="name"></p>
+		<input type="button" value="出力" onclick="makeOutput()">
+	</details>
+
+	<h3>下の テキストエリアに 代用表記を 入力すれば，本来の 表記が レンダリングされます。</h3>
+	<div><textarea id="text"></textarea></div>
+	<div id="render"></div>
+
+	<h3>代用表記と レンダリングの スクショを シェア</h3>
+	<div class="share-button-wrapper">
+		<button class="share-button twitter-button" onclick="twitterButton()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M23.643 4.937c-.835.37-1.732.62-2.675.733a4.67 4.67 0 0 0 2.048-2.578a9.3 9.3 0 0 1-2.958 1.13a4.66 4.66 0 0 0-7.938 4.25a13.23 13.23 0 0 1-9.602-4.868c-.4.69-.63 1.49-.63 2.342A4.66 4.66 0 0 0 3.96 9.824a4.65 4.65 0 0 1-2.11-.583v.06a4.66 4.66 0 0 0 3.737 4.568a4.7 4.7 0 0 1-2.104.08a4.66 4.66 0 0 0 4.352 3.234a9.35 9.35 0 0 1-5.786 1.995a10 10 0 0 1-1.112-.065a13.2 13.2 0 0 0 7.14 2.093c8.57 0 13.255-7.098 13.255-13.254q0-.301-.014-.602a9.5 9.5 0 0 0 2.323-2.41z"/></svg></button>
+		<button class="share-button bluesky-button" onclick="blueskyButton()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565C.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479c.815 2.736 3.713 3.66 6.383 3.364q.204-.03.415-.056q-.207.033-.415.056c-3.912.58-7.387 2.005-2.83 7.078c5.013 5.19 6.87-1.113 7.823-4.308c.953 3.195 2.05 9.271 7.733 4.308c4.267-4.308 1.172-6.498-2.74-7.078a9 9 0 0 1-.415-.056q.21.026.415.056c2.67.297 5.568-.628 6.383-3.364c.246-.828.624-5.79.624-6.478c0-.69-.139-1.861-.902-2.206c-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8"/></svg></button>
+		<button class="share-button threads-button" onclick="threadsButton()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098c1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015c-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164c1.43 1.783 3.631 2.698 6.54 2.717c2.623-.02 4.358-.631 5.8-2.045c1.647-1.613 1.618-3.593 1.09-4.798c-.31-.71-.873-1.3-1.634-1.75c-.192 1.352-.622 2.446-1.284 3.272c-.886 1.102-2.14 1.704-3.73 1.79c-1.202.065-2.361-.218-3.259-.801c-1.063-.689-1.685-1.74-1.752-2.964c-.065-1.19.408-2.285 1.33-3.082c.88-.76 2.119-1.207 3.583-1.291a14 14 0 0 1 3.02.142c-.126-.742-.375-1.332-.75-1.757c-.513-.586-1.308-.883-2.359-.89h-.029c-.844 0-1.992.232-2.721 1.32l-1.757-1.18c.98-1.454 2.568-2.256 4.478-2.256h.044c3.194.02 5.097 1.975 5.287 5.388q.163.07.321.142c1.49.7 2.58 1.761 3.154 3.07c.797 1.82.871 4.79-1.548 7.158c-1.85 1.81-4.094 2.628-7.277 2.65Zm1.003-11.69q-.362 0-.739.021c-1.836.103-2.98.946-2.916 2.143c.067 1.256 1.452 1.839 2.784 1.767c1.224-.065 2.818-.543 3.086-3.71a10.5 10.5 0 0 0-2.215-.221"/></svg></button>
+		<button class="share-button mastodon-button" onclick="mastodonButton()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127C.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611c.118 1.24.325 2.47.62 3.68c.55 2.237 2.777 4.098 4.96 4.857c2.336.792 4.849.923 7.256.38q.398-.092.786-.213c.585-.184 1.27-.39 1.774-.753a.06.06 0 0 0 .023-.043v-1.809a.05.05 0 0 0-.02-.041a.05.05 0 0 0-.046-.01a20.3 20.3 0 0 1-4.709.545c-2.73 0-3.463-1.284-3.674-1.818a5.6 5.6 0 0 1-.319-1.433a.053.053 0 0 1 .066-.054c1.517.363 3.072.546 4.632.546c.376 0 .75 0 1.125-.01c1.57-.044 3.224-.124 4.768-.422q.059-.011.11-.024c2.435-.464 4.753-1.92 4.989-5.604c.008-.145.03-1.52.03-1.67c.002-.512.167-3.63-.024-5.545m-3.748 9.195h-2.561V8.29c0-1.309-.55-1.976-1.67-1.976c-1.23 0-1.846.79-1.846 2.35v3.403h-2.546V8.663c0-1.56-.617-2.35-1.848-2.35c-1.112 0-1.668.668-1.67 1.977v6.218H4.822V8.102q0-1.965 1.011-3.12c.696-.77 1.608-1.164 2.74-1.164c1.311 0 2.302.5 2.962 1.498l.638 1.06l.638-1.06c.66-.999 1.65-1.498 2.96-1.498c1.13 0 2.043.395 2.74 1.164q1.012 1.155 1.012 3.12z"/></svg></button>
+		<button class="share-button misskey-button" onclick="misskeyButton()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8.91 16.892c-1.039.003-1.931-.63-2.352-1.366c-.225-.322-.67-.437-.676 0v2.014q0 1.215-.876 2.1q-.85.86-2.078.86q-1.2 0-2.077-.86A2.93 2.93 0 0 1 0 17.54V6.46q0-.936.526-1.695a2.86 2.86 0 0 1 1.402-1.088a2.9 2.9 0 0 1 1-.177q1.353 0 2.253 1.063l2.997 3.515c.067.05.263.437.732.437c.47 0 .692-.386.758-.437l2.972-3.515Q13.567 3.5 14.918 3.5q.501 0 1.001.177a2.73 2.73 0 0 1 1.377 1.088q.55.758.55 1.695v11.08q0 1.215-.875 2.1q-.852.86-2.078.86q-1.201 0-2.078-.86a2.93 2.93 0 0 1-.85-2.1v-2.014c-.05-.55-.531-.204-.702 0c-.45.843-1.313 1.361-2.352 1.366M21.448 8.61q-1.05 0-1.802-.733q-.726-.759-.726-1.822c0-1.063.242-1.307.726-1.796a2.44 2.44 0 0 1 1.802-.758q1.05 0 1.803.758q.75.735.75 1.796q0 1.063-.75 1.822q-.751.732-1.803.733m.025.507q1.05 0 1.777.758q.75.759.751 1.822v6.248q0 1.064-.75 1.821a2.4 2.4 0 0 1-1.778.734q-1.05 0-1.802-.733a2.5 2.5 0 0 1-.75-1.822v-6.248a2.5 2.5 0 0 1 .75-1.822a2.44 2.44 0 0 1 1.802-.758"/></svg></button>
+		<button class="share-button facebook-button" onclick="facebookButton()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978c.401 0 .955.042 1.468.103a9 9 0 0 1 1.141.195v3.325a9 9 0 0 0-.653-.036a27 27 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.7 1.7 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103l-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647"/></svg></button>
+		<button class="share-button line-button" onclick="lineButton()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19.365 9.863a.631.631 0 0 1 0 1.261H17.61v1.125h1.755a.63.63 0 1 1 0 1.259h-2.386a.63.63 0 0 1-.627-.629V8.108c0-.345.282-.63.63-.63h2.386a.63.63 0 0 1-.003 1.26H17.61v1.125zm-3.855 3.016a.63.63 0 0 1-.631.627a.62.62 0 0 1-.51-.25l-2.443-3.317v2.94a.63.63 0 0 1-1.257 0V8.108a.627.627 0 0 1 .624-.628c.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63c.345 0 .63.285.63.63zm-5.741 0a.63.63 0 0 1-.631.629a.63.63 0 0 1-.627-.629V8.108c0-.345.282-.63.63-.63c.346 0 .628.285.628.63zm-2.466.629H4.917a.634.634 0 0 1-.63-.629V8.108c0-.345.285-.63.63-.63c.348 0 .63.285.63.63v4.141h1.756a.63.63 0 0 1 0 1.259M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608c.391.082.923.258 1.058.59c.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645c1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></button>
+		<button class="share-button fiicen-button" onclick="fiicenButton()"><img src="fiicen_icon.png" alt="Fiicen"></button>
+		<button class="share-button" onclick="copyToClipboard()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><path d="M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2"/></g></svg></button>
+		<span id="message"></span>
+	</div>
+	<p>レンダリングの スクショは 手動で お願いします。</p>
+	<div id="count">0/140</div>
+	<p>140文字 ぴったりの ときは 末尾の 半角スペースを 削除すれば ツイートできます。</p>
+
+	<h3>漢字構成記述文字の 一覧</h3>
+	<table border="1">
+		<tr><th>漢字構成記述文字</th><th>代用表記</th><th>かな漢字変換 案</th></tr>
+		<tr><td>⬚</td><td></td><td>くうはく</td></tr>
+		<tr><td>⿰</td><td></td><td>へんつくり</td></tr>
+		<tr><td>⿱</td><td></td><td>かんむりあし</td></tr>
+		<tr><td>⿲</td><td></td><td>たてみっつ</td></tr>
+		<tr><td>⿳</td><td></td><td>よこみっつ</td></tr>
+		<tr><td>⿴</td><td></td><td>くにがこみ</td></tr>
+		<tr><td>⿵</td><td></td><td>どうがこみ</td></tr>
+		<tr><td>⿶</td><td></td><td>うけがこみ</td></tr>
+		<tr><td>⿷</td><td></td><td>はこがこみ</td></tr>
+		<tr><td>⿸</td><td></td><td>がんがこみ</td></tr>
+		<tr><td>⿹</td><td></td><td>つつみがこみ</td></tr>
+		<tr><td>⿺</td><td></td><td>にょうがこみ</td></tr>
+		<tr><td>⿻</td><td></td><td>かさなり</td></tr>
+		<tr><td>⿼</td><td>コｯ</td><td>このじがこみ</td></tr>
+		<tr><td>⿽</td><td>Jｯ</td><td>ぎゃくにょう</td></tr>
+		<tr><td>⿾</td><td>↔ｯ</td><td>かがみもじ</td></tr>
+		<tr><td>⿿</td><td>↩ｯ</td><td>さかさもじ</td></tr>
+		<tr><td>㇯</td><td>−ｯ</td><td>とりのぞく</td></tr>
+		<tr><td></td><td>⤵ｯ</td><td>みぎだおし</td></tr>
+		<tr><td></td><td>⤴ｯ</td><td>ひだりだおし</td></tr>
+	</table>
+
+	<h4>注意</h4>
+	<p>「⿼、⿽、⿾、⿿、㇯」は フォントによっては 表示されないので，それぞれ 「コｯ、Jｯ、↔ｯ、↩ｯ、−ｯ」で 代用できます。</p>
+	<p>「㇯」で 一部を 取り除くことの レンダリングは 実現できないので，取り除かれる 部品を 赤い 半透明で 重ねます。</p>
+	<p>「、」は Unicode 未収録です。外字で 表示しているので，ほかの 環境では「⤵ｯ、⤴ｯ」で 代用しなければなりません。</p>
+
+	<h3>つきへん、にくづき、ふなづきの 区別</h3>
+	<p>日本では つきへん、にくづきを 同じ 形で 書きますが，台湾では 違う 形で 書きます。</p>
+	<p>つきへん、にくづきで 別の 字も あります。⿰⽉星（よぞら，つきへんに 星）、腥（⿰⺼星）（なまぐさい，にくづきに 星）など。</p>
+	<table border="1">
+		<tr><th>形</th><th>代用表記</th><th>説明</th><th>コードポイント</th></tr>
+		<tr><td>⽉</td><td>月🌃ｯ</td><td>つきへん（横棒の 右に 隙間が 空いている）</td><td>U+2F49（フォントによっては 隙間が 空いていない）</td></tr>
+		<tr><td>⺼</td><td>月🍖ｯ</td><td>にくづき（横棒が 平行でない）</td><td>U+2EBC（フォントによっては ふなづきが 表示される）</td></tr>
+		<tr><td>􁙷</td><td>月⛵️ｯ</td><td>ふなづき（横棒が 右下がり）</td><td>Unicode 未収録（外字で 表示している）</td></tr>
+		<tr><td>月</td><td>月ｯ</td><td>その他</td><td>U+6708</td></tr>
+	</table>
+	<p>フォントによって 表示が 異なるので，確実に 区別するなら，代用表記が 必要です。</p>
+
+	<h3>二、三</h3>
+	<p>この ツールでも 使っている フォント「Mkana+」では，「二、三」を 縦書きで 並べやすくするために，下の 棒を L字型に 曲げています。</p>
+	<p>部首などで，元の 形が 必要なら，「二ｯ、三ｯ」と 書きます。</p>
+	<table border="1">
+		<tr><th>形</th><th>代用表記</th><th>説明</th><th>コードポイント</th></tr>
+		<tr><td>⼆</td><td>二ｯ</td><td>部首の 二（横棒 2本）</td><td>U+2F06</td></tr>
+		<tr><td></td><td>三ｯ</td><td>部首の 三（横棒 3本）</td><td>Unicode 未収録</td></tr>
+	</table>
+
+	<h3>色の テキスト表記</h3>
+	<p>ｲ{色|文字} または ｲ{文字|色}</p>
+	<p>色は ハートの 色（黄緑は 梨，金は DVD，銀は CD）で 選びます。</p>
+	<table border="1">
+		<tr><th>ハート</th><th>色</th></tr>
+		<tr><td>❤</td><td>赤</td></tr>
+		<tr><td>🧡</td><td>オレンジ</td></tr>
+		<tr><td>💛</td><td>黄色</td></tr>
+		<tr><td>🍐</td><td>黄緑</td></tr>
+		<tr><td>💚</td><td>緑</td></tr>
+		<tr><td>🩵</td><td>水色</td></tr>
+		<tr><td>💙</td><td>青</td></tr>
+		<tr><td>💜</td><td>紫</td></tr>
+		<tr><td>🩷</td><td>ピンク</td></tr>
+		<tr><td>🤎</td><td>茶色</td></tr>
+		<tr><td>🖤</td><td>黒</td></tr>
+		<tr><td>🩶</td><td>灰色</td></tr>
+		<tr><td>🤍</td><td>白</td></tr>
+		<tr><td>📀</td><td>金色</td></tr>
+		<tr><td>💿</td><td>銀色</td></tr>
+	</table>
+
+	<h3>色付きの 図形</h3>
+	<p>🔴🟠🟡🟢🔵🟣🟤⚫⚪🟥🟧🟨🟩🟦🟪🟫⬛⬜</p>
+	<p>これらの 図形は 絵文字でなく フラットに 表示されます。</p>
+	<p>国旗などを いい感じに 表示したかったからです。</p>
+
+	<h3>例</h3>
+	<table border="1">
+		<tr><th>IDS</th><th>代用表記</th><th>説明</th></tr>
+		<tr><td>⿱⺮湦</td><td></td><td><ruby><rb>松笛 ●臣</rb><rp>（</rp><rt>まつぶえ たかおみ</rt><rp>）</rp></ruby>（漫画『ディスコミュニケーション』）の ●（竹冠に 湦）</td></tr>
+		<tr><td>⿳艹区月</td><td>&amp;dw-10C7EC;<br>&amp;GJ7010;</td><td><ruby><rb>●山</rb><rp>（</rp><rt>かやま</rt><rp>）</rp></ruby>の ●（上から 草冠、区、月）</td></tr>
+		<tr><td>⿳宀⿰示申主</td><td></td><td>そしじ（うかんむりに 示と 申，その 下に 主）</td></tr>
+		<tr><td>⿱苦⿲⿰⿹耳舌鼻⿱⿱平⿰惡意⿱眼⿰淨染⿰⿱女子身</td><td></td><td>ぼんのう（108画）</td></tr>
+		<tr><td>⿾馬</td><td>↔ｯ馬</td><td>左馬</td></tr>
+		<tr><td>⿿水</td><td>↩ｯ水</td><td>しでかす（ひっくり返った 水）</td></tr>
+		<tr><td>⿹㇯馬灬ハ</td><td>⿹−ｯ馬灬ハ</td><td>ウマ娘の 馬（馬の 灬が ハ）</td></tr>
+		<tr><td>⿰⽉星</td><td>⿰月🌃ｯ星</td><td>よぞら（つきへんに 星），腥（なまぐさい）とは 別字</td></tr>
+		<tr><td>⿽🟩⿴⬜ｲ{💚|★}<br>⿽🟩⿴⬜ｲ{★|💚}</td><td>Jｯ🟩⿴⬜ｲ{💚|★}<br>Jｯ🟩⿴⬜ｲ{★|💚}</td><td>エスペラントの 旗</td></tr>
+		<tr><td>⿴⿻🟨ｲ{🤍|━}⿻⚪ｲ{💚|H}<br>⿴⿻🟨ｲ{━|🤍}⿻⚪ｲ{H|💚}</td><td></td><td>ウェルトの 旗</td></tr>
+		<tr><td>⿻⿺🟥⿴⬜ｲ{❤|★}⿳⬚⬚ｲ{🤍|⿲語通東}<br>⿻⿺🟥⿴⬜ｲ{★|❤}⿳⬚⬚ｲ{⿲語通東|🤍}</td><td></td><td>トントン語の 旗</td></tr>
+	</table>
+
+	<h2>その他の 代用表記</h2>
+
+	<h3>エスケープ</h3>
+	<p>ｴ￭</p>
+	<p>代用表記ではなく，表記通りに 表示する 場合に 使います。例: 「⿰」そのもの: ｴ⿰</p>
+
+	<h3>ラテン文字の 代用表記</h3>
+	<p>ASCII のみ 使える 場面で，「x」を 使って 代用表記します。</p>
+	<p>こちらは，設定で 無効にすることも，テキストエリアごと 変換することも できます。</p>
+	<div class="yoko-wrapper">
+		<table border="1" class="yoko">
+			<tr><th></th><th>x</th><th>2x</th><th>3x</th><th>4x</th></tr>
+			<tr><th>A</th><td>Ə</td><td>Æ</td><td>A̩</td><td></td></tr>
+			<tr><th>B</th><td>Ð</td><td>Ƅ</td><td></td><td></td></tr>
+			<tr><th>C</th><td>Ĉ</td><td></td><td>Ꞓ</td><td>Ċ</td></tr>
+			<tr><th>D</th><td>D̂</td><td></td><td></td><td>Ḋ</td></tr>
+			<tr><th>E</th><td>Ɛ</td><td>Ƹ</td><td></td><td></td></tr>
+			<tr><th>F</th><td>F̂</td><td></td><td></td><td></td></tr>
+			<tr><th>G</th><td>Ĝ</td><td></td><td>Ɣ</td><td></td></tr>
+			<tr><th>H</th><td>Ĥ</td><td></td><td></td><td>Ḣ</td></tr>
+			<tr><th>I</th><td>Ɨ</td><td></td><td></td><td></td></tr>
+			<tr><th>J</th><td>Ĵ</td><td></td><td>Ɉ</td><td></td></tr>
+			<tr><th>K</th><td>X</td><td></td><td></td><td></td></tr>
+			<tr><th>L</th><td>ː</td><td>L̂</td><td></td><td></td></tr>
+			<tr><th>M</th><td></td><td></td><td></td><td></td></tr>
+			<tr><th>N</th><td>Ŋ</td><td>Ñ</td><td></td><td></td></tr>
+			<tr><th>O</th><td>Ɔ</td><td>Ø</td><td>Ơ</td><td></td></tr>
+			<tr><th>P</th><td>Þ</td><td></td><td></td><td></td></tr>
+			<tr><th>Q</th><td>Ɂ</td><td>Q̂</td><td></td><td></td></tr>
+			<tr><th>R</th><td></td><td>R̂</td><td>Ɍ</td><td>Ꝛ</td></tr>
+			<tr><th>S</th><td>Ŝ</td><td>ẞ</td><td></td><td>Ṡ</td></tr>
+			<tr><th>T</th><td></td><td></td><td></td><td>Ṫ</td></tr>
+			<tr><th>U</th><td>Ɯ</td><td></td><td></td><td></td></tr>
+			<tr><th>V</th><td>Ꞟ</td><td></td><td></td><td></td></tr>
+			<tr><th>W</th><td>Ŭ</td><td>Ꝡ</td><td></td><td></td></tr>
+			<tr><th>Y</th><td></td><td>Ɥ</td><td>ꜛ</td><td></td></tr>
+			<tr><th>Z</th><td></td><td>ẞ̂</td><td>ꜜ</td><td>Ż</td></tr>
+		</table>
+		<table border="1" class="yoko">
+			<tr><th></th><th>x</th><th>2x</th><th>3x</th><th>4x</th></tr>
+			<tr><th>a</th><td>ə</td><td>æ</td><td>a̩</td><td></td></tr>
+			<tr><th>b</th><td>ð</td><td>ƅ</td><td> ̍</td><td>̏</td></tr>
+			<tr><th>c</th><td>ĉ</td><td>ʗ</td><td>ꞓ</td><td>ċ</td></tr>
+			<tr><th>d</th><td>d̂</td><td> ̥</td><td></td><td>ḋ</td></tr>
+			<tr><th>e</th><td>ɛ</td><td>ƹ</td><td></td><td></td></tr>
+			<tr><th>f</th><td>f̂</td><td>ᶠ</td><td></td><td></td></tr>
+			<tr><th>g</th><td>ĝ</td><td>ˁ</td><td>ɣ</td><td></td></tr>
+			<tr><th>h</th><td>ĥ</td><td> ̔</td><td></td><td>ḣ</td></tr>
+			<tr><th>i</th><td>ɨ</td><td> ̩</td><td></td><td>ı</td></tr>
+			<tr><th>j</th><td>ĵ</td><td>ʲ</td><td>ɟ</td><td></td></tr>
+			<tr><th>k</th><td>x※1</td><td>ˀ</td><td> ̂</td><td></td></tr>
+			<tr><th>l</th><td> ̄</td><td>l̂</td><td>ᴸ</td><td></td></tr>
+			<tr><th>m</th><td>※2</td><td> ̃</td><td> ̼</td><td></td></tr>
+			<tr><th>n</th><td>ŋ</td><td>ñ</td><td></td><td></td></tr>
+			<tr><th>o</th><td>ɔ</td><td>ø</td><td>ơ</td><td></td></tr>
+			<tr><th>p</th><td>þ</td><td>ʼ</td><td> ̩</td><td>̊</td></tr>
+			<tr><th>q</th><td>ɂ</td><td>q̂</td><td>ẋ</td><td></td></tr>
+			<tr><th>r</th><td> ̢</td><td>r̂</td><td>ɍ</td><td>ꝛ</td></tr>
+			<tr><th>s</th><td>ŝ</td><td>ß</td><td>˥</td><td>ṡ</td></tr>
+			<tr><th>t</th><td></td><td>￭</td><td>˩˥</td><td>ṫ</td></tr>
+			<tr><th>u</th><td>ɯ</td><td>ᵘ</td><td>˩</td><td>̮</td></tr>
+			<tr><th>v</th><td>ꞟ</td><td> ̆</td><td>˥˩</td><td></td></tr>
+			<tr><th>w</th><td>ŭ</td><td>ꝡ</td><td>꜊</td><td></td></tr>
+			<tr><th>y</th><td>ʸ</td><td>ɥ</td><td> ́</td><td></td></tr>
+			<tr><th>z</th><td>※3</td><td>ß̂</td><td> ̀</td><td>ż</td></tr>
+		</table>
+	</div>
+	<p>※1:「x」そのものを 表すのに 使います。ゼロ幅スペースを 置いて，置換を 防ぎます。投稿時に ゼロ幅スペースは 削除されます。</p>
+	<p>※2:「mx￭￭￭￭」で 4桁、「mxs￭￭￭￭￭」で 5桁、「mxg￭￭￭￭」で U+10￭￭￭￭ の コードポイントの Unicode 文字を 表します。「ﾕ」に なります。</p>
+	<p>※3: 「￭zx」で 拡張算用数字を 表します。「ｫ」に なります。</p>
+
+	<h3>ルビの テキスト表記</h3>
+	<p>ﾙ{ルビ|漢字} → <ruby><rb>漢字</rb><rp>（</rp><rt>ルビ</rt><rp>）</rp></ruby></p>
+	<p>ルビを プレーンテキストで 表したい 場合に 使います。HTMLでは ruby タグで 表します。</p>
+	<p>ﾙ{ルビ|漢字|傍註} → <ruby><rb>漢字</rb><rp>（</rp><rt>ルビ</rt><rp>）</rp><rtc>傍註</rtc></ruby></p>
+	<p>傍註を 下ルビとして 表示します。HTMLには 下ルビを 表す rtc タグが ありますが，実装されている ブラウザが 少ないので，CSSを 使って 無理やり rtc タグを 実装しています。</p>
+	<p>ﾙ{|漢字|傍註} → <ruby><rb>漢字</rb><rp>（</rp><rt></rt><rp>）</rp><rtc>傍註</rtc></ruby></p>
+	<p>傍註だけでも 可能です。</p>
+	<p>※傍註が あると，行間が 広がります。rtc タグを 無理やり 実装しているためです。</p>
+
+	<h3>拡張かナ文字の 代用表記</h3>
+	<p>現代では 使われない かナ文字や，外国語の 音を 正しく 表せるように 拡張した かナ文字を，半角カナを 使って 表します。</p>
+	<p>詳しくは こちら（レベル2に 対応しています）: <a href="../KanaSubstitute">かナ代用表記</a></p>
+
+	<h3>変体仮名の 代用表記</h3>
+	<p>変体仮名を「現代の 仮名(由来の 漢字)」という 形で 表します。例: 𛀄: あ(阿)</p>
+	<p>同じ 由来で 複数の 形が ある 変体仮名は，形の 番号を 由来の 漢字の 右に 振って 表します。例: 𛀙: か(可1)</p>
+
+	<h3>合略仮名の 代用表記</h3>
+	<p>合略仮名を「ｺ〰︎ｳ」という 形で 表します。</p>
+	<table border="1">
+		<tr><th>合略仮名</th><th>代用表記</th></tr>
+		<tr><td>󷲰</td><td>ｺことｳ</td></tr>
+		<tr><td></td><td>ｺともｳ</td></tr>
+		<tr><td>𪜈</td><td>ｺトモｳ</td></tr>
+		<tr><td>𬼂</td><td>ｺなりｳ</td></tr>
+		<tr><td>𬻿</td><td>ｺナリｳ</td></tr>
+		<tr><td>󷲵</td><td>ｺヨリｳ</td></tr>
+
+		<tr><td></td><td>ｺさまｳ</td></tr>
+		<tr><td></td><td>ｺそうろうｳ</td></tr>
+		<tr><td></td><td>ｺかしこｳ</td></tr>
+		<tr><td></td><td>ｺまいらせそうろうｳ</td></tr>
+
+		<tr><td></td><td>ｺイウｳ</td></tr>
+		<tr><td>𬼀</td><td>ｺシテｳ</td></tr>
+		<tr><td>󷲴</td><td>ｺトイウｳ</td></tr>
+		<tr><td>󷲲</td><td>ｺトキｳ</td></tr>
+		<tr><td></td><td>ｺトキ2ｳ</td></tr>
+		<tr><td>󷲳</td><td>ｺトテｳ</td></tr>
+
+		<tr><td></td><td>ｺならｳ</td></tr>
+		<tr><td></td><td>ｺてもｳ</td></tr>
+		<tr><td></td><td>ｺしかしｳ</td></tr>
+		<tr><td></td><td>ｺアリｳ</td></tr>
+		<tr><td></td><td>ｺタイｳ</td></tr>
+		<tr><td></td><td>ｺなどｳ</td></tr>
+		<tr><td></td><td>ｺへとｳ</td></tr>
+	</table>
+
+	<h3>拡張算用数字の 代用表記</h3>
+	<p>10超過の 進数を ラテン文字を 使わないで 表すための 算用数字を「￭ｫ」という 形で 表します。</p>
+	<table border="1">
+		<tr><th>拡張算用数字</th><th>代用表記</th><th>名前</th><th>10進数での 表記</th></tr>
+		<tr><td>↊</td><td>2ｫ</td><td>びょん</td><td>10</td></tr>
+		<tr><td>↋</td><td>3ｫ</td><td>ゎん</td><td>11</td></tr>
+		<tr><td>↌</td><td>4ｫ</td><td>みゃ</td><td>12</td></tr>
+		<tr><td>↍</td><td>5ｫ</td><td>𛁭ゎ</td><td>13</td></tr>
+		<tr><td>↎</td><td>6ｫ</td><td>ぴゃい</td><td>14</td></tr>
+		<tr><td>↏</td><td>7ｫ</td><td>ぬゎい</td><td>15</td></tr>
+		<tr><td></td><td>8ｫ</td><td>つゎう</td><td>16</td></tr>
+		<tr><td></td><td>9ｫ</td><td>づん</td><td>17</td></tr>
+		<tr><td></td><td>0ｫ</td><td>す𛅑ん</td><td>18</td></tr>
+		<tr><td></td><td>1ｫ</td><td>ょう</td><td>19</td></tr>
+	</table>
+
+	<h3>真偽値を 表す 文字</h3>
+	<table border="1">
+		<tr><th>真偽値を 表す 文字</th><th>代用表記</th><th>意味</th></tr>
+		<tr><td></td><td>真ｯ</td><td>true</td></tr>
+		<tr><td></td><td>偽ｯ</td><td>false</td></tr>
+		<tr><td></td><td>無ｯ</td><td>null</td></tr>
+	</table>
+
+	<h3>色線文字</h3>
+	<p>色を 用いずに，色の 情報を 示す 文字。</p>
+	<p>カードゲーム、ボードゲームなど、色が 重要な ものに，色と 一緒に この 文字を つけることで，色弱の 人にも 色を 伝えることが できます。</p>
+	<p>左下の 角度が 色の 明るさ，右上の 線が 色合いを 表します。</p>
+
+	<h4>パーツ 右上の 線 色合い</h4>
+	<table border="1">
+		<tr><th>パーツ</th><th>名前</th><th>色</th><th>代用表記</th></tr>
+		<tr><td></td><td>白</td><td style="background-color: #fff;">　　</td><td>ｶ{⎝}</td></tr>
+		<tr><td></td><td>黒</td><td style="background-color: #000;">　　</td><td>ｶ{ᴶ⎝}</td></tr>
+		<tr><td></td><td>赤</td><td style="background-color: #f00;">　　</td><td>ｶ{⏋}</td></tr>
+		<tr><td></td><td>赤橙</td><td style="background-color: #ff4000;">　　</td><td>ｶ{ᴶ∖⎞⏋}</td></tr>
+		<tr><td></td><td>茶</td><td style="background-color: #804040;">　　</td><td>ｶ{∖⎞⏋}</td></tr>
+		<tr><td></td><td>橙</td><td style="background-color: #ff8000;">　　</td><td>ｶ{⎞⏋}</td></tr>
+		<tr><td></td><td>黄橙</td><td style="background-color: #ffc000;">　　</td><td>ｶ{ᴶ⎞⏋}</td></tr>
+		<tr><td></td><td>黄</td><td style="background-color: #ff0;">　　</td><td>ｶ{⎞}</td></tr>
+		<tr><td></td><td>黄緑</td><td style="background-color: #80ff00;">　　</td><td>ｶ{ᴶ⎞}</td></tr>
+		<tr><td></td><td>緑</td><td style="background-color: #0f0;">　　</td><td>ｶ{∖⎞}</td></tr>
+		<tr><td></td><td>青緑</td><td style="background-color: #00ff80;">　　</td><td>ｶ{ᴶ∖⎞}</td></tr>
+		<tr><td></td><td>シアン</td><td style="background-color: #0ff;">　　</td><td>ｶ{ᴶ∖}</td></tr>
+		<tr><td></td><td>青</td><td style="background-color: #00f;">　　</td><td>ｶ{∖}</td></tr>
+		<tr><td></td><td>青紫</td><td style="background-color: #8000ff;">　　</td><td>ｶ{ᴶ∖}</td></tr>
+		<tr><td></td><td>紫</td><td style="background-color: #c000c0;">　　</td><td>ｶ{∖⏋}</td></tr>
+		<tr><td></td><td>マゼンタ</td><td style="background-color: #f0f;">　　</td><td>ｶ{ᴶ⏋}</td></tr>
+	</table>
+
+	<h4>パーツ 左下の 角度 明るさ</h4>
+	<table border="1">
+		<tr><th>パーツ</th><th>名前</th><th>色</th><th>代用表記</th></tr>
+		<tr><td></td><td>光沢</td><td style="background: linear-gradient(135deg, #f00 25%, #fff, #f00 75%);">　　</td><td>ｶ{⟀}</td></tr>
+		<tr><td></td><td>淡色</td><td style="background-color: #fff;">　　</td><td>ｶ{∟}</td></tr>
+		<tr><td></td><td>原色</td><td style="background-color: #f00;">　　</td><td>ｶ{∠}</td></tr>
+		<tr><td></td><td>暗色</td><td style="background-color: #000;">　　</td><td>ｶ{＿}</td></tr>
+	</table>
+
+	<h4>光沢</h4>
+	<table border="1">
+		<tr><th>色線文字</th><th>名前</th><th>色</th><th>代用表記</th></tr>
+		<tr><td></td><td>銀色</td><td style="background: linear-gradient(135deg, #c0c0c0 25%, #fff, #c0c0c0 75%);">　　</td><td>ｶ{⟀⎝}</td></tr>
+		<tr><td></td><td></td><td style="background: linear-gradient(135deg, #404040 25%, #fff, #404040 75%);"></td><td>ｶ{⟀ᴶ⎝}</td></tr>
+		<tr><td></td><td></td><td style="background: linear-gradient(135deg, #f00 25%, #fff, #f00 75%);"></td><td>ｶ{⟀⏋}</td></tr>
+		<tr><td></td><td></td><td style="background: linear-gradient(135deg, #ff4000 25%, #fff, #ff4000 75%);"></td><td>ｶ{⟀ᴶ∖⎞⏋}</td></tr>
+		<tr><td></td><td>銅色</td><td style="background: linear-gradient(135deg, #804040 25%, #fff, #804040 75%);"></td><td>ｶ{⟀∖⎞⏋}</td></tr>
+		<tr><td></td><td></td><td style="background: linear-gradient(135deg, #ff8000 25%, #fff, #ff8000 75%);"></td><td>ｶ{⟀⎞⏋}</td></tr>
+		<tr><td></td><td></td><td style="background: linear-gradient(135deg, #ffc000 25%, #fff, #ffc000 75%);"></td><td>ｶ{⟀ᴶ⎞⏋}</td></tr>
+		<tr><td></td><td>金色</td><td style="background: linear-gradient(135deg, #ff0 25%, #fff, #ff0 75%);"></td><td>ｶ{⟀⎞}</td></tr>
+		<tr><td></td><td></td><td style="background: linear-gradient(135deg, #80ff00 25%, #fff, #80ff00 75%);"></td><td>ｶ{⟀ᴶ⎞}</td></tr>
+		<tr><td></td><td></td><td style="background: linear-gradient(135deg, #0f0 25%, #fff, #0f0 75%);"></td><td>ｶ{⟀∖⎞}</td></tr>
+		<tr><td></td><td></td><td style="background: linear-gradient(135deg, #00ff80 25%, #fff, #00ff80 75%);"></td><td>ｶ{⟀ᴶ∖⎞}</td></tr>
+		<tr><td></td><td></td><td style="background: linear-gradient(135deg, #0ff 25%, #fff, #0ff 75%);"></td><td>ｶ{⟀ᴶ∖}</td></tr>
+		<tr><td></td><td></td><td style="background: linear-gradient(135deg, #00f 25%, #fff, #00f 75%);"></td><td>ｶ{⟀∖}</td></tr>
+		<tr><td></td><td></td><td style="background: linear-gradient(135deg, #8000ff 25%, #fff, #8000ff 75%);"></td><td>ｶ{⟀ᴶ∖⏋}</td></tr>
+		<tr><td></td><td></td><td style="background: linear-gradient(135deg, #c000c0 25%, #fff, #c000c0 75%);"></td><td>ｶ{⟀∖⏋}</td></tr>
+		<tr><td></td><td></td><td style="background: linear-gradient(135deg, #f0f 25%, #fff, #f0f 75%);"></td><td>ｶ{⟀ᴶ⏋}</td></tr>
+	</table>
+
+	<h4>淡色</h4>
+	<table border="1">
+		<tr><th>色線文字</th><th>名前</th><th>色</th><th>代用表記</th></tr>
+		<tr><td></td><td>白</td><td style="background-color: #fff;">　　</td><td>ｶ{∟⎝}</td></tr>
+		<tr><td></td><td>中灰</td><td style="background-color: #808080;">　　</td><td>ｶ{∟ᴶ⎝}</td></tr>
+		<tr><td></td><td></td><td style="background-color: #ff8080;">　　</td><td>ｶ{∟⏋}</td></tr>
+		<tr><td></td><td>薄橙</td><td style="background-color: #ffc0a0;">　　</td><td>ｶ{∟ᴶ∖⎞⏋}</td></tr>
+		<tr><td></td><td>ベージュ</td><td style="background-color: #c0a0a0;">　　</td><td>ｶ{∟∖⎞⏋}</td></tr>
+		<tr><td></td><td></td><td style="background-color: #ffc080;">　　</td><td>ｶ{∟⎞⏋}</td></tr>
+		<tr><td></td><td></td><td style="background-color: #ffe080;">　　</td><td>ｶ{∟ᴶ⎞⏋}</td></tr>
+		<tr><td></td><td>檸檬色</td><td style="background-color: #ffff80;">　　</td><td>ｶ{∟⎞}</td></tr>
+		<tr><td></td><td rowspan="7" style="vertical-align: middle;">↑<br>パステル<br>カラー<br>↓</td><td style="background-color: #c0ff80;">　　</td><td>ｶ{∟ᴶ⎞}</td></tr>
+		<tr><td></td><td style="background-color: #80ff80;">　　</td><td>ｶ{∟∖⎞}</td></tr>
+		<tr><td></td><td style="background-color: #80ffc0;">　　</td><td>ｶ{∟ᴶ∖⎞}</td></tr>
+		<tr><td></td><td style="background-color: #80ffff;">　　</td><td>ｶ{∟ᴶ∖}</td></tr>
+		<tr><td></td><td style="background-color: #8080ff;">　　</td><td>ｶ{∟∖}</td></tr>
+		<tr><td></td><td style="background-color: #c080ff;">　　</td><td>ｶ{∟ᴶ∖⏋}</td></tr>
+		<tr><td></td><td style="background-color: #e080e0;">　　</td><td>ｶ{∟∖⏋}</td></tr>
+		<tr><td></td><td>ピンク</td><td style="background-color: #ff80ff;">　　</td><td>ｶ{∟ᴶ⏋}</td></tr>
+	</table>
+
+	<h4>原色</h4>
+	<table border="1">
+		<tr><th>色線文字</th><th>名前</th><th>色</th><th>代用表記</th></tr>
+		<tr><td></td><td>淡灰</td><td style="background-color: #c0c0c0;">　　</td><td>ｶ{∠⎝}</td></tr>
+		<tr><td></td><td>濃灰</td><td style="background-color: #404040;">　　</td><td>ｶ{∠ᴶ⎝}</td></tr>
+		<tr><td></td><td>赤</td><td style="background-color: #f00;">　　</td><td>ｶ{∠⏋}</td></tr>
+		<tr><td></td><td>赤橙</td><td style="background-color: #ff4000;">　　</td><td>ｶ{∠ᴶ∖⎞⏋}</td></tr>
+		<tr><td></td><td>茶</td><td style="background-color: #804040;">　　</td><td>ｶ{∠∖⎞⏋}</td></tr>
+		<tr><td></td><td>橙</td><td style="background-color: #ff8000;">　　</td><td>ｶ{∠⎞⏋}</td></tr>
+		<tr><td></td><td>黄橙</td><td style="background-color: #ffc000;">　　</td><td>ｶ{∠ᴶ⎞⏋}</td></tr>
+		<tr><td></td><td>黄</td><td style="background-color: #ff0;">　　</td><td>ｶ{∠⎞}</td></tr>
+		<tr><td></td><td>黄緑</td><td style="background-color: #80ff00;">　　</td><td>ｶ{∠ᴶ⎞}</td></tr>
+		<tr><td></td><td>緑</td><td style="background-color: #0f0;">　　</td><td>ｶ{∠∖⎞}</td></tr>
+		<tr><td></td><td>青緑</td><td style="background-color: #00ff80;">　　</td><td>ｶ{∠ᴶ∖⎞}</td></tr>
+		<tr><td></td><td>シアン</td><td style="background-color: #0ff;">　　</td><td>ｶ{∠ᴶ∖}</td></tr>
+		<tr><td></td><td>青</td><td style="background-color: #00f;">　　</td><td>ｶ{∠∖}</td></tr>
+		<tr><td></td><td>青紫</td><td style="background-color: #8000ff;">　　</td><td>ｶ{∠ᴶ∖⏋}</td></tr>
+		<tr><td></td><td>紫</td><td style="background-color: #c000c0;">　　</td><td>ｶ{∠∖⏋}</td></tr>
+		<tr><td></td><td>マゼンタ</td><td style="background-color: #f0f;">　　</td><td>ｶ{∠ᴶ⏋}</td></tr>
+	</table>
+
+	<h4>暗色</h4>
+	<table border="1">
+		<tr><th>色線文字</th><th>名前</th><th>色</th><th>代用表記</th></tr>
+		<tr><td></td><td>透明</td><td>透明</td><td>ｶ{＿⎝}</td></tr>
+		<tr><td></td><td>黒</td><td style="background-color: #000;">　　</td><td>ｶ{＿ᴶ⎝}</td></tr>
+		<tr><td></td><td></td><td style="background-color: #800000;">　　</td><td>ｶ{＿⏋}</td></tr>
+		<tr><td></td><td></td><td style="background-color: #802000;">　　</td><td>ｶ{＿ᴶ∖⎞⏋}</td></tr>
+		<tr><td></td><td>焦げ茶</td><td style="background-color: #402020;">　　</td><td>ｶ{＿∖⎞⏋}</td></tr>
+		<tr><td></td><td></td><td style="background-color: #804000;">　　</td><td>ｶ{＿⎞⏋}</td></tr>
+		<tr><td></td><td></td><td style="background-color: #806000;">　　</td><td>ｶ{＿ᴶ⎞⏋}</td></tr>
+		<tr><td></td><td></td><td style="background-color: #808000;">　　</td><td>ｶ{＿⎞}</td></tr>
+		<tr><td></td><td></td><td style="background-color: #408000;">　　</td><td>ｶ{＿ᴶ⎞}</td></tr>
+		<tr><td></td><td></td><td style="background-color: #008000;">　　</td><td>ｶ{＿∖⎞}</td></tr>
+		<tr><td></td><td>ビリジアン</td><td style="background-color: #008040;">　　</td><td>ｶ{＿ᴶ∖⎞}</td></tr>
+		<tr><td></td><td>緑みの青</td><td style="background-color: #008080;">　　</td><td>ｶ{＿ᴶ∖}</td></tr>
+		<tr><td></td><td></td><td style="background-color: #000080;">　　</td><td>ｶ{＿∖}</td></tr>
+		<tr><td></td><td></td><td style="background-color: #400080;">　　</td><td>ｶ{＿ᴶ∖⏋}</td></tr>
+		<tr><td></td><td></td><td style="background-color: #600060;">　　</td><td>ｶ{＿∖⏋}</td></tr>
+		<tr><td></td><td>赤紫</td><td style="background-color: #800080;">　　</td><td>ｶ{＿ᴶ⏋}</td></tr>
+	</table>
+
+	<h3>ビットマップ外字</h3>
+	<p>代用表記では 形を 正確に 表せないので，形を 正確に 表すために ビットマップ外字を 使います。</p>
+	<p>▒{<br>
+		[ブロック要素]<br>
+		([文字の 名前 オプション])<br>
+		}
+	</p>
+	<p>例: 拡張かナ文字 しｬ</p>
+	<p>
+		▒{<br>
+		▗ ▖ <br>
+		▌▗▙ <br>
+		▌▚▘▌<br>
+		▚ ▞ <br>
+		(拡張かナ文字 しｬ)<br>
+		}
+	</p>
+	<p>こちらで 出力された ビットマップを そのまま 貼り付ければ 使えます。<a href="../BitmapToText">ビットマップをテキストに</a></p>
+
+	<h3>DWPI明朝、にしき的フォント、Mkana+、字雲フォントの 外字</h3>
+	<p>DWPI明朝、にしき的フォント、Mkana+、字雲フォントの 外字を 表すために，</p>
+	<ul>
+		<li>DWPI明朝: &dw-￭￭￭￭￭￭;</li>
+		<li>にしき的フォント: &ni-￭￭￭￭￭￭;</li>
+		<li>Mkana+: &mk-￭￭￭￭￭￭;</li>
+		<li>字雲フォント: &jg-￭￭￭￭￭￭;</li>
+		<li>字雲フォント2: &j2-￭￭￭￭￭￭;</li>
+		<li>字雲フォント3: &j3-￭￭￭￭￭￭;</li>
+	</ul>
+	<p>という 表記を します。</p>
+	<p>註: DWPI明朝の 外字は 最初 設定で OFFになっていますが，DWPI明朝は Webフォントに できないので，DWPI明朝の インストールが 必要です。</p>
+
+	<h3>国によって 形が 違う フォント</h3>
+	<p>簡体字（中国）、繁体字（台湾）、香港、日本、韓国、絵文字の フォントで 表示ために，</p>
+	<ul>
+		<li>簡体字: &sc-￭￭￭￭￭￭;</li>
+		<li>繁体字: &tc-￭￭￭￭￭￭;</li>
+		<li>香港: &hk-￭￭￭￭￭￭;</li>
+		<li>日本: &jp-￭￭￭￭￭￭;</li>
+		<li>韓国: &kr-￭￭￭￭￭￭;</li>
+		<li>絵文字: &em-￭￭￭￭￭￭;</li>
+	</ul>
+	<p>という 表記を します。</p>
+
+	<h3>Unicode 文字</h3>
+	<p>Unicode 文字を コードポイントで 表すために，</p>
+	<ul>
+		<li>ﾕ￭￭￭￭（4桁）</li>
+		<li>ﾕs￭￭￭￭￭（5桁）</li>
+		<li>ﾕg￭￭￭￭（U+10￭￭￭￭）</li>
+	</ul>
+	<p>という 表記を します。</p>
+
+	<script src="DWPIsubstitute.js"></script>
+	<script src="tolxyolxkanjxi_converter.js"></script>
+	<script src="ExtJzanteiIDS.js"></script>
+	<script src="chr.js"></script>
+	<script src="SubstituteRenderer.js"></script>
+</body>
+</html>

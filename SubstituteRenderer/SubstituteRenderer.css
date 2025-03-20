@@ -1,0 +1,364 @@
+input,
+button,
+select,
+textarea {
+	font-family: inherit;
+	border-width: 0.1rem;
+}
+input[type="button"],
+button {
+	background-color: #e0e0e0;
+}
+
+.dark,
+.dark input,
+.dark button,
+.dark select,
+.dark textarea {
+	color: #fff;
+	background-color: #000;
+}
+
+.share-button-wrapper {
+	font-size: 0;
+}
+.share-button,
+.share-button:hover,
+.share-button:active {
+	margin: 16px;
+	padding: 6px;
+	font-size: 0;
+	border-width: 0;
+	border-radius: 6px;
+}
+.share-button svg {
+	padding: 0;
+}
+.twitter-button {
+	color: #fff;
+	background-color: #1DA1F2 !important;
+}
+.bluesky-button {
+	color: #fff;
+	background-color: #0285FF !important;
+}
+.threads-button {
+	color: #fff;
+	background-color: #000 !important;
+}
+.mastodon-button {
+	color: #fff;
+	background-color: #6364FF !important;
+}
+.misskey-button {
+	color: #fff;
+	background-color: #A1CA03 !important;
+}
+.facebook-button {
+	color: #fff;
+	background-color: #0866FF !important;
+}
+.line-button {
+	color: #fff;
+	background-color: #06C755 !important;
+}
+.fiicen-button {
+	background: linear-gradient(#00c0ff, #c000ff) !important;
+}
+.fiicen-button img {
+	width: 24px;
+	height: 24px;
+}
+#message {
+	font-size: 1.6rem;
+}
+td {
+	text-align: center;
+	vertical-align: top;
+}
+textarea {
+	width: 100%;
+	height: 9.6rem;
+	font-size: 2rem;
+}
+div {
+	vertical-align: top;
+}
+.nogap {
+	line-height: 1;
+}
+#render {
+	margin: 6.4rem 0;
+	font-size: 3.2rem;
+	white-space: pre-wrap;
+}
+#render.autoexpand:has(rtc) {
+	line-height: 2.5;
+}
+.part,
+.bitmap {
+	display: inline-block;
+	position: relative;
+	line-height: 1;
+}
+#render.autoexpand:has(rtc)>.part,
+#render.autoexpand:has(rtc)>.bitmap {
+	top: 2.4rem;
+}
+.bitmap {
+	text-align: left;
+}
+.part {
+	width: 3.2rem;
+	height: 3.2rem;
+	text-align: center;
+	transform-origin: 0 0;
+}
+.part-inner {
+	position: absolute;
+	width: 3.2rem;
+	height: 3.2rem;
+	transform-origin: top left;
+}
+.part-over {
+	background-color: #fcc;
+}
+
+.part-hencukuri>.part-inner:first-child {
+	transform: scale(0.5, 1);
+}
+.part-hencukuri>.part-inner:last-child {
+	transform-origin: top right;
+	transform: scale(0.5, 1);
+}
+
+.part-kanmuriasxi>.part-inner:first-child {
+	transform: scale(1, 0.5);
+}
+.part-kanmuriasxi>.part-inner:last-child {
+	transform-origin: bottom left;
+	transform: scale(1, 0.5);
+}
+
+.part-tatemiqcu>.part-inner:first-child {
+	transform: scale(0.333, 1);
+}
+.part-tatemiqcu>.part-inner:nth-child(2) {
+	transform-origin: top center;
+	transform: scale(0.333, 1);
+}
+.part-tatemiqcu>.part-inner:last-child {
+	transform-origin: top right;
+	transform: scale(0.333, 1);
+}
+
+.part-yokomiqcu>.part-inner:first-child {
+	transform: scale(1, 0.333);
+}
+.part-yokomiqcu>.part-inner:nth-child(2) {
+	transform-origin: center left;
+	transform: scale(1, 0.333);
+}
+.part-yokomiqcu>.part-inner:last-child {
+	transform-origin: bottom left;
+	transform: scale(1, 0.333);
+}
+
+.part-kunigakomi>.part-inner:last-child {
+	transform-origin: center;
+	transform: scale(0.7, 0.7);
+}
+
+.part-dougakomi>.part-inner:last-child {
+	transform-origin: bottom center;
+	transform: scale(0.7, 0.7);
+}
+
+.part-ukegakomi>.part-inner:last-child {
+	transform-origin: top center;
+	transform: scale(0.7, 0.7);
+}
+
+.part-hakogakomi>.part-inner:last-child {
+	transform-origin: center right;
+	transform: scale(0.7, 0.7);
+}
+
+.part-gangakomi>.part-inner:last-child {
+	transform-origin: bottom right;
+	transform: scale(0.7, 0.7);
+}
+
+.part-cucumigakomi>.part-inner:last-child {
+	transform-origin: bottom left;
+	transform: scale(0.7, 0.7);
+}
+
+.part-nyougakomi>.part-inner:last-child {
+	transform-origin: top right;
+	transform: scale(0.7, 0.7);
+}
+
+.part-konojxigakomi>.part-inner:last-child {
+	transform-origin: center left;
+	transform: scale(0.7, 0.7);
+}
+
+.part-gyakunyou>.part-inner:last-child {
+	transform: scale(0.7, 0.7);
+}
+
+.part-kagamimojxi>.part-inner:first-child {
+	transform-origin: center;
+	transform: scale(-1, 1);
+}
+
+.part-sakasamojxi>.part-inner:first-child {
+	transform-origin: center;
+	transform: scale(-1, -1);
+}
+
+.part-torinozoku>.part-inner:last-child {
+	color: #f00;
+	opacity: 0.5;
+}
+
+.part-migidaosxi>.part-inner:first-child {
+	transform-origin: center;
+	transform: rotate(90deg);
+}
+
+.part-hidaridaosxi>.part-inner:first-child {
+	transform-origin: center;
+	transform: rotate(-90deg);
+}
+
+.red { color: red; }
+.orange { color: orange; }
+.yellow { color: yellow; }
+.lime { color: lime; }
+.green { color: green; }
+.aqua { color: aqua; }
+.skyblue { color: #80c0ff; }
+.blue { color: blue; }
+.purple { color: purple; }
+.fuchsia { color: fuchsia; }
+.pink { color: #ff80c0; }
+.brown { color: brown; }
+.black { color: black; }
+.grey { color: grey; }
+.white { color: white; }
+.gold { color: gold; }
+.silver { color: silver; }
+
+.circle { border-radius: 50%; }
+
+.bg-red { background-color: red; }
+.bg-orange { background-color: orange; }
+.bg-yellow { background-color: yellow; }
+.bg-lime { background-color: lime; }
+.bg-green { background-color: green; }
+.bg-blue { background-color: blue; }
+.bg-purple { background-color: purple; }
+.bg-brown { background-color: brown; }
+.bg-black { background-color: black; }
+.bg-white { background-color: white; }
+
+.error { color: #f00; }
+
+.width2x {
+	display: inline-block;
+	transform: scale(200%, 100%);
+	transform-origin: top left;
+}
+
+ruby {
+	position: relative;
+}
+rtc {
+	text-indent: 0px;
+	line-height: 1;
+	text-emphasis: none;
+}
+ruby > rtc {
+	display: ruby-text;
+	font-size: 50%;
+	text-align: center;
+	width: 100%;
+	position: absolute;
+	top: 100%;
+	left: 0;
+}
+
+#error {
+	color: #f00;
+}
+#bitmap {
+	border-bottom: 0.1rem solid #808080;
+	border-right: 0.1rem solid #808080;
+}
+.bitmap-dot {
+	width: 3.1rem;
+	height: 3.1rem;
+	float: left;
+	border-top: 0.1rem solid #808080;
+	border-left: 0.1rem solid #808080;
+}
+.bitmap-row:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.yoko {
+	float: left;
+	margin-left: 1rem;
+}
+.yoko:first-child {
+	margin-left: 0;
+}
+.yoko-wrapper:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.dwpi {
+	font-family: "DWPIMincho";
+}
+.nishiki {
+	font-family: "Nishiki-teki";
+}
+.jigmo {
+	font-family: "Jigmo", "Jigmo2", "Jigmo3";
+}
+.jigmo2 {
+	font-family: "Jigmo2";
+}
+.jigmo3 {
+	font-family: "Jigmo3";
+}
+.zh-cn {
+	font-family: "Noto Sans SC";
+}
+.zh-tw {
+	font-family: "Noto Sans TC";
+}
+.zh-hk {
+	font-family: "Noto Sans HK";
+}
+.ko {
+	font-family: "Noto Sans KR";
+}
+.em {
+	font-family: "Noto Color Emoji";
+}
+
+@media screen and (min-width: 768px) {
+	textarea {
+		width: 60rem;
+	}
+	#render {
+		width: 96rem;
+	}
+}

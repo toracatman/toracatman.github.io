@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>アイヌ語の表記変換ブックマークレット</title>
+	<link rel="stylesheet" href="/toracatman.css">
+	<style>
+		textarea {
+			width: 100%;
+			height: 20rem;
+		}
+		.none {
+			display: none;
+		}
+		@media screen and (min-width: 768px) {
+			textarea {
+				width: 50rem;
+			}
+		}
+	</style>
+</head>
+<body>
+	<form name="form1">
+		<p>文字</p>
+		<p>
+			<label><input type="radio" name="letter" value="0" onchange="change();" checked>カタカナ</label>
+			<label><input type="radio" name="letter" value="1" onchange="change();">拡張カタカナ</label>
+			<label><input type="radio" name="letter" value="2" onchange="change();">拡張ひらがな</label>
+			<label><input type="radio" name="letter" value="3" onchange="change();">キリル文字</label>
+		</p>
+		<div id="kana">
+			<p>tu</p>
+			<p>
+				<label><input type="radio" name="tu" value="0" onchange="change();" checked>トゥ</label>
+				<label><input type="radio" name="tu" value="1" onchange="change();">ト゚</label>
+				<label><input type="radio" name="tu" value="2" onchange="change();">ツ゚</label>
+			</p>
+			<p>ce</p>
+			<p>
+				<label><input type="radio" name="ce" value="0" onchange="change();" checked>チェ</label>
+				<label><input type="radio" name="ce" value="1" onchange="change();">セ゚</label>
+			</p>
+			<p>-y, -w</p>
+			<p>
+				<label><input type="radio" name="yw" value="0" onchange="change();" checked>イ、ウ</label>
+				<label><input type="radio" name="yw" value="1" onchange="change();">ィ、ゥ</label>
+			</p>
+			<p>子音の連続</p>
+			<p>
+				<label><input type="radio" name="renzoku" value="0" onchange="change();" checked>ッにする</label>
+				<label><input type="radio" name="renzoku" value="1" onchange="change();">ッにしない</label>
+			</p>
+			<p>b、m、pの前のn</p>
+			<p>
+				<label><input type="radio" name="nm" value="0" onchange="change();" checked>ン</label>
+				<label><input type="radio" name="nm" value="1" onchange="change();">ㇺ</label>
+			</p>
+		</div>
+		<textarea name="output"></textarea>
+		<p>
+			<input type="button" value="クリップボードにコピー" onclick="copyToClipboard();">
+			<span id="message"></span>
+		</p>
+	</form>
+	<script src="bookmarklet.js"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>アイヌ語の 数字に 変換</title>
+	<link rel="stylesheet" href="/toracatman.css">
+	<style>
+		html {
+			font-size: 62.5%;
+		}
+		body {
+			font-size: 1.6rem;
+		}
+		input[type="text"] {
+			font-size: 1.6rem;
+			font-family: inherit;
+			width: 100%;
+		}
+		#error {
+			color: #f00;
+		}
+
+		@media screen and (min-width: 768px) {
+			input[type="text"] {
+				width: 80rem;
+			}
+		}
+	</style>
+</head>
+<body>
+	<h3>10進数、20進数（拡張算用数字）を 入力すれば，アイヌ語の 数字が 出力されます。</h3>
+	<form name="form1">
+		<p>10進数<input type="text" name="decimal" onchange="changeDecimal();"></p>
+		<p>20進数<input type="text" name="vigesimal" onchange="changeVigesimal();"></p>
+		<details>
+			<summary>拡張算用数字</summary>
+			<p><ruby><rb>0</rb><rp>（</rp><rt>ぜろ</rt><rp>）</rp></ruby>、<ruby><rb>1</rb><rp>（</rp><rt>いち</rt><rp>）</rp></ruby>、<ruby><rb>2</rb><rp>（</rp><rt>に</rt><rp>）</rp></ruby>、<ruby><rb>3</rb><rp>（</rp><rt>さん</rt><rp>）</rp></ruby>、<ruby><rb>4</rb><rp>（</rp><rt>よん</rt><rp>）</rp></ruby>、<ruby><rb>5</rb><rp>（</rp><rt>ご</rt><rp>）</rp></ruby>、<ruby><rb>6</rb><rp>（</rp><rt>ろく</rt><rp>）</rp></ruby>、<ruby><rb>7</rb><rp>（</rp><rt>なな</rt><rp>）</rp></ruby>、<ruby><rb>8</rb><rp>（</rp><rt>はち</rt><rp>）</rp></ruby>、<ruby><rb>9</rb><rp>（</rp><rt>きゅう</rt><rp>）</rp></ruby>、<ruby><rb>↊</rb><rp>（</rp><rt>びょん</rt><rp>）</rp></ruby>、<ruby><rb>↋</rb><rp>（</rp><rt>ゎん</rt><rp>）</rp></ruby>、<ruby><rb>↌</rb><rp>（</rp><rt>みゃ</rt><rp>）</rp></ruby>、<ruby><rb>↍</rb><rp>（</rp><rt>𛁭ゎ</rt><rp>）</rp></ruby>、<ruby><rb>↎</rb><rp>（</rp><rt>ぴゃい</rt><rp>）</rp></ruby>、<ruby><rb>↏</rb><rp>（</rp><rt>ぬゎい</rt><rp>）</rp></ruby>、<ruby><rb></rb><rp>（</rp><rt>つゎう</rt><rp>）</rp></ruby>、<ruby><rb></rb><rp>（</rp><rt>づん</rt><rp>）</rp></ruby>、<ruby><rb></rb><rp>（</rp><rt>す𛅑ん</rt><rp>）</rp></ruby>、<ruby><rb></rb><rp>（</rp><rt>ょう</rt><rp>）</rp></ruby></p>
+		</details>
+		<p>アイヌ語ローマ字<input type="text" name="ainu_roman" onchange=""></p>
+		<p>アイヌ語カタカナ<input type="text" name="ainu_kana" onchange=""></p>
+		<p>
+			<label><input type="radio" name="type" value="1" onchange="convert();" checked>数</label>
+			<label><input type="radio" name="type" value="2" onchange="convert();">個数</label>
+			<label><input type="radio" name="type" value="3" onchange="convert();">人数</label>
+		</p>
+	</form>
+	<div id="error"></div>
+	<a href="QuickReference.html">早見表</a>
+	<script>
+		var num;
+		var e_error = document.getElementById("error");
+		var vigesimal = [
+			["a", "↊"], ["b", "↋"], ["c", "↌"], ["d", "↍"], ["e", "↎"],
+			["f", "↏"], ["g", ""], ["h", ""], ["i", ""], ["j", ""]
+		];
+		var ainu_num_roman = ["", "sine", "tu", "re", "ine", "asikne", "iwan", "arwan", "tupesan", "sinepesan", "wan"];
+		var ainu_num_kana = ["", "シネ", "", "レ", "イネ", "アシㇰネ", "イワン", "アㇻワン", "ペサン", "シネペサン", "ワン"];
+		var ainu_roman;
+		var ainu_kana;
+		function changeDecimal() {
+			if (!/^-?\d+$/.test(document.form1.decimal.value)) {
+				e_error.textContent = "整数を 入力してください。";
+				return;
+			}
+			num = Number(document.form1.decimal.value);
+			convert();
+		}
+		function changeVigesimal() {
+			var n = document.form1.vigesimal.value;
+			for (var i = 0; i < vigesimal.length; i++) {
+				n = n.replace(new RegExp(vigesimal[i][1], "g"), vigesimal[i][0]);
+			}
+			if (!/^-?[\dA-Ja-j]+$/.test(n)) {
+				e_error.textContent = "整数を 入力してください。";
+				return;
+			}
+			num = parseInt(n, 20);
+			convert();
+		}
+		function convert() {
+			e_error.textContent = "";
+			if (num < -4000 || num > 4000) {
+				e_error.textContent = "-4000 から 4000（10進数），-↊00 から ↊00（20進数）までの 数字を 入力してください。";
+				return;
+			}
+			document.form1.decimal.value = num;
+			var n = num.toString(20);
+			for (var i = 0; i < vigesimal.length; i++) {
+				n = n.replace(new RegExp(vigesimal[i][0], "g"), vigesimal[i][1]);
+			}
+			document.form1.vigesimal.value = n;
+
+			n = Math.abs(num);
+			var n1 = n % 10;
+			var nd20 = (n + 10) / 20 | 0;
+			var nd400 = (n + 200) / 400 | 0;
+			var nm200 = n % 200;
+			ainu_roman = ainu_num_roman[n1];
+			ainu_kana = ainu_num_kana[n1];
+			if (n1 > 0) addSuffix();
+			if (n == 0) {
+				ainu_roman = "oha";
+				ainu_kana = "オハ";
+			}
+			else if (nm200 < 10) {}
+			else if (nm200 < 20) {
+				if (n1 > 0) {
+					ainu_roman += " ikasma ";
+					ainu_kana += " イカㇱマ ";
+				}
+				ainu_roman += "wan";
+				ainu_kana += "ワン";
+				addSuffix();
+			}
+			else {
+				if (n1 > 0) {
+					ainu_roman += " ikasma ";
+					ainu_kana += " イカㇱマ ";
+				}
+				if ((n / 10 | 0) & 1) {
+					ainu_roman += "wan";
+					ainu_kana += "ワン";
+					addSuffix();
+					ainu_roman += "-e";
+					ainu_kana += "・エ";
+				}
+				if (nd20 > 10) nd20 -= (((nd20 - 1) / 10 | 0) * 10);
+				if (nd20 >= 2) {
+					ainu_roman += ainu_num_roman[nd20];
+					ainu_kana += ainu_num_kana[nd20];
+				}
+				ainu_roman += "hotne";
+				ainu_kana += "ホㇳネ";
+				addSuffix();
+			}
+			if (n >= 200) {
+				if (nm200 > 0) {
+					ainu_roman += " ikasma ";
+					ainu_kana += " イカㇱマ ";
+				}
+				if (n < 400) {
+					ainu_roman += "wanhotne";
+					ainu_kana += "ワンホㇳネ";
+					addSuffix();
+				}
+				else {
+					if ((n / 200 | 0) & 1) {
+						ainu_roman += "wanhotne";
+						ainu_kana += "ワンホㇳネ";
+						addSuffix();
+						ainu_roman += "-e";
+						ainu_kana += "・エ";
+					}
+					if (nd400 > 10) nd400 -= (((nd400 - 1) / 10 | 0) * 10);
+					if (nd400 >= 2) {
+						ainu_roman += ainu_num_roman[nd400];
+						ainu_kana += ainu_num_kana[nd400];
+					}
+					ainu_roman += "atuyta";
+					ainu_kana += "アタ";
+					addSuffix();
+				}
+			}
+			if (num < 0) {
+				ainu_roman += " e-isam";
+				ainu_kana += " エ・イサㇺ";
+			}
+
+			document.form1.ainu_roman.value = ainu_roman;
+			document.form1.ainu_kana.value = ainu_kana;
+		}
+
+		function addSuffix() {
+			if (document.form1.type.value == "2") {
+				if (ainu_roman[ainu_roman.length - 1] == "n") {
+					ainu_roman += "pe";
+				}
+				else {
+					ainu_roman += "p";
+				}
+				if (ainu_kana[ainu_kana.length - 1] == "ン") {
+					ainu_kana += "ペ";
+				}
+				else {
+					ainu_kana += "";
+				}
+			}
+			else if (document.form1.type.value == "3") {
+				if (ainu_roman[ainu_roman.length - 1] == "n") {
+					ainu_roman += "iw";
+				}
+				else {
+					ainu_roman += "n";
+				}
+				if (ainu_kana[ainu_kana.length - 1] == "ン") {
+					ainu_kana = ainu_kana.slice(0, -1) + "ニ";
+				}
+				else {
+					ainu_kana += "ン";
+				}
+			}
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&family=Noto+Sans+HK&family=Noto+Sans+KR&family=Noto+Sans+SC&family=Noto+Sans+TC&family=Noto+Serif+Hentaigana&display=swap');
+
+@font-face {
+	font-family: "My Mkana+";
+	src: url("/fonts/mkanaplus.woff2") format("woff2"),
+	     url("/fonts/mkanaplus.woff") format("woff");
+	font-display: swap;
+	unicode-range: U+0-F8FF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23-FA24, U+FA27-FA29, U+FB00-2F7FF, U+2FA20-10FFFF;
+}
+@font-face {
+	font-family: "My MgenKana+";
+	src: url("/fonts/mgenkanaplus.woff2") format("woff2"),
+	     url("/fonts/mgenkanaplus.woff") format("woff");
+	font-display: swap;
+	unicode-range: U+0-F8FF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23-FA24, U+FA27-FA29, U+FB00-2F7FF, U+2FA20-10FFFF;
+}
+@font-face {
+	font-family: "My Ricty Kana";
+	src: url("/fonts/RictyKana.woff2") format("woff2"),
+	     url("/fonts/RictyKana.woff") format("woff");
+	font-display: swap;
+	unicode-range: U+0-F8FF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23-FA24, U+FA27-FA29, U+FB00-2F7FF, U+2FA20-10FFFF;
+}
+@font-face {
+	font-family: "My Ricty ShinKana";
+	src: url("/fonts/RictyShinKana.woff2") format("woff2"),
+	     url("/fonts/RictyShinKana.woff") format("woff");
+	font-display: swap;
+	unicode-range: U+0-F8FF, U+FA0E-FA0F, U+FA11, U+FA13-FA14, U+FA1F, U+FA21, U+FA23-FA24, U+FA27-FA29, U+FB00-2F7FF, U+2FA20-10FFFF;
+}
+@font-face {
+	font-family: "Nishiki-teki";
+	src: local("Nishiki-teki"),
+	     url("/fonts/nishiki-teki.woff2") format("woff2"),
+	     url("/fonts/nishiki-teki.woff") format("woff");
+	font-display: swap;
+}
+@font-face {
+	font-family: "Nishiki-teki-Braille";
+	src: local("Nishiki-teki"),
+	     url("/fonts/nishiki-teki.woff2") format("woff2"),
+	     url("/fonts/nishiki-teki.woff") format("woff");
+	font-display: swap;
+	unicode-range: U+2800-28FF;
+}
+@font-face {
+	font-family: "Jigmo";
+	src: local("Jigmo"),
+	     url("/fonts/Jigmo.woff2") format("woff2"),
+	     url("/fonts/Jigmo.woff") format("woff");
+	font-display: swap;
+	unicode-range: U+2E80-302D, U+3030-312F, U+3190-9FFF, U+F900-FAFF, U+FE11-FE12, U+FE51, U+FF61-FFDF, U+1AFF0-1B16F, U+1D372-1D376, U+1F000-1F02F, U+1F200-1F2FF, U+1FA60-1FA6D, U+100000-10FFFF;
+}
+@font-face {
+	font-family: "Jigmo2";
+	src: local("Jigmo2"),
+	     url("/fonts/Jigmo2.woff2") format("woff2"),
+	     url("/fonts/Jigmo2.woff") format("woff");
+	font-display: swap;
+}
+@font-face {
+	font-family: "Jigmo3";
+	src: local("Jigmo3"),
+	     url("/fonts/Jigmo3.woff2") format("woff2"),
+	     url("/fonts/Jigmo3.woff") format("woff");
+	font-display: swap;
+}
+
+html {
+	font-size: 62.5%;
+}
+body {
+	font-size: 1.6rem;
+	font-family: "My Mkana+", "My MgenKana+", "Nishiki-teki-Braille", "Noto Color Emoji", "Noto Sans KR", "Noto Serif Hentaigana", "Jigmo", "Jigmo2", "Jigmo3", sans-serif !important;
+	overflow-wrap: break-word;
+}
+table {
+	border-collapse: collapse;
+}
+input, textarea {
+	font-family: inherit;
+}

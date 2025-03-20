@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>早見表</title>
+	<link rel="stylesheet" href="/toracatman.css">
+	<style>
+		html {
+			font-size: 62.5%;
+		}
+		body {
+			font-size: 1.6rem;
+		}
+		tr.cyan {
+			background-color: #cff;
+		}
+	</style>
+</head>
+<body>
+	<table border="1">
+		<tr><th>10進数</th><th>20進数</th><th>アイヌ語ローマ字</th><th>アイヌ語カタカナ</th></tr>
+	</table>
+	<script>
+		var e_table = document.getElementsByTagName("table")[0];
+		var vigesimal = [
+			["a", "↊"], ["b", "↋"], ["c", "↌"], ["d", "↍"], ["e", "↎"],
+			["f", "↏"], ["g", ""], ["h", ""], ["i", ""], ["j", ""]
+		];
+		var ainu_num_roman = ["", "sine", "tu", "re", "ine", "asikne", "iwan", "arwan", "tupesan", "sinepesan", "wan"];
+		var ainu_num_kana = ["", "シネ", "", "レ", "イネ", "アシㇰネ", "イワン", "アㇻワン", "ペサン", "シネペサン", "ワン"];
+		(() => {
+			var f = document.createDocumentFragment();
+			var td;
+			for (var num = 0; num <= 4000; num++) {
+				var tr = document.createElement("tr");
+				var numm40 = num % 40;
+				if (numm40 >= 20) tr.classList.add("cyan");
+
+				td = document.createElement("td");
+				td.textContent = num;
+				tr.appendChild(td);
+
+				var n = num.toString(20);
+				for (var i = 0; i < vigesimal.length; i++) {
+					n = n.replace(new RegExp(vigesimal[i][0], "g"), vigesimal[i][1]);
+				}
+				td = document.createElement("td");
+				td.textContent = n;
+				tr.appendChild(td);
+
+				n = Math.abs(num);
+				var n1 = n % 10;
+				var nd20 = (n + 10) / 20 | 0;
+				var nd400 = (n + 200) / 400 | 0;
+				var nm200 = n % 200;
+				var ainu_roman = ainu_num_roman[n1];
+				var ainu_kana = ainu_num_kana[n1];
+				if (n == 0) {
+					ainu_roman = "oha";
+					ainu_kana = "オハ";
+				}
+				else if (nm200 < 10) {}
+				else if (nm200 < 20) {
+					if (n1 > 0) {
+						ainu_roman += " ikasma ";
+						ainu_kana += " イカㇱマ ";
+					}
+					ainu_roman += "wan";
+					ainu_kana += "ワン";
+				}
+				else {
+					if (n1 > 0) {
+						ainu_roman += " ikasma ";
+						ainu_kana += " イカㇱマ ";
+					}
+					if ((n / 10 | 0) & 1) {
+						ainu_roman += "wan-e";
+						ainu_kana += "ワン・エ";
+					}
+					if (nd20 > 10) nd20 -= (((nd20 - 1) / 10 | 0) * 10);
+					if (nd20 >= 2) {
+						ainu_roman += ainu_num_roman[nd20];
+						ainu_kana += ainu_num_kana[nd20];
+					}
+					ainu_roman += "hotne";
+					ainu_kana += "ホㇳネ";
+				}
+				if (n >= 200) {
+					if (nm200 > 0) {
+						ainu_roman += " ikasma ";
+						ainu_kana += " イカㇱマ ";
+					}
+					if (n < 400) {
+						ainu_roman += "wanhotne";
+						ainu_kana += "ワンホㇳネ";
+					}
+					else {
+						if ((n / 200 | 0) & 1) {
+							ainu_roman += "wanhotne-e";
+							ainu_kana += "ワンホㇳネ・エ";
+						}
+						if (nd400 > 10) nd400 -= (((nd400 - 1) / 10 | 0) * 10);
+						if (nd400 >= 2) {
+							ainu_roman += ainu_num_roman[nd400];
+							ainu_kana += ainu_num_kana[nd400];
+						}
+						ainu_roman += "atuyta";
+						ainu_kana += "アタ";
+					}
+				}
+
+				td = document.createElement("td");
+				td.textContent = ainu_roman;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.textContent = ainu_kana;
+				tr.appendChild(td);
+
+				f.appendChild(tr);
+			}
+			e_table.appendChild(f);
+		})();
+	</script>
+</body>
+</html>

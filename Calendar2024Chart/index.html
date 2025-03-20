@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>早見表</title>
+	<link rel="stylesheet" href="/toracatman.css">
+	<script>
+		function isLeap(y) {
+			return y % 400 == 0 || (y % 100 != 0 && y % 4 == 0);
+		}
+		function isLeapH(y) {
+			if (y % 896 == 0) {
+				return false;
+			}
+			y %= 28;
+			if (y == 0 || y == 6 || y == 12 || y == 18 || y == 24) {
+				return true;
+			}
+			return false;
+		}
+
+		function displayChart() {
+			var gy = 2024;
+			var gm = 1;
+			var gd = 0;
+
+			var hy = 2024;
+			var hm = 1;
+			var hd = 0;
+
+			var s = document.form1.start.value;
+			var e = document.form1.end.value;
+
+			var nwin = window.open("");
+			nwin.document.open();
+			nwin.document.write('<!DOCTYPE html>');
+			nwin.document.write('<html lang="ja">');
+			nwin.document.write('<head>');
+			nwin.document.write('<meta charset="UTF-8">');
+			nwin.document.write('<meta name="viewport" content="width=device-width,initial-scale=1">');
+			nwin.document.write('<title>早見表</title>');
+			nwin.document.write('<style>');
+			nwin.document.write('html { font-size: 62.5%; }');
+			nwin.document.write('body { font-size: 1.6rem; }');
+			nwin.document.write('td { text-align: right; font-size: 2rem; font-family: monospace; }');
+			nwin.document.write('.gregorian-first { background-color: #0ff; }');
+			nwin.document.write('.hhpc-first { background-color: #0f0; }');
+			nwin.document.write('</style>');
+			nwin.document.write('</head>');
+			nwin.document.write('<body>');
+			nwin.document.write('<table border="1">');
+			nwin.document.write('<tr><th>日の番号</th><th>グレゴリオ暦</th><th>HHPC改定案</th></tr>');
+			for (var i = 1; i <= e; i++) {
+				gd++;
+				if (gm == 2) {
+					if (isLeap(gy)) {
+						if (gd > 29) {
+							gm++;
+							gd = 1;
+						}
+					}
+					else {
+						if (gd > 28) {
+							gm++;
+							gd = 1;
+						}
+					}
+				}
+				else if (gm == 4 || gm == 6 || gm == 9 || gm == 11) {
+					if (gd > 30) {
+						gm++;
+						gd = 1;
+					}
+				}
+				else {
+					if (gd > 31) {
+						gm++;
+						gd = 1;
+					}
+				}
+				if (gm > 12) {
+					gy++;
+					gm = 1;
+				}
+
+				hd++;
+				if (hm == 13) {
+					if (hd > 7) {
+						hm++;
+						hd = 1;
+					}
+				}
+				else if (hm == 3 || hm == 6 || hm == 9 || hm == 12) {
+					if (hd > 31) {
+						hm++;
+						hd = 1;
+					}
+				}
+				else {
+					if (hd > 30) {
+						hm++;
+						hd = 1;
+					}
+				}
+				if (isLeapH(hy)) {
+					if (hm > 13) {
+						hy++;
+						hm = 1;
+					}
+				}
+				else {
+					if (hm > 12) {
+						hy++;
+						hm = 1;
+					}
+				}
+
+				if (i >= s) {
+					var gf = "";
+					if (gd == 1) gf = ' class="gregorian-first"';
+
+					var hf = "";
+					if (hd == 1) hf = ' class="hhpc-first"';
+
+					gm = gm.toString().padStart(2, "0");
+					gd = gd.toString().padStart(2, "0");
+					hm = hm.toString().padStart(2, "0");
+					hd = hd.toString().padStart(2, "0");
+					nwin.document.write(`<tr><td>${i}</td><td${gf}>${gy}/${gm}/${gd}</td><td${hf}>${hy}/${hm}/${hd}</td></tr>`);
+				}
+			}
+			nwin.document.write('</table>');
+			nwin.document.write('</body>');
+			nwin.document.write('</html>');
+			nwin.document.close();
+		}
+	</script>
+</head>
+<body>
+	<form name="form1">
+		開始番号<input type="text" name="start"><br>
+		終了番号<input type="text" name="end"><br>
+		<input type="button" value="表示" onclick="displayChart()">
+	</form>
+</body>
+</html>
