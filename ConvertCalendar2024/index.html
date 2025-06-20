@@ -7,10 +7,10 @@
 	<link rel="stylesheet" href="/toracatman.css">
 	<style>
 		.red {
-			color: red;
+			color: #f00;
 		}
 		.blue {
-			color: blue;
+			color: #00f;
 		}
 	</style>
 </head>
@@ -342,13 +342,13 @@
 
 			switch (document.form1.format.value) {
 			case "ymdslash":
-				document.form1.hhpc.value = `${hy.toString().padStart(4, "0")}/${hm.toString().padStart(2, "0")}/${hd.toString().padStart(2, "0")}`;
+				document.form1.hhpc.value = `${String(hy).padStart(4, "0")}/${String(hm).padStart(2, "0")}/${String(hd).padStart(2, "0")}`;
 				break;
 			case "ymdhyphen":
-				document.form1.hhpc.value = `${hy.toString().padStart(4, "0")}-${hm.toString().padStart(2, "0")}-${hd.toString().padStart(2, "0")}`;
+				document.form1.hhpc.value = `${String(hy).padStart(4, "0")}-${String(hm).padStart(2, "0")}-${String(hd).padStart(2, "0")}`;
 				break;
 			case "ymd":
-				document.form1.hhpc.value = `${hy.toString().padStart(4, "0")}${hm.toString().padStart(2, "0")}${hd.toString().padStart(2, "0")}`;
+				document.form1.hhpc.value = `${String(hy).padStart(4, "0")}${String(hm).padStart(2, "0")}${String(hd).padStart(2, "0")}`;
 				break;
 			case "japanese":
 				document.form1.hhpc.value = `${hy}年${hm}月${hd}日`;
@@ -417,13 +417,13 @@
 
 			switch (document.form1.format.value) {
 			case "ymdslash":
-				document.form1.gregorian.value = `${gy.toString().padStart(4, "0")}/${gm.toString().padStart(2, "0")}/${gd.toString().padStart(2, "0")}`;
+				document.form1.gregorian.value = `${String(gy).padStart(4, "0")}/${String(gm).padStart(2, "0")}/${String(gd).padStart(2, "0")}`;
 				break;
 			case "ymdhyphen":
-				document.form1.gregorian.value = `${gy.toString().padStart(4, "0")}-${gm.toString().padStart(2, "0")}-${gd.toString().padStart(2, "0")}`;
+				document.form1.gregorian.value = `${String(gy).padStart(4, "0")}-${String(gm).padStart(2, "0")}-${String(gd).padStart(2, "0")}`;
 				break;
 			case "ymd":
-				document.form1.gregorian.value = `${gy.toString().padStart(4, "0")}${gm.toString().padStart(2, "0")}${gd.toString().padStart(2, "0")}`;
+				document.form1.gregorian.value = `${String(gy).padStart(4, "0")}${String(gm).padStart(2, "0")}${String(gd).padStart(2, "0")}`;
 				break;
 			case "japanese":
 				document.form1.gregorian.value = `${gy}年${gm}月${gd}日`;

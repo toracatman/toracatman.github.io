@@ -14,11 +14,11 @@ var sh = text.scrollHeight - 96;
 	var url = new URL(window.location.href);
 	var str = url.searchParams.get("text");
 	text.value = str;
-	inputText();
-	text.addEventListener("input", inputText);
+	changeText();
+	text.addEventListener("change", changeText);
 })();
 
-function inputText() {
+function changeText() {
 	changeTheme();
 	changeLineGap();
 	s = text.value;
@@ -101,22 +101,38 @@ function textProcess(d) {
 	if (s.slice(i, i + 2) == "ｲ{") {
 		i += 2;
 		var span = document.createElement("span");
-		var heart = s.codePointAt(i);
-		if (heart == 0x2764) span.classList.add("red");
-		else if (heart == 0x1F9E1) span.classList.add("orange");
-		else if (heart == 0x1F49B) span.classList.add("yellow");
-		else if (heart == 0x1F350) span.classList.add("lime");
-		else if (heart == 0x1F49A) span.classList.add(document.form1.green.value == "green" ? "green" : "lime");
-		else if (heart == 0x1FA75) span.classList.add(document.form1.lightblue.value == "aqua" ? "aqua" : "skyblue");
-		else if (heart == 0x1F499) span.classList.add("blue");
-		else if (heart == 0x1F49C) span.classList.add("purple");
-		else if (heart == 0x1FA77) span.classList.add(document.form1.pink.value == "fuchsia" ? "fuchsia" : "pink");
-		else if (heart == 0x1F90E) span.classList.add("brown");
-		else if (heart == 0x1F5A4) span.classList.add("black");
-		else if (heart == 0x1FA76) span.classList.add("grey");
-		else if (heart == 0x1F90D) span.classList.add("white");
-		else if (heart == 0x1F4C0) span.classList.add("gold");
-		else if (heart == 0x1F4BF) span.classList.add("silver");
+		var p = s.codePointAt(i);
+		var emojxi = s.slice(i, i + (p == 0x200B ? 3 : p > 0xFFFF ? 2 : 1));
+		if (emojxi == "🖤") span.classList.add("black");
+		else if (emojxi == "🍁") span.classList.add("redorange");
+		else if (emojxi == "🌞") span.classList.add("yelloworange");
+		else if (emojxi == "💛") span.classList.add("yellow");
+		else if (emojxi == "🍐") span.classList.add("lime");
+		else if (emojxi == "💚") span.classList.add("green");
+		else if (emojxi == "🥒") span.classList.add("bluegreen");
+		else if (emojxi == "🩵") span.classList.add("cyan");
+		else if (emojxi == "💙") span.classList.add("blue");
+		else if (emojxi == "🍆") span.classList.add("bluepurple");
+		else if (emojxi == "💜") span.classList.add("purple");
+		else if (emojxi == "🩷") span.classList.add("magenta");
+		else if (emojxi == "❤") span.classList.add("red");
+		else if (emojxi == "🤎") span.classList.add("brown");
+		else if (emojxi == "🧡") span.classList.add("orange");
+		else if (emojxi == "📀") span.classList.add("gold");
+		else if (emojxi == "💿") span.classList.add("silver");
+		else if (emojxi == "🩶") span.classList.add("gray");
+		else if (emojxi == "🤍") span.classList.add("white");
+		else if (emojxi == "➖") span.classList.add("transparent");
+		else if (emojxi == "🍋") span.classList.add("lemon");
+		else if (emojxi == "🌚") span.classList.add("navy");
+		else if (emojxi == "🥔") span.classList.add("ocher");
+		else if (emojxi == "🌸") span.classList.add("pink");
+		else if (emojxi == "💧") span.classList.add("skyblue");
+		else if (emojxi == "​🏻") span.classList.add("skincolor1");
+		else if (emojxi == "​🏼") span.classList.add("skincolor2");
+		else if (emojxi == "​🏽") span.classList.add("skincolor3");
+		else if (emojxi == "​🏾") span.classList.add("skincolor4");
+		else if (emojxi == "​🏿") span.classList.add("skincolor5");
 		else {
 			while (s[i] != "|") {
 				var e = textProcess(d);
@@ -125,27 +141,43 @@ function textProcess(d) {
 				if (i >= s.length) break;
 			}
 			i++;
-			heart = s.codePointAt(i);
-			if (heart == 0x2764) span.classList.add("red");
-			else if (heart == 0x1F9E1) span.classList.add("orange");
-			else if (heart == 0x1F49B) span.classList.add("yellow");
-			else if (heart == 0x1F350) span.classList.add("lime");
-			else if (heart == 0x1F49A) span.classList.add(document.form1.green.value == "green" ? "green" : "lime");
-			else if (heart == 0x1FA75) span.classList.add(document.form1.lightblue.value == "aqua" ? "aqua" : "skyblue");
-			else if (heart == 0x1F499) span.classList.add("blue");
-			else if (heart == 0x1F49C) span.classList.add("purple");
-			else if (heart == 0x1FA77) span.classList.add(document.form1.pink.value == "fuchsia" ? "fuchsia" : "pink");
-			else if (heart == 0x1F90E) span.classList.add("brown");
-			else if (heart == 0x1F5A4) span.classList.add("black");
-			else if (heart == 0x1FA76) span.classList.add("grey");
-			else if (heart == 0x1F90D) span.classList.add("white");
-			else if (heart == 0x1F4C0) span.classList.add("gold");
-			else if (heart == 0x1F4BF) span.classList.add("silver");
-			i += heart > 0xFFFF ? 2 : 1;
+			p = s.codePointAt(i);
+			emojxi = s.slice(i, i + (p == 0x200B ? 3 : p > 0xFFFF ? 2 : 1));
+			if (emojxi == "🖤") span.classList.add("black");
+			else if (emojxi == "🍁") span.classList.add("redorange");
+			else if (emojxi == "🌞") span.classList.add("yelloworange");
+			else if (emojxi == "💛") span.classList.add("yellow");
+			else if (emojxi == "🍐") span.classList.add("lime");
+			else if (emojxi == "💚") span.classList.add("green");
+			else if (emojxi == "🥒") span.classList.add("bluegreen");
+			else if (emojxi == "🩵") span.classList.add("cyan");
+			else if (emojxi == "💙") span.classList.add("blue");
+			else if (emojxi == "🍆") span.classList.add("bluepurple");
+			else if (emojxi == "💜") span.classList.add("purple");
+			else if (emojxi == "🩷") span.classList.add("magenta");
+			else if (emojxi == "❤") span.classList.add("red");
+			else if (emojxi == "🤎") span.classList.add("brown");
+			else if (emojxi == "🧡") span.classList.add("orange");
+			else if (emojxi == "📀") span.classList.add("gold");
+			else if (emojxi == "💿") span.classList.add("silver");
+			else if (emojxi == "🩶") span.classList.add("gray");
+			else if (emojxi == "🤍") span.classList.add("white");
+			else if (emojxi == "➖") span.classList.add("transparent");
+			else if (emojxi == "🍋") span.classList.add("lemon");
+			else if (emojxi == "🌚") span.classList.add("navy");
+			else if (emojxi == "🥔") span.classList.add("ocher");
+			else if (emojxi == "🌸") span.classList.add("pink");
+			else if (emojxi == "💧") span.classList.add("skyblue");
+			else if (emojxi == "​🏻") span.classList.add("skincolor1");
+			else if (emojxi == "​🏼") span.classList.add("skincolor2");
+			else if (emojxi == "​🏽") span.classList.add("skincolor3");
+			else if (emojxi == "​🏾") span.classList.add("skincolor4");
+			else if (emojxi == "​🏿") span.classList.add("skincolor5");
+			i += emojxi.length;
 			return span;
 		}
 
-		i += heart > 0xFFFF ? 3 : 2;
+		i += emojxi.length + 1;
 		while (s[i] != "}") {
 			var e = textProcess(d);
 			span.appendChild(e);
@@ -400,7 +432,7 @@ function textProcess(d) {
 			else if (c == 0x1F535 || c == 0x1F7E6)	e1.classList.add("bg-blue");
 			else if (c == 0x1F7E0 || c == 0x1F7E7)	e1.classList.add("bg-orange");
 			else if (c == 0x1F7E1 || c == 0x1F7E8)	e1.classList.add("bg-yellow");
-			else if (c == 0x1F7E2 || c == 0x1F7E9)	e1.classList.add(document.form1.green.value == "green" ? "bg-green" : "bg-lime");
+			else if (c == 0x1F7E2 || c == 0x1F7E9)	e1.classList.add("bg-green");
 			else if (c == 0x1F7E3 || c == 0x1F7EA)	e1.classList.add("bg-purple");
 			else if (c == 0x1F7E4 || c == 0x1F7EB)	e1.classList.add("bg-brown");
 			i++;
@@ -434,7 +466,7 @@ function insert(c) {
 
 	text.focus();
 
-	inputText();
+	changeText();
 }
 
 function insert2(s, e) {
@@ -452,7 +484,7 @@ function insert2(s, e) {
 
 	text.focus();
 
-	inputText();
+	changeText();
 }
 
 function insertColor() {
@@ -543,7 +575,7 @@ function threadsButton() {
 	window.open(`https://www.threads.net/intent/post?text=${encodeURIComponent(old_s)}`);
 }
 function mastodonButton() {
-	var instance = prompt("Mastodonの インスタンス", "https://mstdn.jp");
+	var instance = prompt("Mastodon の インスタンス", "https://mstdn.jp");
 	if (instance == "" || instance == null) return;
 	if (instance.slice(0, 8) != "https://") instance = `https://${instance}`;
 	if (instance.slice(-1) == "/") instance = instance.slice(0, -1);

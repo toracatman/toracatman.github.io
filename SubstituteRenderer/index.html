@@ -10,7 +10,10 @@
 	<style id="custom-linegap"></style>
 </head>
 <body>
-	<details>
+    <h1>代用表記レンダラー</h1>
+    <p>代用表記から 本来の 表記を レンダリングします。</p>
+
+    <details>
 		<summary>設定</summary>
 		<p>言語 JA/<del><a href="indexEN.html">EN</a></del>（英語版は 更新停止中）</p>
 		<form name="form1">
@@ -30,23 +33,6 @@
 				<label><input type="radio" name="linegap" value="custom" onchange="changeLineGap()">カスタム</label>
 				<label>行の 高さ<input type="text" name="lineheight" value="1" onchange="changeLineHeight()"></label>
 				<label><input type="checkbox" name="autoexpand" onchange="changeLineGap()" checked>下ルビが あるとき，行間を 広げる</label>
-			</p>
-
-			<h4>色の 設定</h4>
-			<p>
-				緑の 図形💚🟢🟩
-				<label><input type="radio" name="green" value="green" checked onchange="inputText()">緑<span class="green">■</span></label>
-				<label><input type="radio" name="green" value="lime" onchange="inputText()">黄緑<span class="lime">■</span></label>
-			</p>
-			<p>
-				水色の 図形🩵
-				<label><input type="radio" name="lightblue" value="aqua" checked onchange="inputText()">シアン<span class="aqua">■</span></label>
-				<label><input type="radio" name="lightblue" value="skyblue" onchange="inputText()">空色<span class="skyblue">■</span></label>
-			</p>
-			<p>
-				ピンクの 図形🩷
-				<label><input type="radio" name="pink" value="fuchsia" checked onchange="inputText()">マゼンタ<span class="fuchsia">■</span></label>
-				<label><input type="radio" name="pink" value="pink" onchange="inputText()">ピンク<span class="pink">■</span></label>
 			</p>
 
 			<h3>ラテン文字の 代用表記</h3>
@@ -104,21 +90,36 @@
 		<summary>色付きの 文字</summary>
 		<form name="form2">
 			<select name="color">
-				<option value="❤">赤❤</option>
-				<option value="🧡">オレンジ🧡</option>
-				<option value="💛">黄色💛</option>
+				<option value="🖤">黒🖤</option>
+				<option value="🍁">赤橙🍁</option>
+				<option value="🌞">黄橙🌞</option>
+				<option value="💛">黄💛</option>
 				<option value="🍐">黄緑🍐</option>
 				<option value="💚">緑💚</option>
-				<option value="🩵">水色🩵</option>
+				<option value="🥒">青緑🥒</option>
+				<option value="🩵">シアン🩵</option>
 				<option value="💙">青💙</option>
+				<option value="🍆">青紫🍆</option>
 				<option value="💜">紫💜</option>
-				<option value="🩷">ピンク🩷</option>
-				<option value="🤎">茶色🤎</option>
-				<option value="🖤">黒🖤</option>
-				<option value="🩶">灰色🩶</option>
+				<option value="🩷">マゼンタ🩷</option>
+				<option value="❤">赤❤</option>
+				<option value="🤎">茶🤎</option>
+				<option value="🧡">橙🧡</option>
+				<option value="📀">金📀</option>
+				<option value="💿">銀💿</option>
+				<option value="🩶">灰🩶</option>
 				<option value="🤍">白🤍</option>
-				<option value="📀">金色📀</option>
-				<option value="💿">銀色💿</option>
+				<option value="➖">透明➖</option>
+				<option value="🍋">檸檬色🍋</option>
+				<option value="🌚">藍色🌚</option>
+				<option value="🥔">黄土色🥔</option>
+				<option value="🌸">ピンク🌸</option>
+				<option value="💧">そら色💧</option>
+				<option value="​🏻">肌色​🏻</option>
+				<option value="​🏼">肌色​🏼</option>
+				<option value="​🏽">肌色​🏽</option>
+				<option value="​🏾">肌色​🏾</option>
+				<option value="​🏿">肌色​🏿</option>
 			</select>
 			<input type="button" value="色付きの 文字" onclick="insertColor()">
 			<p>
@@ -139,6 +140,38 @@
 	</details>
 	<details>
 		<summary>色付きの 図形</summary>
+        <p>
+            <input type="button" value="🖤" onclick="insert('🖤')">
+            <input type="button" value="🍁" onclick="insert('🍁')">
+            <input type="button" value="🌞" onclick="insert('🌞')">
+            <input type="button" value="💛" onclick="insert('💛')">
+            <input type="button" value="🍐" onclick="insert('🍐')">
+            <input type="button" value="💚" onclick="insert('💚')">
+            <input type="button" value="🥒" onclick="insert('🥒')">
+            <input type="button" value="🩵" onclick="insert('🩵')">
+            <input type="button" value="💙" onclick="insert('💙')">
+            <input type="button" value="🍆" onclick="insert('🍆')">
+            <input type="button" value="💜" onclick="insert('💜')">
+            <input type="button" value="🩷" onclick="insert('🩷')">
+            <input type="button" value="❤" onclick="insert('❤')">
+            <input type="button" value="🤎" onclick="insert('🤎')">
+            <input type="button" value="🧡" onclick="insert('🧡')">
+            <input type="button" value="📀" onclick="insert('📀')">
+            <input type="button" value="💿" onclick="insert('💿')">
+            <input type="button" value="🩶" onclick="insert('🩶')">
+            <input type="button" value="🤍" onclick="insert('🤍')">
+            <input type="button" value="➖" onclick="insert('➖')">
+            <input type="button" value="🍋" onclick="insert('🍋')">
+            <input type="button" value="🌚" onclick="insert('🌚')">
+            <input type="button" value="🥔" onclick="insert('🥔')">
+            <input type="button" value="🌸" onclick="insert('🌸')">
+            <input type="button" value="💧" onclick="insert('💧')">
+            <input type="button" value="​🏻" onclick="insert('​🏻')">
+            <input type="button" value="​🏼" onclick="insert('​🏼')">
+            <input type="button" value="​🏽" onclick="insert('​🏽')">
+            <input type="button" value="​🏾" onclick="insert('​🏾')">
+            <input type="button" value="​🏿" onclick="insert('​🏿')">
+        </p>
 		<p>
 			<input type="button" value="🔴" onclick="insert('🔴')">
 			<input type="button" value="🟠" onclick="insert('🟠')">
@@ -1570,25 +1603,40 @@
 
 	<h3>色の テキスト表記</h3>
 	<p>ｲ{色|文字} または ｲ{文字|色}</p>
-	<p>色は ハートの 色（黄緑は 梨，金は DVD，銀は CD）で 選びます。</p>
+	<p>色は 絵文字の 色で 選びます。</p>
 	<table border="1">
-		<tr><th>ハート</th><th>色</th></tr>
-		<tr><td>❤</td><td>赤</td></tr>
-		<tr><td>🧡</td><td>オレンジ</td></tr>
-		<tr><td>💛</td><td>黄色</td></tr>
+		<tr><th>絵文字</th><th>色</th></tr>
+		<tr><td>🖤</td><td>黒</td></tr>
+		<tr><td>🍁</td><td>赤橙</td></tr>
+		<tr><td>🌞</td><td>黄橙</td></tr>
+		<tr><td>💛</td><td>黄</td></tr>
 		<tr><td>🍐</td><td>黄緑</td></tr>
 		<tr><td>💚</td><td>緑</td></tr>
-		<tr><td>🩵</td><td>水色</td></tr>
+		<tr><td>🥒</td><td>青緑</td></tr>
+		<tr><td>🩵</td><td>シアン</td></tr>
 		<tr><td>💙</td><td>青</td></tr>
+		<tr><td>🍆</td><td>青紫</td></tr>
 		<tr><td>💜</td><td>紫</td></tr>
-		<tr><td>🩷</td><td>ピンク</td></tr>
-		<tr><td>🤎</td><td>茶色</td></tr>
-		<tr><td>🖤</td><td>黒</td></tr>
-		<tr><td>🩶</td><td>灰色</td></tr>
+		<tr><td>🩷</td><td>マゼンタ</td></tr>
+		<tr><td>❤</td><td>赤</td></tr>
+		<tr><td>🤎</td><td>茶</td></tr>
+		<tr><td>🧡</td><td>橙</td></tr>
+		<tr><td>📀</td><td>金</td></tr>
+		<tr><td>💿</td><td>銀</td></tr>
+		<tr><td>🩶</td><td>灰</td></tr>
 		<tr><td>🤍</td><td>白</td></tr>
-		<tr><td>📀</td><td>金色</td></tr>
-		<tr><td>💿</td><td>銀色</td></tr>
-	</table>
+		<tr><td>➖</td><td>透明</td></tr>
+		<tr><td>🍋</td><td>檸檬色</td></tr>
+		<tr><td>🌚</td><td>藍色</td></tr>
+		<tr><td>🥔</td><td>黄土色</td></tr>
+		<tr><td>🌸</td><td>ピンク</td></tr>
+		<tr><td>💧</td><td>そら色</td></tr>
+		<tr><td>​🏻</td><td>肌色​</td></tr>
+		<tr><td>​🏼</td><td>肌色​</td></tr>
+		<tr><td>​🏽</td><td>肌色​</td></tr>
+		<tr><td>​🏾</td><td>肌色​</td></tr>
+		<tr><td>​🏿</td><td>肌色​</td></tr>
+    </table>
 
 	<h3>色付きの 図形</h3>
 	<p>🔴🟠🟡🟢🔵🟣🟤⚫⚪🟥🟧🟨🟩🟦🟪🟫⬛⬜</p>
@@ -1607,8 +1655,10 @@
 		<tr><td>⿹㇯馬灬ハ</td><td>⿹−ｯ馬灬ハ</td><td>ウマ娘の 馬（馬の 灬が ハ）</td></tr>
 		<tr><td>⿰⽉星</td><td>⿰月🌃ｯ星</td><td>よぞら（つきへんに 星），腥（なまぐさい）とは 別字</td></tr>
 		<tr><td>⿽🟩⿴⬜ｲ{💚|★}<br>⿽🟩⿴⬜ｲ{★|💚}</td><td>Jｯ🟩⿴⬜ｲ{💚|★}<br>Jｯ🟩⿴⬜ｲ{★|💚}</td><td>エスペラントの 旗</td></tr>
+		<tr><td>⿻ｲ{🌚|█}ｲ{🤍|⿳⿲⬚✧⬚⿲｛⿱⿰ᘐ⿾ᘐ⿰⿾ᘓᘓ｝⿲⬚✧⬚}	</td><td></td><td>アイヌの 旗（モレ（渦巻）、アウㇱ（トゲ）、シㇰ（目））</td></tr>
 		<tr><td>⿴⿻🟨ｲ{🤍|━}⿻⚪ｲ{💚|H}<br>⿴⿻🟨ｲ{━|🤍}⿻⚪ｲ{H|💚}</td><td></td><td>ウェルトの 旗</td></tr>
 		<tr><td>⿻⿺🟥⿴⬜ｲ{❤|★}⿳⬚⬚ｲ{🤍|⿲語通東}<br>⿻⿺🟥⿴⬜ｲ{★|❤}⿳⬚⬚ｲ{⿲語通東|🤍}</td><td></td><td>トントン語の 旗</td></tr>
+		<tr><td>⿽🟨⿴⬜ｲ{💛|☀}<br>⿽🟨⿴⬜ｲ{☀|💛}</td><td>Jｯ🟨⿴⬜ｲ{💛|☀}<br>Jｯ🟨⿴⬜ｲ{☀|💛}</td><td>Todopebori の 旗</td></tr>
 	</table>
 
 	<h2>その他の 代用表記</h2>
@@ -1904,7 +1954,7 @@
 		<li>字雲フォント3: &j3-￭￭￭￭￭￭;</li>
 	</ul>
 	<p>という 表記を します。</p>
-	<p>註: DWPI明朝の 外字は 最初 設定で OFFになっていますが，DWPI明朝は Webフォントに できないので，DWPI明朝の インストールが 必要です。</p>
+	<p>註: DWPI明朝の 外字は 最初 設定で OFFになっていますが，DWPI明朝は Webフォントに できないので，DWPI明朝の インストールが 必要です。インストールしなくても，既存の フォントの 合成で レンダリングされます。</p>
 
 	<h3>国によって 形が 違う フォント</h3>
 	<p>簡体字（中国）、繁体字（台湾）、香港、日本、韓国、絵文字の フォントで 表示ために，</p>

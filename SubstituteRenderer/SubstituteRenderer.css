@@ -233,36 +233,49 @@ div {
 	transform: rotate(-90deg);
 }
 
-.red { color: red; }
-.orange { color: orange; }
-.yellow { color: yellow; }
-.lime { color: lime; }
-.green { color: green; }
-.aqua { color: aqua; }
-.skyblue { color: #80c0ff; }
-.blue { color: blue; }
-.purple { color: purple; }
-.fuchsia { color: fuchsia; }
-.pink { color: #ff80c0; }
-.brown { color: brown; }
-.black { color: black; }
-.grey { color: grey; }
-.white { color: white; }
+.black { color: #000; }
+.redorange { color: #ff4000; }
+.yelloworange { color: #ffc000; }
+.yellow { color: #ff0; }
+.lime { color: #0f0; }
+.green { color: #008000; }
+.bluegreen { color: #008080; }
+.cyan { color: #0ff; }
+.blue { color: #00f; }
+.bluepurple { color: #8000ff; }
+.purple { color: #800080; }
+.magenta { color: #f0f; }
+.red { color: #f00; }
+.brown { color: #804040; }
+.orange { color: #ff8000; }
 .gold { color: gold; }
 .silver { color: silver; }
+.gray { color: #808080; }
+.white { color: #fff; }
+.transparent { color: transparent; }
+.lemon { color: #ffff80; }
+.navy { color: #000080; }
+.ocher { color: #808000; }
+.pink { color: #ff80c0; }
+.skyblue { color: #80c0ff; }
+.skincolor1 { color: #fbdab6; }
+.skincolor2 { color: #dcb68f; }
+.skincolor3 { color: #b68967; }
+.skincolor4 { color: #a06740; }
+.skincolor5 { color: #6c4f46; }
 
 .circle { border-radius: 50%; }
 
-.bg-red { background-color: red; }
-.bg-orange { background-color: orange; }
-.bg-yellow { background-color: yellow; }
-.bg-lime { background-color: lime; }
-.bg-green { background-color: green; }
-.bg-blue { background-color: blue; }
-.bg-purple { background-color: purple; }
-.bg-brown { background-color: brown; }
-.bg-black { background-color: black; }
-.bg-white { background-color: white; }
+.bg-red { background-color: #f00; }
+.bg-orange { background-color: #ff8000; }
+.bg-yellow { background-color: #ff0; }
+.bg-lime { background-color: #0f0; }
+.bg-green { background-color: #008000; }
+.bg-blue { background-color: #00f; }
+.bg-purple { background-color: #800080; }
+.bg-brown { background-color: #804040; }
+.bg-black { background-color: #000; }
+.bg-white { background-color: #fff; }
 
 .error { color: #f00; }
 
@@ -273,6 +286,7 @@ div {
 }
 
 ruby {
+    ruby-align: center;
 	position: relative;
 }
 rtc {
