@@ -248,8 +248,18 @@ div {
 .red { color: #f00; }
 .brown { color: #804040; }
 .orange { color: #ff8000; }
-.gold { color: gold; }
-.silver { color: silver; }
+.gold {
+	background: linear-gradient(#ffff80, #ffc000) text;
+	color: transparent;
+}
+.silver {
+	background: linear-gradient(#e0e0e0, #a0a0a0) text;
+	color: transparent;
+}
+.rainbow {
+	background: linear-gradient(90deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00) text;
+	color: transparent;
+}
 .gray { color: #808080; }
 .white { color: #fff; }
 .transparent { color: transparent; }
@@ -258,11 +268,11 @@ div {
 .ocher { color: #808000; }
 .pink { color: #ff80c0; }
 .skyblue { color: #80c0ff; }
-.skincolor1 { color: #fbdab6; }
-.skincolor2 { color: #dcb68f; }
-.skincolor3 { color: #b68967; }
-.skincolor4 { color: #a06740; }
-.skincolor5 { color: #6c4f46; }
+.skincolor1 { color: #fadcbb; }
+.skincolor2 { color: #dfb993; }
+.skincolor3 { color: #b88b67; }
+.skincolor4 { color: #a36a42; }
+.skincolor5 { color: #6e5148; }
 
 .circle { border-radius: 50%; }
 

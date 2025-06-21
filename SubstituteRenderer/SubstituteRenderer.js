@@ -133,6 +133,7 @@ function textProcess(d) {
 		else if (emojxi == "​🏽") span.classList.add("skincolor3");
 		else if (emojxi == "​🏾") span.classList.add("skincolor4");
 		else if (emojxi == "​🏿") span.classList.add("skincolor5");
+		else if (emojxi == "🌈") span.classList.add("rainbow");
 		else {
 			while (s[i] != "|") {
 				var e = textProcess(d);
@@ -173,6 +174,7 @@ function textProcess(d) {
 			else if (emojxi == "​🏽") span.classList.add("skincolor3");
 			else if (emojxi == "​🏾") span.classList.add("skincolor4");
 			else if (emojxi == "​🏿") span.classList.add("skincolor5");
+			else if (emojxi == "🌈") span.classList.add("rainbow");
 			i += emojxi.length;
 			return span;
 		}
