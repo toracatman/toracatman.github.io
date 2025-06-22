@@ -96,17 +96,26 @@ div {
 	line-height: 2.5;
 }
 .part,
-.bitmap {
+.bitmap,
+.bitmap-color {
 	display: inline-block;
 	position: relative;
 	line-height: 1;
 }
 #render.autoexpand:has(rtc)>.part,
-#render.autoexpand:has(rtc)>.bitmap {
+#render.autoexpand:has(rtc)>.bitmap,
+#render.autoexpand:has(rtc)>.bitmap-color {
 	top: 2.4rem;
 }
-.bitmap {
+.bitmap,
+.bitmap-color {
 	text-align: left;
+}
+.bitmap-color {
+	font-size: 0;
+}
+.bitmap-color div {
+	display: inline-block;
 }
 .part {
 	width: 3.2rem;
@@ -276,16 +285,37 @@ div {
 
 .circle { border-radius: 50%; }
 
-.bg-red { background-color: #f00; }
-.bg-orange { background-color: #ff8000; }
+.bg-black { background-color: #000; }
+.bg-redorange { background-color: #ff4000; }
+.bg-yelloworange { background-color: #ffc000; }
 .bg-yellow { background-color: #ff0; }
 .bg-lime { background-color: #0f0; }
 .bg-green { background-color: #008000; }
+.bg-bluegreen { background-color: #008080; }
+.bg-cyan { background-color: #0ff; }
 .bg-blue { background-color: #00f; }
+.bg-bluepurple { background-color: #8000ff; }
 .bg-purple { background-color: #800080; }
+.bg-magenta { background-color: #f0f; }
+.bg-red { background-color: #f00; }
 .bg-brown { background-color: #804040; }
-.bg-black { background-color: #000; }
+.bg-orange { background-color: #ff8000; }
+.bg-gold { background: linear-gradient(#ffff80, #ffc000); }
+.bg-silver { background: linear-gradient(#e0e0e0, #a0a0a0); }
+.bg-rainbow { background: linear-gradient(90deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00); }
+.bg-gray { background-color: #808080; }
 .bg-white { background-color: #fff; }
+.bg-transparent { background-color: transparent; }
+.bg-lemon { background-color: #ffff80; }
+.bg-navy { background-color: #000080; }
+.bg-ocher { background-color: #808000; }
+.bg-pink { background-color: #ff80c0; }
+.bg-skyblue { background-color: #80c0ff; }
+.bg-skincolor1 { background-color: #fadcbb; }
+.bg-skincolor2 { background-color: #dfb993; }
+.bg-skincolor3 { background-color: #b88b67; }
+.bg-skincolor4 { background-color: #a36a42; }
+.bg-skincolor5 { background-color: #6e5148; }
 
 .error { color: #f00; }
 

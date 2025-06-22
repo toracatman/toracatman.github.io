@@ -276,6 +276,69 @@ function textProcess(d) {
 		return div;
 	}
 
+	if (s.slice(i, i + 2) == "ﾛ{") {
+		i += 3;
+		var div = document.createElement("div");
+		div.classList.add("bitmap-color");
+		while (s[i] != "}" && s[i] != "(") {
+			var p = s.codePointAt(i);
+			var c = s.slice(i, i + (p == 0x200B ? 3 : p > 0xFFFF ? 2 : 1));
+			if (s[i] == "\n") {
+				div.appendChild(document.createTextNode("\n"));
+			}
+			else {
+				var e1 = document.createElement("div");
+				if (c == "0" || c == "🖤") e1.classList.add("bg-black");
+				else if (c == "1" || c == "🍁") e1.classList.add("bg-redorange");
+				else if (c == "2" || c == "🌞") e1.classList.add("bg-yelloworange");
+				else if (c == "3" || c == "💛") e1.classList.add("bg-yellow");
+				else if (c == "4" || c == "🍐") e1.classList.add("bg-lime");
+				else if (c == "5" || c == "💚") e1.classList.add("bg-green");
+				else if (c == "6" || c == "🥒") e1.classList.add("bg-bluegreen");
+				else if (c == "7" || c == "🩵") e1.classList.add("bg-cyan");
+				else if (c == "8" || c == "💙") e1.classList.add("bg-blue");
+				else if (c == "9" || c == "🍆") e1.classList.add("bg-bluepurple");
+				else if (c == "↊" || c == "💜" || c == "A") e1.classList.add("bg-purple");
+				else if (c == "↋" || c == "🩷" || c == "B") e1.classList.add("bg-magenta");
+				else if (c == "↌" || c == "❤" || c == "C") e1.classList.add("bg-red");
+				else if (c == "↍" || c == "🤎" || c == "D") e1.classList.add("bg-brown");
+				else if (c == "↎" || c == "🧡" || c == "E") e1.classList.add("bg-orange");
+				else if (c == "↏" || c == "📀" || c == "F") e1.classList.add("bg-gold");
+				else if (c == "" || c == "💿" || c == "G") e1.classList.add("bg-silver");
+				else if (c == "" || c == "🩶" || c == "H") e1.classList.add("bg-gray");
+				else if (c == "" || c == "🤍" || c == "I") e1.classList.add("bg-white");
+				else if (c == "" || c == "➖" || c == "J" || c == ".") e1.classList.add("bg-transparent");
+				else if (c == "🍋" || c == "L") e1.classList.add("bg-lemon");
+				else if (c == "🌚" || c == "N") e1.classList.add("bg-navy");
+				else if (c == "🥔" || c == "O") e1.classList.add("bg-ocher");
+				else if (c == "🌸" || c == "P") e1.classList.add("bg-pink");
+				else if (c == "💧" || c == "S") e1.classList.add("bg-skyblue");
+				else if (c == "​🏻" || c == "U") e1.classList.add("bg-skincolor1");
+				else if (c == "​🏼" || c == "V") e1.classList.add("bg-skincolor2");
+				else if (c == "​🏽" || c == "W") e1.classList.add("bg-skincolor3");
+				else if (c == "​🏾" || c == "Y") e1.classList.add("bg-skincolor4");
+				else if (c == "​🏿" || c == "Z") e1.classList.add("bg-skincolor5");
+				else if (c == "🌈") e1.classList.add("bg-rainbow");
+				div.appendChild(e1);
+			}
+			i += c.length;
+			if (i >= s.length) break;
+		}
+		if (s[i] == "(") {
+			while (s[i] != "}") {
+				i++;
+				if (i >= s.length) break;
+			}
+		}
+		var l = div.textContent.match(/\n/g).length;
+		var d = div.children;
+		for (var j = 0; j < d.length; j++) {
+			d[j].style.width = `${3.2 / l}rem`;
+			d[j].style.height = `${3.2 / l}rem`;
+		}
+		return div;
+	}
+
 	if (s.slice(i, i + 4) == "&dw-" ||
 		s.slice(i, i + 4) == "&ni-" || s.slice(i, i + 4) == "&mk-" ||
 		s.slice(i, i + 4) == "&jg-" || s.slice(i, i + 4) == "&j2-" ||
