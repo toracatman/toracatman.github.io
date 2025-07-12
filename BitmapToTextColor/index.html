@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>ビットマップをテキストに（カラー絵文字）</title>
+	<link rel="stylesheet" href="/toracatman.css">
+	<style>
+		textarea {
+			white-space: pre;
+		}
+		#error {
+			color: #f00;
+		}
+		form[name="palette"] {
+			margin-bottom: 1rem;
+			font-size: 0;
+		}
+		input[name="color"] {
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+			margin: 0;
+			width: 2rem;
+			height: 2rem;
+			border: 1px solid #000;
+		}
+		input[name="color"]:checked {
+			border: 1px solid #f00;
+		}
+
+		[data-color="0"] { background-color: #000; }
+		[data-color="1"] { background-color: #ff4000; }
+		[data-color="2"] { background-color: #ffc000; }
+		[data-color="3"] { background-color: #ff0; }
+		[data-color="4"] { background-color: #0f0; }
+		[data-color="5"] { background-color: #008000; }
+		[data-color="6"] { background-color: #008080; }
+		[data-color="7"] { background-color: #0ff; }
+		[data-color="8"] { background-color: #00f; }
+		[data-color="9"] { background-color: #8000ff; }
+		[data-color="A"] { background-color: #800080; }
+		[data-color="B"] { background-color: #f0f; }
+		[data-color="C"] { background-color: #f00; }
+		[data-color="D"] { background-color: #804040; }
+		[data-color="E"] { background-color: #ff8000; }
+		[data-color="F"] { background: linear-gradient(#ffff80, #ffc000); }
+		[data-color="G"] { background: linear-gradient(#e0e0e0, #a0a0a0); }
+		[data-color="H"] { background-color: #808080; }
+		[data-color="I"] { background-color: #fff; }
+		[data-color="J"] {
+			background: linear-gradient(#808080, #808080) top right / 50% 50% no-repeat,
+				linear-gradient(#808080, #808080) bottom left / 50% 50% no-repeat;
+		}
+		.bitmap-dot[data-color="J"] {
+			background: linear-gradient(#808080, #808080) top right / 1.6rem 1.5rem no-repeat,
+				linear-gradient(#808080, #808080) bottom left / 1.5rem 1.6rem no-repeat;
+		}
+		[data-color="L"] { background-color: #ffff80; }
+		[data-color="N"] { background-color: #000080; }
+		[data-color="O"] { background-color: #808000; }
+		[data-color="P"] { background-color: #ff80c0; }
+		[data-color="S"] { background-color: #80c0ff; }
+		[data-color="U"] { background-color: #fadcbb; }
+		[data-color="V"] { background-color: #dfb993; }
+		[data-color="W"] { background-color: #b88b67; }
+		[data-color="Y"] { background-color: #a36a42; }
+		[data-color="Z"] { background-color: #6e5148; }
+		[data-color="R"] { background: linear-gradient(90deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00); }
+
+		#bitmap {
+			margin-bottom: 1rem;
+			border-bottom: 0.1rem solid #808080;
+			border-right: 0.1rem solid #808080;
+		}
+		.bitmap-dot {
+			width: 3.1rem;
+			height: 3.1rem;
+			float: left;
+			border-top: 0.1rem solid #808080;
+			border-left: 0.1rem solid #808080;
+		}
+		.bitmap-row:after {
+			content: "";
+			display: block;
+			clear: both;
+		}
+		#output {
+			width: 32rem;
+			height: 32rem;
+			font-size: 2.4rem;
+			line-height: 2.4rem;
+		}
+	</style>
+</head>
+<body>
+	<p>ビットマップから テキストを 生成します。（カラー絵文字）</p>
+
+	<p>
+		<label>行<input type="text" value="8" id="rows" onchange="makeBitmap()"></label>
+		<label>列<input type="text" value="8" id="cols" onchange="makeBitmap()"></label>
+	</p>
+
+	<div id="error"></div>
+
+	<form name="palette">
+		<input type="radio" name="color" value="0" data-color="0" checked>
+		<input type="radio" name="color" value="1" data-color="1">
+		<input type="radio" name="color" value="2" data-color="2">
+		<input type="radio" name="color" value="3" data-color="3">
+		<input type="radio" name="color" value="4" data-color="4">
+		<input type="radio" name="color" value="5" data-color="5">
+		<input type="radio" name="color" value="6" data-color="6">
+		<input type="radio" name="color" value="7" data-color="7">
+		<input type="radio" name="color" value="8" data-color="8">
+		<input type="radio" name="color" value="9" data-color="9">
+		<input type="radio" name="color" value="A" data-color="A">
+		<input type="radio" name="color" value="B" data-color="B">
+		<input type="radio" name="color" value="C" data-color="C">
+		<input type="radio" name="color" value="D" data-color="D">
+		<input type="radio" name="color" value="E" data-color="E">
+		<input type="radio" name="color" value="F" data-color="F">
+		<input type="radio" name="color" value="G" data-color="G">
+		<input type="radio" name="color" value="H" data-color="H">
+		<input type="radio" name="color" value="I" data-color="I">
+		<input type="radio" name="color" value="J" data-color="J">
+		<input type="radio" name="color" value="L" data-color="L">
+		<input type="radio" name="color" value="N" data-color="N">
+		<input type="radio" name="color" value="O" data-color="O">
+		<input type="radio" name="color" value="P" data-color="P">
+		<input type="radio" name="color" value="S" data-color="S">
+		<input type="radio" name="color" value="U" data-color="U">
+		<input type="radio" name="color" value="V" data-color="V">
+		<input type="radio" name="color" value="W" data-color="W">
+		<input type="radio" name="color" value="Y" data-color="Y">
+		<input type="radio" name="color" value="Z" data-color="Z">
+		<input type="radio" name="color" value="R" data-color="R">
+	</form>
+	<div id="bitmap"></div>
+
+	<label>文字の 名前<input type="text" id="name" onchange="makeOutput()"></label>
+
+	<form name="option">
+		<label><input type="radio" name="format" value="emojxi" onchange="makeOutput()" checked>絵文字</label>
+		<label><input type="radio" name="format" value="extnum" onchange="makeOutput()">拡張算用数字と ラテン文字</label>
+		<label><input type="radio" name="format" value="num" onchange="makeOutput()">数字と ラテン文字</label>
+		<label><input type="checkbox" name="transdot" onchange="makeOutput()" checked>透明を「.」にする</label>
+	</form>
+
+	<p>出力</p>
+	<textarea id="output"></textarea>
+
+	<script>
+		var emojxi = {
+			"0": "🖤",
+			"1": "🍁",
+			"2": "🌞",
+			"3": "💛",
+			"4": "🍐",
+			"5": "💚",
+			"6": "🥒",
+			"7": "🩵",
+			"8": "💙",
+			"9": "🍆",
+			"A": "💜",
+			"B": "🩷",
+			"C": "❤",
+			"D": "🤎",
+			"E": "🧡",
+			"F": "📀",
+			"G": "💿",
+			"H": "🩶",
+			"I": "🤍",
+			"J": "➖",
+			"L": "🍋",
+			"N": "🌚",
+			"O": "🥔",
+			"P": "🌸",
+			"S": "💧",
+			"U": "​🏻",
+			"V": "​🏼",
+			"W": "​🏽",
+			"Y": "​🏾",
+			"Z": "​🏿",
+			"R": "🌈"
+		};
+
+		var extnum = {
+			"A": "↊",
+			"B": "↋",
+			"C": "↌",
+			"D": "↍",
+			"E": "↎",
+			"F": "↏",
+			"G": "",
+			"H": "",
+			"I": "",
+			"J": ""
+		};
+
+		var e_input = document.getElementById("input");
+
+		var e_rows = document.getElementById("rows");
+		var e_cols = document.getElementById("cols");
+		var rows;
+		var cols;
+
+		var e_error = document.getElementById("error");
+		var error;
+
+		var e_bitmap = document.getElementById("bitmap");
+		var bitmap;
+
+		var e_name = document.getElementById("name");
+
+		var e_output = document.getElementById("output");
+
+		function makeBitmap() {
+			error = false;
+			e_error.textContent = "";
+			if (!(/^\d+$/.test(e_rows.value))) {
+				e_error.textContent += "行は 整数を 指定してください。";
+				error = true;
+			}
+			rows = Number(e_rows.value);
+			if (rows & 1) {
+				e_error.textContent += "行は 偶数を 指定してください。";
+				error = true;
+			}
+			else if (rows < 2 || rows > 32) {
+				e_error.textContent += "行は 2〰︎32を 指定してください。";
+				error = true;
+			}
+
+			if (!(/^\d+$/.test(e_cols.value))) {
+				e_error.textContent += "列は 整数を 指定してください。";
+				error = true;
+			}
+			cols = Number(e_cols.value);
+			if (cols & 1) {
+				e_error.textContent += "列は 偶数を 指定してください。";
+				error = true;
+			}
+			else if (cols < 2 || cols > 32) {
+				e_error.textContent += "列は 2〰︎32を 指定してください。";
+				error = true;
+			}
+
+			if (error) return;
+
+			var w = cols * 32;
+			var ws = String(w);
+			e_bitmap.style.width = `${ws.slice(0, -1)}.${ws.slice(-1)}rem`;
+			var h = rows * 32;
+			var hs = String(h);
+			e_bitmap.style.height = `${hs.slice(0, -1)}.${hs.slice(-1)}rem`;
+			e_bitmap.innerHTML = "";
+			bitmap = Array(rows).fill().map(() => Array(cols).fill(0));
+
+			for (var i = 0; i < rows; i++) {
+				var r = document.createElement("div");
+				e_bitmap.appendChild(r);
+				r.className = "bitmap-row";
+				for (var j = 0; j < cols; j++) {
+					var d = document.createElement("div");
+					r.appendChild(d);
+					d.id = `bitmap${i}-${j}`;
+					d.className = "bitmap-dot";
+					d.setAttribute("data-color", "J");
+					d.addEventListener("click", function() {
+						this.setAttribute("data-color", document.palette.color.value);
+						makeOutput();
+					});
+				}
+			}
+		}
+
+		function makeOutput() {
+			if (error) return;
+			for (var i = 0; i < rows; i++) {
+				for (var j = 0; j < cols; j++) {
+					var c = document.getElementById(`bitmap${i}-${j}`).getAttribute("data-color");
+					if (document.option.format.value == "emojxi") {
+						c = emojxi[c];
+					}
+					else {
+						if (document.option.transdot.checked && c == "J") c = ".";
+						if (document.option.format.value == "extnum") {
+							if (c in extnum) c = extnum[c];
+						}
+					}
+					bitmap[i][j] = c;
+				}
+			}
+			var s = "ﾛ{\n";
+			for (var i = 0; i < rows; i++) {
+				for (var j = 0; j < cols; j++) {
+					s += bitmap[i][j];
+				}
+				s += "\n";
+			}
+			if (e_name.value != "") s += `(${e_name.value})
+`;
+			s += "}";
+			e_output.value = s;
+		}
+
+		(() => {
+			makeBitmap();
+		})();
+	</script>
+</body>
+</html>

@@ -50,7 +50,7 @@
 	</details>
 
 	<h3>ソフト キーボード</h3>
-	<details>
+	<details class="keyboard">
 		<summary>漢字構成記述文字</summary>
 		<p>
 			<input type="button" value="⬚" onclick="insert('⬚')">
@@ -75,7 +75,7 @@
 			<input type="button" value="" onclick="insert('⤴ｯ')">
 		</p>
 	</details>
-	<details>
+	<details class="keyboard">
 		<summary>部首</summary>
 		<p>
 			<input type="button" value="⽉" onclick="insert('月🌃ｯ')">
@@ -86,7 +86,7 @@
 			<input type="button" value="" onclick="insert('三ｯ')">
 		</p>
 	</details>
-	<details>
+	<details class="keyboard">
 		<summary>色付きの 文字</summary>
 		<form name="form2">
 			<select name="color">
@@ -130,7 +130,7 @@
 			</p>
 		</form>
 	</details>
-	<details>
+	<details class="keyboard">
 		<summary>太字、斜体、倍角、下線</summary>
 		<p>
 			<input type="button" value="太字" onclick="insert2('ﾌ{', '}')">
@@ -139,7 +139,7 @@
 			<input type="button" value="下線" onclick="insert2('ｱ{', '}')">
 		</p>
 	</details>
-	<details>
+	<details class="keyboard">
 		<summary>色付きの 図形</summary>
         <p>
             <input type="button" value="🖤" onclick="insert('🖤')">
@@ -197,13 +197,13 @@
 			<input type="button" value="⬜" onclick="insert('⬜')">
 		</p>
 	</details>
-	<details>
+	<details class="keyboard">
 		<summary>ルビの テキスト表記</summary>
 		<p>
 			<input type="button" value="ルビの テキスト表記" onclick="insertRuby()">
 		</p>
 	</details>
-	<details>
+	<details class="keyboard">
 		<summary>声調記号</summary>
 		<p>
 			<input type="button" value="˥" onclick="insert('˥')">
@@ -225,7 +225,7 @@
 			<input type="button" value="ꜜ" onclick="insert('ꜜ')">
 		</p>
 	</details>
-	<details>
+	<details class="keyboard">
 		<summary>かナ文字に つける 記号</summary>
 		<p>
 			<input type="button" value="゙" onclick="insert('゙')">
@@ -253,7 +253,7 @@
 			<input type="button" value="" onclick="insert('‌͡')">
 		</p>
 	</details>
-	<details>
+	<details class="keyboard">
 		<summary>専名号、その他の 記号</summary>
 		<p>
 			<input type="button" value="˱" onclick="insert('˱')">
@@ -279,7 +279,7 @@
 			<input type="button" value="〱゚" onclick="insert('く゚ｯ')">
 		</p>
 	</details>
-	<details>
+	<details class="keyboard">
 		<summary>小書きひらがな</summary>
 		<p>
 			<input type="button" value="ぁ" onclick="insert('ぁ')">
@@ -408,7 +408,7 @@
 			<input type="button" value="" onclick="insert('ﾁちﾗ')">
 		</p>
 	</details>
-	<details>
+	<details class="keyboard">
 		<summary>小書きカタカナ</summary>
 		<p>
 			<input type="button" value="ァ" onclick="insert('ァ')">
@@ -537,7 +537,7 @@
 			<input type="button" value="" onclick="insert('ﾁチﾗ')">
 		</p>
 	</details>
-	<details>
+	<details class="keyboard">
 		<summary>ケセン語かナ、子音のみの -y、-w、ひらがな カタカナ 共通</summary>
 		<p>
 			<input type="button" value="" onclick="insert('すﾒ')"><input type="button" value="" onclick="insert('ずﾒ')">
@@ -563,7 +563,7 @@
 			<input type="button" value="ー" onclick="insert('ー')">
 		</p>
 	</details>
-	<details>
+	<details class="keyboard">
 		<summary>拡張ひらがな</summary>
 		<p>
 			<input type="button" value="" onclick="insert('あ‌̣')">
@@ -670,7 +670,7 @@
 			<input type="button" value="" onclick="insert('ちﾗ')">
 		</p>
 	</details>
-	<details>
+	<details class="keyboard">
 		<summary>拡張カタカナ</summary>
 		<p>
 			<input type="button" value="" onclick="insert('ア‌̣')">
@@ -777,7 +777,7 @@
 			<input type="button" value="" onclick="insert('チﾗ')">
 		</p>
 	</details>
-	<details>
+	<details class="keyboard">
 		<summary>上代特殊仮名遣</summary>
 		<p>
 			<input type="button" value="𛀦" onclick="insert('きｦ')">
@@ -840,7 +840,7 @@
 			<input type="button" value="" onclick="insert('ロｵ')">
 		</p>
 	</details>
-	<details>
+	<details class="keyboard">
 		<summary>変体仮名</summary>
 		<p>
 			<input type="button" value="𛀂" onclick="insert('あ(安)')">
@@ -1363,7 +1363,7 @@
 			<input type="button" value="" onclick="insert('ロ(侶)')">
 		</p>
 	</details>
-	<details>
+	<details class="keyboard">
 		<summary>合略仮名</summary>
 		<p>
 			<input type="button" value="󷲰" onclick="insert('ｺことｳ')">
@@ -1397,7 +1397,7 @@
 			<input type="button" value="" onclick="insert('ｺへとｳ')">
 		</p>
 	</details>
-	<details>
+	<details class="keyboard">
 		<summary>拡張算用数字</summary>
 		<p>
 			<input type="button" value="↊" onclick="insert('2ｫ')">
@@ -1412,7 +1412,7 @@
 			<input type="button" value="" onclick="insert('1ｫ')">
 		</p>
 	</details>
-	<details>
+	<details class="keyboard">
 		<summary>真偽値を 表す 文字</summary>
 		<p>
 			<input type="button" value="" onclick="insert('真ｯ')">
@@ -1421,7 +1421,7 @@
 		</p>
 	</details>
 
-	<details>
+	<details class="keyboard">
 		<summary>色線文字</summary>
 		<p>
 			<input type="button" value="" onclick="insert('ｶ{⟀⎝}')">
@@ -1521,7 +1521,7 @@
 		</p>
 	</details>
 
-	<details>
+	<details class="keyboard">
 		<summary>ビットマップ外字</summary>
 		<p><label>行<input type="text" value="8" id="rows" onchange="makeBitmap()"></label></p>
 		<p><label>列<input type="text" value="8" id="cols" onchange="makeBitmap()"></label></p>

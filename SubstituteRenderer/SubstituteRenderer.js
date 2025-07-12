@@ -14,9 +14,16 @@ var sh = text.scrollHeight - 96;
 	var url = new URL(window.location.href);
 	var str = url.searchParams.get("text");
 	text.value = str;
+	text.addEventListener("input", autoExpand);
 	changeText();
 	text.addEventListener("change", changeText);
 })();
+
+function autoExpand() {
+	text.style.height = "9.6rem";
+	var height = String(Math.max(96, text.scrollHeight - sh));
+	text.style.height = `${height.slice(0, -1)}.${height.slice(-1)}rem`;
+}
 
 function changeText() {
 	changeTheme();
@@ -38,10 +45,6 @@ function changeText() {
 		}
 		s = s.replace(/​x/g, "x");
 	}
-
-	text.style.height = "9.6rem";
-	var height = String(Math.max(96, text.scrollHeight - sh));
-	text.style.height = `${height.slice(0, -1)}.${height.slice(-1)}rem`;
 
 	old_s = s.replace(//g, "Kʷ").replace(//g, "kʷ").replace(//g, "Gʷ").replace(//g, "gʷ");
 	var c = 0;
@@ -318,7 +321,7 @@ function textProcess(d) {
 				else if (c == "​🏽" || c == "W") e1.classList.add("bg-skincolor3");
 				else if (c == "​🏾" || c == "Y") e1.classList.add("bg-skincolor4");
 				else if (c == "​🏿" || c == "Z") e1.classList.add("bg-skincolor5");
-				else if (c == "🌈") e1.classList.add("bg-rainbow");
+				else if (c == "🌈" || c == "R") e1.classList.add("bg-rainbow");
 				div.appendChild(e1);
 			}
 			i += c.length;
