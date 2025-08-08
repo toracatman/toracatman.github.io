@@ -246,6 +246,157 @@ div {
 	transform: rotate(-90deg);
 }
 
+.part-sugekae>.part-inner:nth-child(2) {
+	transform-origin: center left;
+	transform: scale(0.5, 0.5);
+	color: #f00;
+	opacity: 0.5;
+}
+.part-sugekae>.part-inner:last-child {
+	transform-origin: center right;
+	transform: scale(0.5, 0.5);
+	color: #00f;
+	opacity: 0.5;
+}
+
+.part-hocunarabe>.part-inner:first-child {
+	transform: scale(0.5, 0.5);
+}
+.part-hocunarabe>.part-inner:last-child {
+	transform-origin: bottom right;
+	transform: scale(0.5, 0.5);
+}
+
+.part-hecunarabe>.part-inner:first-child {
+	transform-origin: top right;
+	transform: scale(0.5, 0.5);
+}
+.part-hecunarabe>.part-inner:last-child {
+	transform-origin: bottom left;
+	transform: scale(0.5, 0.5);
+}
+
+.part-mauezoe>.part-inner:first-child {
+	transform-origin: bottom center;
+	transform: scale(1, 0.667);
+}
+.part-mauezoe>.part-inner:last-child {
+	transform-origin: top center;
+	transform: scale(0.667, 0.333);
+}
+
+.part-mamigizoe>.part-inner:first-child {
+	transform-origin: center left;
+	transform: scale(0.667, 1);
+}
+.part-mamigizoe>.part-inner:last-child {
+	transform-origin: center right;
+	transform: scale(0.333, 0.667);
+}
+
+.part-masxitazoe>.part-inner:first-child {
+	transform-origin: top center;
+	transform: scale(1, 0.667);
+}
+.part-masxitazoe>.part-inner:last-child {
+	transform-origin: bottom center;
+	transform: scale(0.667, 0.333);
+}
+
+.part-mahidarizoe>.part-inner:first-child {
+	transform-origin: center right;
+	transform: scale(0.667, 1);
+}
+.part-mahidarizoe>.part-inner:last-child {
+	transform-origin: center left;
+	transform: scale(0.333, 0.667);
+}
+
+.part-migiuezoe>.part-inner:last-child {
+	transform-origin: top right;
+	transform: scale(0.333, 0.333);
+}
+
+.part-migisxitazoe>.part-inner:last-child {
+	transform-origin: bottom right;
+	transform: scale(0.333, 0.333);
+}
+
+.part-hidarisxitazoe>.part-inner:last-child {
+	transform-origin: bottom left;
+	transform: scale(0.333, 0.333);
+}
+
+.part-hidariuezoe>.part-inner:last-child {
+	transform: scale(0.333, 0.333);
+}
+
+.part-hinjxiyou>.part-inner:first-child {
+	transform-origin: top center;
+	transform: scale(0.5, 0.5);
+}
+.part-hinjxiyou>.part-inner:nth-child(2) {
+	transform-origin: bottom left;
+	transform: scale(0.5, 0.5);
+}
+.part-hinjxiyou>.part-inner:last-child {
+	transform-origin: bottom right;
+	transform: scale(0.5, 0.5);
+}
+
+.part-sxikakunarabe>.part-inner:first-child {
+	transform: scale(0.5, 0.5);
+}
+.part-sxikakunarabe>.part-inner:nth-child(2) {
+	transform-origin: bottom left;
+	transform: scale(0.5, 0.5);
+}
+.part-sxikakunarabe>.part-inner:nth-child(3) {
+	transform-origin: top right;
+	transform: scale(0.5, 0.5);
+}
+.part-sxikakunarabe>.part-inner:last-child {
+	transform-origin: bottom right;
+	transform: scale(0.5, 0.5);
+}
+
+.part-tateonajxiyoqcu>.part-inner:first-child {
+	transform: scale(1, 0.25);
+}
+.part-tateonajxiyoqcu>.part-inner:nth-child(2) {
+	transform: translate(0, 25%) scale(1, 0.25);
+}
+.part-tateonajxiyoqcu>.part-inner:nth-child(3) {
+	transform: translate(0, 50%) scale(1, 0.25);
+}
+.part-tateonajxiyoqcu>.part-inner:last-child {
+	transform-origin: bottom left;
+	transform: scale(1, 0.25);
+}
+
+.part-yokoonajxiyoqcu>.part-inner:first-child {
+	transform: scale(0.25, 1);
+}
+.part-yokoonajxiyoqcu>.part-inner:nth-child(2) {
+	transform: translate(25%, 0) scale(0.25, 1);
+}
+.part-yokoonajxiyoqcu>.part-inner:nth-child(3) {
+	transform: translate(50%, 0) scale(0.25, 1);
+}
+.part-yokoonajxiyoqcu>.part-inner:last-child {
+	transform-origin: bottom right;
+	transform: scale(0.25, 1);
+}
+
+.part-youon>.part-inner:last-child {
+	transform-origin: bottom left;
+	transform: scale(0.5, 0.5);
+}
+
+.part-youontop>.part-inner:last-child {
+	transform: scale(0.5, 0.5);
+}
+
 .black { color: #000; }
 .redorange { color: #ff4000; }
 .yelloworange { color: #ffc000; }
