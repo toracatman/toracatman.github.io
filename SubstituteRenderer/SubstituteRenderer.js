@@ -421,7 +421,7 @@ function textProcess(d) {
 		e1.classList.add("part-inner");
 		e.appendChild(e1);
 	}
-	else if (s[i] >= "⿲" && s[i] <= "⿳" || s[i] == "") {
+	else if (/[⿲-⿳]/.test(s[i])) {
 		if (s[i] == "⿲")		e.classList.add("part-tatemiqcu");
 		else if (s[i] == "⿳")	e.classList.add("part-yokomiqcu");
 		else if (s[i] == "")	e.classList.add("part-sugekae");
@@ -445,9 +445,7 @@ function textProcess(d) {
 		e.appendChild(e2);
 		e.appendChild(e3);
 	}
-	else if (s[i] >= "⿰" && s[i] <= "⿱" || s[i] >= "⿴" && s[i] <= "⿽" ||
-		s[i] == "㇯" || s[i] >= "" && s[i] <= "" ||
-		s[i] >= "" && s[i] <= "") {
+	else if (/[⿰⿱⿴-⿽㇯-]/.test(s[i])) {
 		if (s[i] == "⿰")		e.classList.add("part-hencukuri");
 		else if (s[i] == "⿱")	e.classList.add("part-kanmuriasxi");
 		else if (s[i] == "⿴")	e.classList.add("part-kunigakomi");
@@ -460,7 +458,6 @@ function textProcess(d) {
 		else if (s[i] == "⿼")	e.classList.add("part-konojxigakomi");
 		else if (s[i] == "⿽")	e.classList.add("part-gyakunyou");
 		else if (s[i] == "㇯")	e.classList.add("part-torinozoku");
-		else if (s[i] == "")	e.classList.add("part-sugekae");
 		else if (s[i] == "")	e.classList.add("part-hocunarabe");
 		else if (s[i] == "")	e.classList.add("part-hecunarabe");
 		else if (s[i] == "")	e.classList.add("part-mauezoe");
@@ -485,18 +482,17 @@ function textProcess(d) {
 		e.appendChild(e1);
 		e.appendChild(e2);
 	}
-	else if (s[i] >= "⿾" && s[i] <= "⿿" || s[i] >= "" && s[i] <= "" ||
-		s[i] >= "" && s[i] <= "" || s[i] >= "" && s[i] <= "") {
+	else if (/[⿾⿿-]/.test(s[i])) {
 		if (s[i] == "⿾") e.classList.add("part-kagamimojxi");
 		else if (s[i] == "⿿") e.classList.add("part-sakasamojxi");
-		else if (s[i] == "") e.classList.add("part-migidaosxi");
-		else if (s[i] == "") e.classList.add("part-hidaridaosxi");
 		else if (s[i] == "") e.classList.add("part-youon");
 		else if (s[i] == "") e.classList.add("part-youontop");
+		else if (s[i] == "") e.classList.add("part-migidaosxi");
+		else if (s[i] == "") e.classList.add("part-hidaridaosxi");
 
 		var ids = s[i];
-		if (ids == "") e.classList.add("part-hencukuri");
-		else if (ids == "") e.classList.add("part-kanmuriasxi");
+		if (ids == "") e.classList.add("part-kanmuriasxi");
+		else if (ids == "") e.classList.add("part-hencukuri");
 		else if (ids == "") e.classList.add("part-hinjxiyou");
 		else if (ids == "") e.classList.add("part-yokomiqcu");
 		else if (ids == "") e.classList.add("part-tatemiqcu");
@@ -511,9 +507,9 @@ function textProcess(d) {
 
 		e.appendChild(e1);
 		var n = 0;
-		if (ids >= "" && ids <= "") n = 1;
-		else if (ids >= "" && ids <= "") n = 2;
-		else if (ids >= "" && ids <= "") n = 3;
+		if (/[]/.test(ids)) n = 1;
+		else if (/[-]/.test(ids)) n = 2;
+		else if (/[-]/.test(ids)) n = 3;
 		for (var j = 0; j < n; j++) {
 			e.appendChild(e1.cloneNode(true));
 		}

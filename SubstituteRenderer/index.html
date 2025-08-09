@@ -97,7 +97,7 @@
 			<input type="button" value="" onclick="insert('彡ｯ')">
 			<input type="button" value="" onclick="insert('汌ｯ')">
 			<input type="button" value="" onclick="insert('亖ｯ')">
-			<input type="button" value="" onclick="insert('拗ｯ')">
+			<input type="button" value="" onclick="insert('ﾁｯ')">
 			<input type="button" value="" onclick="insert('尗ｯ')">
 			<input type="button" value="" onclick="insert('[ｯ')">
 			<input type="button" value="" onclick="insert(']ｯ')">
@@ -1426,7 +1426,7 @@
 		</p>
 	</details>
 	<details class="keyboard">
-		<summary>拡張算用数字</summary>
+		<summary>拡張算用数字、拡張漢数字</summary>
 		<p>
 			<input type="button" value="↊" onclick="insert('2ｫ')">
 			<input type="button" value="↋" onclick="insert('3ｫ')">
@@ -1627,12 +1627,41 @@
 		<tr><td>㇯</td><td>−ｯ</td><td>とりのぞく</td></tr>
 		<tr><td></td><td>⤵ｯ</td><td>みぎだおし</td></tr>
 		<tr><td></td><td>⤴ｯ</td><td>ひだりだおし</td></tr>
+		<tr><td></td><td>🔄ｯ</td><td>すげかえ</td></tr>
+		<tr><td></td><td>＼ｯ</td><td>ほつならべ（<ruby><rb>乀</rb><rp>（</rp><rt>ほつ</rt><rp>）</rp></ruby>方向並べ）</td></tr>
+		<tr><td></td><td>／ｯ</td><td>へつならべ（<ruby><rb>丿</rb><rp>（</rp><rt>へつ</rt><rp>）</rp></ruby>方向並べ）</td></tr>
+		<tr><td></td><td>↑ｯ</td><td>まうえぞえ</td></tr>
+		<tr><td></td><td>→ｯ</td><td>まみぎぞえ</td></tr>
+		<tr><td></td><td>↓ｯ</td><td>ましたぞえ</td></tr>
+		<tr><td></td><td>←ｯ</td><td>まひだりぞえ</td></tr>
+		<tr><td></td><td>↗ｯ</td><td>みぎうえぞえ</td></tr>
+		<tr><td></td><td>↘ｯ</td><td>みぎしたぞえ</td></tr>
+		<tr><td></td><td>↙ｯ</td><td>ひだりしたぞえ</td></tr>
+		<tr><td></td><td>↖ｯ</td><td>ひだりうえぞえ</td></tr>
+		<tr><td></td><td>合ｯ</td><td>ぜんつなぎ（全方向結合）</td></tr>
+		<tr><td></td><td>⇑ｯ</td><td>うえつなぎ（上方向結合）</td></tr>
+		<tr><td></td><td>⇒ｯ</td><td>みぎつなぎ（右方向結合）</td></tr>
+		<tr><td></td><td>⇓ｯ</td><td>したつなぎ（下方向結合）</td></tr>
+		<tr><td></td><td>⇐ｯ</td><td>ひだりつなぎ（左方向結合）</td></tr>
+		<tr><td></td><td>吕ｯ</td><td>たておなじふたつ</td></tr>
+		<tr><td></td><td>吅ｯ</td><td>よこおなじふたつ</td></tr>
+		<tr><td></td><td>品ｯ</td><td>ひんじよう</td></tr>
+		<tr><td></td><td>㗊ｯ</td><td>しかくならべ</td></tr>
+		<tr><td></td><td>川ｯ</td><td>よこおなじみっつ</td></tr>
+		<tr><td></td><td>彡ｯ</td><td>たておなじみっつ</td></tr>
+		<tr><td></td><td>汌ｯ</td><td>よこおなじよっつ</td></tr>
+		<tr><td></td><td>亖ｯ</td><td>たておなじよっつ</td></tr>
+		<tr><td></td><td>ﾁｯ</td><td>ようおんおき？</td></tr>
+		<tr><td></td><td>尗ｯ</td><td>うえつきおき？</td></tr>
+		<tr><td></td><td>[ｯ</td><td>かたちはじまり？</td></tr>
+		<tr><td></td><td>]ｯ</td><td>かたちおわり？</td></tr>
 	</table>
 
 	<h4>注意</h4>
 	<p>「⿼、⿽、⿾、⿿、㇯」は フォントによっては 表示されないので，それぞれ 「コｯ、Jｯ、↔ｯ、↩ｯ、−ｯ」で 代用できます。</p>
 	<p>「㇯」で 一部を 取り除くことの レンダリングは 実現できないので，取り除かれる 部品を 赤い 半透明で 重ねます。</p>
-	<p>「、」は Unicode 未収録です。外字で 表示しているので，ほかの 環境では「⤵ｯ、⤴ｯ」で 代用しなければなりません。</p>
+	<p>「」で 一部を 挿げ替えることの レンダリングは 実現できないので，取り除かれる 部品を 赤い 半透明で，取り付けられる 部品を 青い 半透明で 重ねます。</p>
+	<p>「」以降は Unicode 未収録です。外字で 表示しているので，ほかの 環境では 代用表記で 書かなければなりません。</p>
 
 	<h3>つきへん、にくづき、ふなづきの 区別</h3>
 	<p>日本では つきへん、にくづきを 同じ 形で 書きますが，台湾では 違う 形で 書きます。</p>
@@ -1836,20 +1865,21 @@
 		<tr><td></td><td>ｺへとｳ</td></tr>
 	</table>
 
-	<h3>拡張算用数字の 代用表記</h3>
-	<p>10超過の 進数を ラテン文字を 使わないで 表すための 算用数字を「￭ｫ」という 形で 表します。</p>
+	<h3>拡張算用数字、拡張漢数字の 代用表記</h3>
+	<p>10超過の 進数を ラテン文字を 使わないで 表すための 算用数字、漢数字を「￭ｫ」という 形で 表します。</p>
+	<p>漢数字の 代用表記は このほかにも 対応しています。例: : 参ｫ、叁ｫ</p>
 	<table border="1">
-		<tr><th>拡張算用数字</th><th>代用表記</th><th>名前</th><th>10進数での 表記</th></tr>
-		<tr><td>↊</td><td>2ｫ</td><td>びょん</td><td>10</td></tr>
-		<tr><td>↋</td><td>3ｫ</td><td>ゎん</td><td>11</td></tr>
-		<tr><td>↌</td><td>4ｫ</td><td>みゃ</td><td>12</td></tr>
-		<tr><td>↍</td><td>5ｫ</td><td>𛁭ゎ</td><td>13</td></tr>
-		<tr><td>↎</td><td>6ｫ</td><td>ぴゃい</td><td>14</td></tr>
-		<tr><td>↏</td><td>7ｫ</td><td>ぬゎい</td><td>15</td></tr>
-		<tr><td></td><td>8ｫ</td><td>つゎう</td><td>16</td></tr>
-		<tr><td></td><td>9ｫ</td><td>づん</td><td>17</td></tr>
-		<tr><td></td><td>0ｫ</td><td>す𛅑ん</td><td>18</td></tr>
-		<tr><td></td><td>1ｫ</td><td>ょう</td><td>19</td></tr>
+		<tr><th>算用数字</th><th>代用</th><th>漢数字（小字）</th><th>代用</th><th>漢数字（大字）</th><th>代用</th><th>名前</th><th>10進数での 表記</th></tr>
+		<tr><td>↊</td><td>2ｫ</td><td></td><td>二ｫ</td><td></td><td>弐ｫ</td><td>びょん</td><td>10</td></tr>
+		<tr><td>↋</td><td>3ｫ</td><td></td><td>三ｫ</td><td></td><td>参ｫ</td><td>ゎん</td><td>11</td></tr>
+		<tr><td>↌</td><td>4ｫ</td><td></td><td>四ｫ</td><td></td><td>肆ｫ</td><td>みゃ</td><td>12</td></tr>
+		<tr><td>↍</td><td>5ｫ</td><td></td><td>五ｫ</td><td></td><td>伍ｫ</td><td>𛁭ゎ</td><td>13</td></tr>
+		<tr><td>↎</td><td>6ｫ</td><td></td><td>六ｫ</td><td></td><td>陸ｫ</td><td>ぴゃい</td><td>14</td></tr>
+		<tr><td>↏</td><td>7ｫ</td><td></td><td>七ｫ</td><td></td><td>漆ｫ</td><td>ぬゎい</td><td>15</td></tr>
+		<tr><td></td><td>8ｫ</td><td></td><td>八ｫ</td><td></td><td>捌ｫ</td><td>つゎう</td><td>16</td></tr>
+		<tr><td></td><td>9ｫ</td><td></td><td>九ｫ</td><td></td><td>玖ｫ</td><td>づん</td><td>17</td></tr>
+		<tr><td></td><td>0ｫ</td><td></td><td>〇ｫ</td><td></td><td>零ｫ</td><td>す𛅑ん</td><td>18</td></tr>
+		<tr><td></td><td>1ｫ</td><td></td><td>一ｫ</td><td></td><td>壱ｫ</td><td>ょう</td><td>19</td></tr>
 	</table>
 
 	<h3>真偽値を 表す 文字</h3>
@@ -1981,7 +2011,8 @@
 
 	<h3>ビットマップ外字</h3>
 	<p>代用表記では 形を 正確に 表せないので，形を 正確に 表すために ビットマップ外字を 使います。</p>
-	<p>▒{<br>
+	<p>
+		▒{<br>
 		[ブロック要素]<br>
 		([文字の 名前 オプション])<br>
 		}
@@ -1997,6 +2028,71 @@
 		}
 	</p>
 	<p>こちらで 出力された ビットマップを そのまま 貼り付ければ 使えます。<a href="../BitmapToText">ビットマップをテキストに</a></p>
+
+	<h3>ビットマップ外字（カラー絵文字）</h3>
+	<p>自由に 絵文字を 表すために ビットマップ外字（カラー絵文字）を 使います。</p>
+	<p>
+		ﾛ{<br>
+		[色を 表す 絵文字、数字、ラテン文字など]<br>
+		([文字の 名前 オプション])<br>
+		}
+	</p>
+	<p>例: モナ メイドインワリオ</p>
+	<p>
+		絵文字で 構成<br>
+		ﾛ{<br>
+		➖➖💙💙💙❤💙💙💙➖➖➖<br>
+		➖❤💙💧💙💙💙💧💙❤➖➖<br>
+		❤💙💙💙💙❤💙💙💙💙❤➖<br>
+		💙🧡​🏻🌚🤍​🏻🤍🌚​🏻🧡💙➖<br>
+		❤🧡​🏻🌚🩵​🏻🩵🌚​🏻🧡❤➖<br>
+		❤🧡​🏻🌚🌚​🏻🌚🌚​🏻🧡❤➖<br>
+		🧡🧡​🏻​🏻​🏻​🏻​🏻​🏻​🏻🧡🧡➖<br>
+		🧡🧡​🏻​🏻🌸​🏻🌸​🏻​🏻🧡🧡➖<br>
+		🧡🧡🧡​🏻​🏻🌸​🏻​🏻🧡🧡🧡➖<br>
+		➖🧡🧡🧡​🏻​🏻​🏻🧡🧡🧡➖➖<br>
+		➖🧡🧡🧡​🏻​🏻​🏻🧡🧡🧡➖➖<br>
+		🧡🧡➖🧡➖➖➖🧡➖🧡🧡➖<br>
+		(モナ_メイドインワリオ)<br>
+		}
+	</p>
+	<p>
+		数字と ラテン文字と ドットで 構成<br>
+		ﾛ{<br>
+		..888C888...<br>
+		.C8S888S8C..<br>
+		C8888C8888C.<br>
+		8EUNIUINUE8.<br>
+		CEUN7U7NUEC.<br>
+		CEUNNUNNUEC.<br>
+		EEUUUUUUUEE.<br>
+		EEUUPUPUUEE.<br>
+		EEEUUPUUEEE.<br>
+		.EEEUUUEEE..<br>
+		.EEEUUUEEE..<br>
+		EE.E...E.EE.<br>
+		(モナ_メイドインワリオ)<br>
+		}
+	</p>
+	<p>
+		拡張算専用数字と ラテン文字で 構成<br>
+		ﾛ{<br>
+		888↌888<br>
+		↌8S888S8↌<br>
+		↌8888↌8888↌<br>
+		8↎UNUNU↎8<br>
+		↌↎UN7U7NU↎↌<br>
+		↌↎UNNUNNU↎↌<br>
+		↎↎UUUUUUU↎↎<br>
+		↎↎UUPUPUU↎↎<br>
+		↎↎↎UUPUU↎↎↎<br>
+		↎↎↎UUU↎↎↎<br>
+		↎↎↎UUU↎↎↎<br>
+		↎↎↎↎↎↎<br>
+		(モナ_メイドインワリオ)<br>
+		}
+	</p>
+	<p>こちらで 出力された ビットマップを そのまま 貼り付ければ 使えます。<a href="../BitmapToTextColor">ビットマップをテキストに（カラー絵文字）</a></p>
 
 	<h3>DWPI明朝、にしき的フォント、Mkana+、字雲フォントの 外字</h3>
 	<p>DWPI明朝、にしき的フォント、Mkana+、字雲フォントの 外字を 表すために，</p>
