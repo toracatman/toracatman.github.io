@@ -18,110 +18,271 @@
 	</style>
 </head>
 <body>
-	<table border="1">
-		<tr><th>10進数</th><th>20進数</th><th>アイヌ語ローマ字</th><th>アイヌ語カタカナ</th></tr>
-	</table>
+	<form name="form1">
+		<h3>オプション</h3>
+		<p>
+			<label><input type="radio" name="notation" value="1" onchange="convert();" checked>ローマ字</label>
+			<label><input type="radio" name="notation" value="2" onchange="convert();">カタカナ</label>
+		</p>
+		<p>
+			<label><input type="radio" name="type" value="1" onchange="convert();" checked>数（連体数詞）</label>
+			<label><input type="radio" name="type" value="2" onchange="convert();">個数</label>
+			<label><input type="radio" name="type" value="3" onchange="convert();">人数</label>
+		</p>
+		<p>
+			<label><input type="radio" name="order" value="1" onchange="convert();" checked>伝統数詞</label>
+			<label><input type="radio" name="order" value="2" onchange="convert();">算術数詞 日本順</label>
+			<label><input type="radio" name="order" value="3" onchange="convert();">算術数詞 アイヌ順</label>
+		</p>
+		<p>
+			<h4>算術数詞の オプション</h4>
+			<label><input type="checkbox" name="abbr" onchange="convert();" checked>略式</label>
+			<label><input type="checkbox" name="hyphen" onchange="convert();">グループを ダブルハイフンで 区切る</label>
+
+			<h4>1の 位の 数と 上の 位の 名前の 合体の 回避</h4>
+			<label><input type="radio" name="avoid" value="1" onchange="convert();" checked>1の 位に siha</label>
+			<label><input type="radio" name="avoid" value="2" onchange="convert();">上の 位に sine</label>
+		</p>
+	</form>
+	<table border="1"></table>
 	<script>
-		var e_table = document.getElementsByTagName("table")[0];
-		var vigesimal = [
-			["a", "↊"], ["b", "↋"], ["c", "↌"], ["d", "↍"], ["e", "↎"],
-			["f", "↏"], ["g", ""], ["h", ""], ["i", ""], ["j", ""]
+		var c = [
+			["á", "a"],	["í", "i"],	["ú", "u"],	["é", "e"],	["ó", "o"],
+			[", ?", "、"], ["\\. ?", "。"], ["! ?", "！"], ["\\? ?", "？"],
+			[" ?“", "「"], ["” ?", "」"], [" ?‘", "『"], ["’ ?", "』"],
+			["-", "・"], ["=", "゠"],
+			["a[hx]", "aㇵ"], ["i[hx]", "iㇶ"], ["u[hx]", "uㇷ"], ["e[hx]", "eㇸ"], ["o[hx]", "oㇹ"],
+			["ar", "aㇻ"], ["ir", "iㇼ"], ["ur", "uㇽ"], ["er", "eㇾ"], ["or", "oㇿ"],
+			["[hxㇵ-ㇹ]a", "ハ"], ["[hxㇵ-ㇹ]i", "ヒ"], ["[hxㇵ-ㇹ]u", "フ"], ["[hxㇵ-ㇹ]e", "ヘ"], ["[hxㇵ-ㇹ]o", "ホ"], ["[hx]", "ㇵ"],
+			["[rㇻ-ㇿ]a", "ラ"], ["[rㇻ-ㇿ]i", "リ"], ["[rㇻ-ㇿ]u", "ル"], ["[rㇻ-ㇿ]e", "レ"], ["[rㇻ-ㇿ]o", "ロ"], ["r", "ㇽ"],
+			["ka", "カ"], ["ki", "キ"], ["ku", "ク"], ["ke", "ケ"], ["ko", "コ"], ["k", "ㇰ"],
+			["ga", "ガ"], ["gi", "ギ"], ["gu", "グ"], ["ge", "ゲ"], ["go", "ゴ"], ["g", "ㇰ゙"],
+			["(ts|ċ)a",""], ["ċi",""], ["(ts|ċ)u","ツ"], ["(ts|ċ)e",""], ["(ts|ċ)o",""],
+			["sa", "サ"], ["ṡi", ""], ["su", "ス"], ["se", "セ"], ["so", "ソ"],
+			["şa", ""], ["[sş]i", "シ"], ["şu", ""], ["şe", ""], ["şo", ""],
+			["dza",""], ["dżi",""], ["dzu","ヅ"], ["dze",""], ["dzo",""],
+			["za", "ザ"], ["żi", ""], ["zu", "ズ"], ["ze", "ゼ"], ["zo", "ゾ"],
+			["dja",""], ["d[jz]i","ヂ"], ["dju",""], ["dje",""], ["djo",""],
+			["ja", ""], ["[jz]i", "ジ"], ["ju", ""], ["je", ""], ["jo", ""],
+			["ca", ""], ["(ts|c)i", "チ"], ["cu", ""], ["ce", ""], ["co", ""],
+			["(ts|ċ)",""], ["ṡ", "ㇲ"], ["[sş]", "ㇱ"], ["dż","ッ゙"], ["ż", "ㇲ゙"], ["d[jz]","𛅚゙"], ["[jz]", "ㇱ゙"], ["c", "𛅚"],
+			["ta", "タ"], ["ti", ""], ["tu", ""], ["te", "テ"], ["to", "ト"], ["t", "ㇳ"],
+			["da", "ダ"], ["di", ""], ["du", ""], ["de", "デ"], ["do", "ド"], ["d", "ㇳ゙"],
+			["na", "ナ"], ["ni", "ニ"], ["nu", "ヌ"], ["ne", "ネ"], ["no", "ノ"], ["n", "ン"],
+			["ḣu", ""],
+			["ba", "バ"], ["bi", "ビ"], ["bu", "ブ"], ["be", "ベ"], ["bo", "ボ"], ["b", "ㇷ゙"],
+			["pa", "パ"], ["pi", "ピ"], ["pu", "プ"], ["pe", "ペ"], ["po", "ポ"], ["p", "ㇷ゚"],
+			["ma", "マ"], ["mi", "ミ"], ["mu", "ム"], ["me", "メ"], ["mo", "モ"], ["m", "ㇺ"],
+			["ya", "ヤ"], ["yi", "𛄠"], ["yu", "ユ"], ["ye", "𛄡"], ["yo", "ヨ"], ["y", ""],
+			["wa", "ワ"], ["wi", "ヰ"], ["wu", "𛄢"], ["we", "ヱ"], ["wo", "ヲ"], ["w", ""],
+			["va", "ヷ"], ["vi", "ヸ"], ["vu", ""], ["ve", "ヹ"], ["vo", "ヺ"], ["v", "𛅭゙"],
+			["fa", ""], ["fi", ""], ["fu", ""], ["fe", ""], ["fo", ""], ["f", "𛅭゚"],
+			["a", "ア"],  ["i", "イ"],  ["u", "ウ"],  ["e", "エ"],  ["o", "オ"],
+			["ʼ", ""]
 		];
-		var ainu_num_roman = ["", "sine", "tu", "re", "ine", "asikne", "iwan", "arwan", "tupesan", "sinepesan", "wan"];
-		var ainu_num_kana = ["", "シネ", "", "レ", "イネ", "アシㇰネ", "イワン", "アㇻワン", "ペサン", "シネペサン", "ワン"];
-		(() => {
+		var e_table = document.getElementsByTagName("table")[0];
+		var vigesimal = {
+			"a": "↊", "b": "↋", "c": "↌", "d": "↍", "e": "↎",
+			"f": "↏", "g": "", "h": "", "i": "", "j": ""
+		};
+		var ainu_num = [
+			"oha", "sine", "tu", "re", "ine",
+			"asikne", "iwan", "arwan", "tupesan", "sinepesan",
+			"wan"
+		];
+		var ainu_num_a = [
+			"oha", "sine", "tu", "re", "ine",
+			"asik", "iwan", "arwan", "tupes", "sinepes",
+			"wan", "sinepesew", "tupesew", "arwanew", "iwanew",
+			"asikew", "inetnew", "retnew", "tutnew", "sinetnew"
+		];
+		var ainu_digit = ["siha", "hotne", "atuyta", "sinek"];
+		function convert() {
+			e_table.innerHTML = "<tr><th>10進数</th><th>20進数</th><th>アイヌ語 数詞</th></tr>";
 			var f = document.createDocumentFragment();
 			var td;
-			for (var num = 0; num <= 4000; num++) {
+			var num = 0;
+			while (num <= 8000) {
 				var tr = document.createElement("tr");
-				var numm40 = num % 40;
-				if (numm40 >= 20) tr.classList.add("cyan");
+				if (num % 40 >= 20) tr.classList.add("cyan");
 
 				td = document.createElement("td");
 				td.textContent = num;
 				tr.appendChild(td);
 
-				var n = num.toString(20);
-				for (var i = 0; i < vigesimal.length; i++) {
-					n = n.replace(new RegExp(vigesimal[i][0], "g"), vigesimal[i][1]);
+				var ns = num.toString(20);
+				var n = "";
+				for (var i = 0; i < ns.length; i++) {
+					n += vigesimal[ns[i]] ?? ns[i];
 				}
 				td = document.createElement("td");
 				td.textContent = n;
 				tr.appendChild(td);
 
-				n = Math.abs(num);
-				var n1 = n % 10;
-				var nd20 = (n + 10) / 20 | 0;
-				var nd400 = (n + 200) / 400 | 0;
-				var nm200 = n % 200;
-				var ainu_roman = ainu_num_roman[n1];
-				var ainu_kana = ainu_num_kana[n1];
-				if (n == 0) {
-					ainu_roman = "oha";
-					ainu_kana = "オハ";
-				}
-				else if (nm200 < 10) {}
-				else if (nm200 < 20) {
-					if (n1 > 0) {
-						ainu_roman += " ikasma ";
-						ainu_kana += " イカㇱマ ";
+				n = num;
+				var ainu = [];
+
+				if (document.form1.order.value == "1") {
+					var h;
+					if (n == 0) ainu.push(ainu_num[n]);
+					else if (n % 10 > 0) ainu.push(ainu_num[n % 10]);
+					h = (n / 10 | 0) % 2;
+					if (h) ainu.push(ainu_num[10]);
+					n = n / 20 | 0;
+					var d = 0;
+					while (n > 0) {
+						d++;
+						if (n % 10 > 0) {
+							if (h) {
+								if (document.form1.type.value == "2") {
+									ainu[ainu.length - 1] += "aeiou".indexOf(ainu[ainu.length - 1][ainu[ainu.length - 1].length - 1]) !== -1 ? "p" : "pe";
+								}
+								else if (document.form1.type.value == "3") {
+									ainu[ainu.length - 1] += "aeiou".indexOf(ainu[ainu.length - 1][ainu[ainu.length - 1].length - 1]) !== -1 ? "n" : "iw";
+								}
+								var s = `-e${ainu_num[n % 10 + 1]}`;
+								var ad = ainu_digit[d];
+								if ("aeiou".indexOf(s[s.length - 1]) === -1 &&
+									"aeiou".indexOf(ad[0]) !== -1) s += "ʼ";
+								s += ad;
+								ainu[ainu.length - 1] += s;
+							}
+							else {
+								var s = "";
+								if (n % 10 > 1) {
+									var ad = ainu_digit[d];
+									s += ainu_num[n % 10];
+									if ("aeiou".indexOf(s[s.length - 1]) === -1 &&
+										"aeiou".indexOf(ad[0]) !== -1) s += "ʼ";
+								}
+								s += ainu_digit[d];
+								ainu.push(s);
+							}
+						}
+						h = (n / 10 | 0) % 2;
+						if (h) {
+							var s = ainu_num[10];
+							var ad = ainu_digit[d];
+							if ("aeiou".indexOf(s[s.length - 1]) === -1 &&
+								"aeiou".indexOf(ad[0]) !== -1) s += "ʼ";
+							s += ad;
+							ainu.push(s);
+						}
+						n = n / 20 | 0;
 					}
-					ainu_roman += "wan";
-					ainu_kana += "ワン";
+
+					if (document.form1.type.value == "2") {
+						for (var i = 0; i < ainu.length; i++) {
+							ainu[i] += "aeiou".indexOf(ainu[i][ainu[i].length - 1]) !== -1 ? "p" : "pe";
+						}
+					}
+					else if (document.form1.type.value == "3") {
+						for (var i = 0; i < ainu.length; i++) {
+							ainu[i] += "aeiou".indexOf(ainu[i][ainu[i].length - 1]) !== -1 ? "n" : "iw";
+						}
+					}
+					ainu = ainu.join(" ikasma ");
 				}
+
 				else {
-					if (n1 > 0) {
-						ainu_roman += " ikasma ";
-						ainu_kana += " イカㇱマ ";
+					if (document.form1.abbr.checked && n == 0) ainu.push(ainu_num_a[n]);
+					ns = n.toString(20);
+					if (document.form1.order.value == "2") {
+						for (var i = ns.length - 1; i >= 0; i--) {
+							n = parseInt(ns[ns.length - 1 - i], 20);
+							if (!document.form1.abbr.checked || n > 0) {
+								var s = "";
+								if (!document.form1.abbr.checked || i == 0 || n > 1) s += ainu_num_a[n];
+								if (i > 0) {
+									var ad;
+									if (i < ainu_digit.length) ad = ainu_digit[i];
+									else ad = `ho${ainu_num_a[i]}non`;
+									if (s) {
+										if ("aeiou".indexOf(s[s.length - 1]) === -1 &&
+											"aeiou".indexOf(ad[0]) !== -1) s += "ʼ";
+									}
+									s += ad;
+								}
+								ainu.push(s);
+							}
+						}
 					}
-					if ((n / 10 | 0) & 1) {
-						ainu_roman += "wan-e";
-						ainu_kana += "ワン・エ";
+					else if (document.form1.order.value == "3") {
+						for (var i = 0; i < ns.length; i++) {
+							n = parseInt(ns[ns.length - 1 - i], 20);
+							if (!document.form1.abbr.checked || n > 0) {
+								var s = "";
+								if (!document.form1.abbr.checked || i == 0 || n > 1) s += ainu_num_a[n];
+								if (i > 0) {
+									var ad;
+									if (i < ainu_digit.length) ad = ainu_digit[i];
+									else ad = `ho${ainu_num_a[i]}non`;
+									if (s) {
+										if ("aeiou".indexOf(s[s.length - 1]) === -1 &&
+											"aeiou".indexOf(ad[0]) !== -1) s += "ʼ";
+									}
+									s += ad;
+								}
+								ainu.push(s);
+							}
+						}
+						if (document.form1.abbr.checked) {
+							if (ns[ns.length - 1] != "0") {
+								for (var i = 1; i < ns.length; i++) {
+									if (ns[ns.length - 1 - i] == "0") {
+										continue;
+									}
+									else if (ns[ns.length - 1 - i] == "1") {
+										if (document.form1.avoid.value == "1") {
+											ainu[0] += ainu_digit[0];
+										}
+										else {
+											ainu[1] = ainu_num_a[1] + ainu[1];
+										}
+										break;
+									}
+									else {
+										break;
+									}
+								}
+							}
+						}
 					}
-					if (nd20 > 10) nd20 -= (((nd20 - 1) / 10 | 0) * 10);
-					if (nd20 >= 2) {
-						ainu_roman += ainu_num_roman[nd20];
-						ainu_kana += ainu_num_kana[nd20];
-					}
-					ainu_roman += "hotne";
-					ainu_kana += "ホㇳネ";
-				}
-				if (n >= 200) {
-					if (nm200 > 0) {
-						ainu_roman += " ikasma ";
-						ainu_kana += " イカㇱマ ";
-					}
-					if (n < 400) {
-						ainu_roman += "wanhotne";
-						ainu_kana += "ワンホㇳネ";
+					if (document.form1.hyphen.checked) {
+						ainu = ainu.join("=");
 					}
 					else {
-						if ((n / 200 | 0) & 1) {
-							ainu_roman += "wanhotne-e";
-							ainu_kana += "ワンホㇳネ・エ";
+						for (var i = 0; i < ainu.length - 1; i++) {
+							if ("aeiou".indexOf(ainu[i][ainu[i].length - 1]) === -1 &&
+								"aeiou".indexOf(ainu[i + 1][0]) !== -1) ainu[i] += "ʼ";
 						}
-						if (nd400 > 10) nd400 -= (((nd400 - 1) / 10 | 0) * 10);
-						if (nd400 >= 2) {
-							ainu_roman += ainu_num_roman[nd400];
-							ainu_kana += ainu_num_kana[nd400];
-						}
-						ainu_roman += "atuyta";
-						ainu_kana += "アタ";
+						ainu = ainu.join("");
+					}
+					if (document.form1.type.value == "2") {
+						ainu += "aeiou".indexOf(ainu[ainu.length - 1]) !== -1 ? "p" : "pe";
+					}
+					else if (document.form1.type.value == "3") {
+						ainu += "aeiou".indexOf(ainu[ainu.length - 1]) !== -1 ? "n" : "iw";
 					}
 				}
 
+				if (document.form1.notation.value == "2") {
+					for (var i = 0; i < c.length; i++) {
+						ainu = ainu.replace(new RegExp(c[i][0], "ig"), c[i][1]);
+					}
+				}
 				td = document.createElement("td");
-				td.textContent = ainu_roman;
-				tr.appendChild(td);
-
-				td = document.createElement("td");
-				td.textContent = ainu_kana;
+				td.textContent = ainu;
 				tr.appendChild(td);
 
 				f.appendChild(tr);
+				if (num < 20) num++;
+				else if (num < 400) num += 10;
+				else num += 100;
 			}
 			e_table.appendChild(f);
-		})();
+		}
+		convert();
 	</script>
 </body>
 </html>
