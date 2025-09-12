@@ -59,7 +59,7 @@
 		<p>
 			<h4>算術数詞の オプション</h4>
 			<label><input type="checkbox" name="abbr" onchange="convert();" checked>略式</label>
-			<label><input type="checkbox" name="hyphen" onchange="convert();">グループを ダブルハイフンで 区切る</label>
+			<label><input type="checkbox" name="hyphen" onchange="convert();">グループを ハイフンで 区切る</label>
 
 			<h4>1の 位の 数と 上の 位の 名前の 合体の 回避</h4>
 			<label><input type="radio" name="avoid" value="1" onchange="convert();" checked>1の 位に siha</label>
@@ -293,7 +293,7 @@
 					}
 				}
 				if (document.form1.hyphen.checked) {
-					ainu = ainu.join("=");
+					ainu = ainu.join("-");
 					if (num < 0) ainu = "minus=" + ainu;
 				}
 				else {
