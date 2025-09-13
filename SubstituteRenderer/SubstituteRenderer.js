@@ -73,10 +73,6 @@ function changeText() {
 	}
 	s = s.replace(/ﾕ([\dA-Fa-f]{4})/g, (_, p) => String.fromCodePoint(parseInt(p, 16)))
 		.replace(/ﾕs([\dA-Fa-f]{5})/g, (_, p) => String.fromCodePoint(parseInt(p, 16)))
-		.replace(/ﾕg([\dA-Fa-f]{4})/g, (_, p) => String.fromCodePoint(parseInt(`10${p}`, 16)));
-	for (i = 0; i < extJzanteiIDS.length; i++) {
-		s = s.replace(new RegExp(extJzanteiIDS[i][0], "gu"), extJzanteiIDS[i][1]);
-	}
 	for (i = 0; i < chr.length; i++) {
 		s = s.replace(new RegExp(chr[i][0], "gu"), chr[i][1]);
 	}
