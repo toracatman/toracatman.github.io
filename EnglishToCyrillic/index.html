@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>英語、IPA→キリル文字</title>
+	<link rel="stylesheet" href="../css/toracatman.css">
+	<link rel="stylesheet" href="EnglishToCyrillic.css">
+</head>
+<body>
+	<h3>ここに 英語、IPA を 入力すると，キリル文字に 変換されます。</h3>
+	<p>まずは こちらの サイトで 両方の IPA を 取得します: <a href="https://tophonetics.com/" target="_blank">IPA Phonetic Transcription of English Text - toPhonetics</a></p>
+	<div class="wrapper">
+		<div>
+			英語<br>
+			<textarea id="en"></textarea>
+		</div>
+		<div>
+			IPA（イギリス英語）<br>
+			<textarea id="ipa_uk"></textarea>
+		</div>
+		<div>
+			IPA（アメリカ英語）<br>
+			<textarea id="ipa_us"></textarea>
+		</div>
+	</div>
+	<input type="button" value="変換" id="convert_btn"><br>
+	<div class="wrapper">
+		<div>
+			IPA（合成）<br>
+			<textarea id="ipa_mix"></textarea>
+		</div>
+		<div>
+			キリル文字<br>
+			<textarea id="cyrillic"></textarea>
+		</div>
+	</div>
+	<div id="error"></div>
+	<p><a href="indexEN.html">English</a></p>
+	<script src="EnglishToCyrillic.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>English and IPA to Shavian alphabet</title>
+	<link rel="stylesheet" href="../css/toracatman.css">
+	<link rel="stylesheet" href="EnglishToShaw.css">
+</head>
+<body>
+	<h3>If you input English and IPA here, it's converted Shavian alphabet.</h3>
+	<p>First, please get both of IPA from this site, <a href="https://tophonetics.com/" target="_blank">IPA Phonetic Transcription of English Text - toPhonetics</a></p>
+	<div class="wrapper">
+		<div>
+			English<br>
+			<textarea id="en"></textarea>
+		</div>
+		<div>
+			IPA (British)<br>
+			<textarea id="ipa_uk"></textarea>
+		</div>
+		<div>
+			IPA (American)<br>
+			<textarea id="ipa_us"></textarea>
+		</div>
+	</div>
+	<input type="button" value="convert" id="convert_btn"><br>
+	<div class="wrapper">
+		<div>
+			IPA (mix)<br>
+			<textarea id="ipa_mix"></textarea>
+		</div>
+		<div>
+			Shavian alphabet<br>
+			<textarea id="shaw"></textarea>
+		</div>
+	</div>
+	<div id="error"></div>
+	<p>Note: Shavian alphabet puts a middle dot “·” before a proper noun, but this tool cannot place a middle dot before a proper noun.</p>
+	<p><a href="index.html">日本語</a></p>
+	<script src="EnglishToShaw.js"></script>
+</body>
+</html>

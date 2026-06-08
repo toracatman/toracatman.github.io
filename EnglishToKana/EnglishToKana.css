@@ -1,0 +1,25 @@
+textarea {
+	width: 100%;
+	height: 200px;
+}
+.wrapper div {
+	float: left;
+	width: 100%;
+}
+.wrapper:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+#error {
+	color: #f00;
+}
+
+@media screen and (min-width: 768px) {
+	textarea {
+		width: 320px;
+	}
+	.wrapper div {
+		width: auto;
+	}
+}

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>アイヌ語の 数詞に 変換</title>
+	<link rel="stylesheet" href="../css/toracatman.css">
+	<style>
+		html {
+			font-size: 62.5%;
+		}
+		body {
+			font-size: 1.6rem;
+		}
+		input[type="text"] {
+			font-size: 1.6rem;
+			font-family: inherit;
+			width: 100%;
+		}
+		#error {
+			color: #f00;
+		}
+
+		@media screen and (min-width: 768px) {
+			input[type="text"] {
+				width: 80rem;
+			}
+		}
+	</style>
+</head>
+<body>
+	<h3>10進数、20進数（拡張算用数字）を 入力すれば，アイヌ語の 数詞が 出力されます。</h3>
+	<form name="form1">
+		<p>10進数<input type="text" name="decimal" onchange="changeDecimal();"></p>
+		<p>20進数<input type="text" name="vigesimal" onchange="changeVigesimal();"></p>
+		<details>
+			<summary>拡張算用数字</summary>
+			<p><ruby><rb>0</rb><rp>（</rp><rt>ぜろ</rt><rp>）</rp></ruby>、<ruby><rb>1</rb><rp>（</rp><rt>いち</rt><rp>）</rp></ruby>、<ruby><rb>2</rb><rp>（</rp><rt>に</rt><rp>）</rp></ruby>、<ruby><rb>3</rb><rp>（</rp><rt>さん</rt><rp>）</rp></ruby>、<ruby><rb>4</rb><rp>（</rp><rt>よん</rt><rp>）</rp></ruby>、<ruby><rb>5</rb><rp>（</rp><rt>ご</rt><rp>）</rp></ruby>、<ruby><rb>6</rb><rp>（</rp><rt>ろく</rt><rp>）</rp></ruby>、<ruby><rb>7</rb><rp>（</rp><rt>なな</rt><rp>）</rp></ruby>、<ruby><rb>8</rb><rp>（</rp><rt>はち</rt><rp>）</rp></ruby>、<ruby><rb>9</rb><rp>（</rp><rt>きゅう</rt><rp>）</rp></ruby>、<ruby><rb>↊</rb><rp>（</rp><rt>びょん</rt><rp>）</rp></ruby>、<ruby><rb>↋</rb><rp>（</rp><rt>ゎん</rt><rp>）</rp></ruby>、<ruby><rb>↌</rb><rp>（</rp><rt>みゃ</rt><rp>）</rp></ruby>、<ruby><rb>↍</rb><rp>（</rp><rt>𛁭ゎ</rt><rp>）</rp></ruby>、<ruby><rb>↎</rb><rp>（</rp><rt>ぴゃい</rt><rp>）</rp></ruby>、<ruby><rb>↏</rb><rp>（</rp><rt>ぬゎい</rt><rp>）</rp></ruby>、<ruby><rb></rb><rp>（</rp><rt>つゎう</rt><rp>）</rp></ruby>、<ruby><rb></rb><rp>（</rp><rt>づん</rt><rp>）</rp></ruby>、<ruby><rb></rb><rp>（</rp><rt>す𛅑ん</rt><rp>）</rp></ruby>、<ruby><rb></rb><rp>（</rp><rt>ょう</rt><rp>）</rp></ruby></p>
+		</details>
+
+		<p>アイヌ語 数詞<input type="text" name="ainu" onchange=""></p>
+		<p>伝統数詞向けの 数字<input type="text" name="ainu_numeral" onchange=""></p>
+
+		<h3>オプション</h3>
+		<p>
+			<label><input type="radio" name="notation" value="1" onchange="convert();" checked>ローマ字</label>
+			<label><input type="radio" name="notation" value="2" onchange="convert();">カタカナ</label>
+		</p>
+		<p>
+			<label><input type="radio" name="type" value="1" onchange="convert();" checked>数（連体数詞）</label>
+			<label><input type="radio" name="type" value="2" onchange="convert();">個数</label>
+			<label><input type="radio" name="type" value="3" onchange="convert();">人数</label>
+		</p>
+		<p>
+			<label><input type="radio" name="order" value="1" onchange="convert();" checked>伝統数詞</label>
+			<label><input type="radio" name="order" value="2" onchange="convert();">算術数詞 日本順</label>
+			<label><input type="radio" name="order" value="3" onchange="convert();">算術数詞 アイヌ順</label>
+		</p>
+		<p>
+			<h4>算術数詞の オプション</h4>
+			<label><input type="checkbox" name="abbr" onchange="convert();" checked>略式</label>
+			<label><input type="checkbox" name="hyphen" onchange="convert();">グループを ハイフンで 区切る</label>
+
+			<h4>1の 位の 数と 上の 位の 名前の 合体の 回避</h4>
+			<label><input type="radio" name="avoid" value="1" onchange="convert();" checked>1の 位に siha</label>
+			<label><input type="radio" name="avoid" value="2" onchange="convert();">上の 位に sine</label>
+		</p>
+	</form>
+	<div id="error"></div>
+	<a href="QuickReference.html">早見表</a>
+	<script>
+		var c = [
+			["á", "a"], ["í", "i"], ["ú", "u"], ["é", "e"], ["ó", "o"],
+			[", ?", "、"], ["\\. ?", "。"], ["! ?", "！"], ["\\? ?", "？"],
+			[" ?“", "「"], ["” ?", "」"], [" ?‘", "『"], ["’ ?", "』"],
+			["(?<=[a-z])-(?=[a-z])", "・"], ["(?<=[a-z])=|=(?=[a-z])", "゠"],
+			["ih", "iㇶ"], ["uh", "uㇷ"], ["eh", "eㇸ"], ["oh", "oㇹ"], ["h", "ㇵ"],
+			["iĥ", "iㇶ‌̣"], ["uĥ", "uㇷ‌̣"], ["eĥ", "eㇸ‌̣"], ["oĥ", "oㇹ‌̣"], ["ĥ", "ㇵ‌̣"],
+			["ar", "aㇻ"], ["ir", "iㇼ"], ["er", "eㇾ"], ["or", "oㇿ"], ["r", "ㇽ"],
+			["[ㇵ-ㇹ]a", "ハ"], ["[ㇵ-ㇹ]i", "ヒ"], ["[ㇵ-ㇹ]u", "フ"], ["[ㇵ-ㇹ]e", "ヘ"], ["[ㇵ-ㇹ]o", "ホ"],
+			["[ㇵ-ㇹ]‌̣a", ""], ["[ㇵ-ㇹ]‌̣i", ""], ["[ㇵ-ㇹ]‌̣u", ""], ["[ㇵ-ㇹ]‌̣e", ""], ["[ㇵ-ㇹ]‌̣o", ""], ["ㇷ‌̣", "‌̣"],
+			["[ㇻ-ㇿ]a", "ラ"], ["[ㇻ-ㇿ]i", "リ"], ["[ㇻ-ㇿ]u", "ル"], ["[ㇻ-ㇿ]e", "レ"], ["[ㇻ-ㇿ]o", "ロ"],
+			["ka", "カ"], ["ki", "キ"], ["ku", "ク"], ["ke", "ケ"], ["ko", "コ"], ["k", "ㇰ"],
+			["ga", "ガ"], ["gi", "ギ"], ["gu", "グ"], ["ge", "ゲ"], ["go", "ゴ"], ["g", "ㇰ゙"],
+			["ċa", ""], ["ċi", ""], ["ċu", "ツ"], ["ċe", ""], ["ċo", ""],
+			["sa", "サ"], ["ṡi", ""], ["su", "ス"], ["se", "セ"], ["so", "ソ"],
+			["ŝa", ""], ["[sŝ]i", "シ"], ["ŝu", ""], ["ŝe", ""], ["ŝo", ""],
+			["d̂a", ""], ["d̂̇i", ""], ["d̂u", "ヅ"], ["d̂e", ""], ["d̂o", ""],
+			["za", "ザ"], ["żi", ""], ["zu", "ズ"], ["ze", "ゼ"], ["zo", "ゾ"],
+			["ĝa", ""], ["d̂i|ĝi", "ヂ"], ["ĝu", ""], ["ĝe", ""], ["ĝo", ""],
+			["ĵa", ""], ["[ĵz]i", "ジ"], ["ĵu", ""], ["ĵe", ""], ["ĵo", ""],
+			["ca", ""], ["ci", "チ"], ["cu", ""], ["ce", ""], ["co", ""],
+			["ċ", ""], ["ṡ", "ㇲ"], ["[sŝ]", "ㇱ"], ["d̂̇", "ッ゙"], ["ż", "ㇲ゙"], ["d[ĵz]", "𛅚゙"], ["[ĵz]", "ㇱ゙"], ["c", "𛅚"],
+			["ta", "タ"], ["ti", ""], ["tu", ""], ["te", "テ"], ["to", "ト"], ["t", "ㇳ"],
+			["da", "ダ"], ["di", ""], ["du", ""], ["de", "デ"], ["do", "ド"], ["d", "ㇳ゙"],
+			["na", "ナ"], ["ni", "ニ"], ["nu", "ヌ"], ["ne", "ネ"], ["no", "ノ"], ["n(?=゠[aiueo])", "ㇴ"], ["n", "ン"],
+			["ḣu", ""],
+			["ba", "バ"], ["bi", "ビ"], ["bu", "ブ"], ["be", "ベ"], ["bo", "ボ"], ["b", "ㇷ゙"],
+			["pa", "パ"], ["pi", "ピ"], ["pu", "プ"], ["pe", "ペ"], ["po", "ポ"], ["p", "ㇷ゚"],
+			["ma", "マ"], ["mi", "ミ"], ["mu", "ム"], ["me", "メ"], ["mo", "モ"], ["m", "ㇺ"],
+			["ya", "ヤ"], ["yi", "𛄠"], ["yu", "ユ"], ["ye", "𛄡"], ["yo", "ヨ"], ["y", ""],
+			["wa", "ワ"], ["wi", "ヰ"], ["wu", "𛄢"], ["we", "ヱ"], ["wo", "ヲ"], ["w", ""],
+			["va", "ヷ"], ["vi", "ヸ"], ["vu", ""], ["ve", "ヹ"], ["vo", "ヺ"], ["v", "𛅭゙"],
+			["fa", ""], ["fi", ""], ["fu", ""], ["fe", ""], ["fo", ""], ["f", "𛅭゚"],
+			["a", "ア"],  ["i", "イ"],  ["u", "ウ"],  ["e", "エ"],  ["o", "オ"],
+			["ʼ", ""]
+		];
+		var num;
+		var e_error = document.getElementById("error");
+		var vigesimal = {
+			"a": "↊", "b": "↋", "c": "↌", "d": "↍", "e": "↎",
+			"f": "↏", "g": "", "h": "", "i": "", "j": ""
+		};
+		var vigesimal_back = {
+			"↊": "a", "↋": "b", "↌": "c", "↍": "d", "↎": "e",
+			"↏": "f", "": "g", "": "h", "": "i", "": "j"
+		};
+		var ainu_num = [
+			"oha", "sine", "tu", "re", "ine",
+			"asikne", "iwan", "arwan", "tupesan", "sinepesan",
+			"wan"
+		];
+		var ainu_num_a = [
+			"oha", "sine", "tu", "re", "ine",
+			"asik", "iwan", "arwan", "tupes", "sinepes",
+			"wan", "sinepesew", "tupesew", "arwanew", "iwanew",
+			"asikew", "inetnew", "retnew", "tutnew", "sinetnew"
+		];
+		var ainu_digit = ["siha", "hotne", "atuyta", "sinek"];
+		function changeDecimal() {
+			if (!/^-?\d+\.?\d*$/.test(document.form1.decimal.value)) {
+				e_error.textContent = "数を 入力してください。";
+				return;
+			}
+			num = Number(document.form1.decimal.value);
+			convert();
+		}
+		function changeVigesimal() {
+			var n = document.form1.vigesimal.value;
+			var ns = "";
+			for (var i = 0; i < n.length; i++) {
+				ns += vigesimal_back[n[i]] ?? n[i];
+			}
+			if (!/^-?[\dA-Ja-j]+\.?[\dA-Ja-j]*$/.test(ns)) {
+				e_error.textContent = "数を 入力してください。";
+				return;
+			}
+			num = parseInt(ns, 20);
+			convert();
+		}
+		function convert() {
+			document.form1.decimal.value = num;
+			var ns = num.toString(20);
+			var n = "";
+			for (var i = 0; i < ns.length; i++) {
+				n += vigesimal[ns[i]] ?? ns[i];
+			}
+			document.form1.vigesimal.value = n;
+			e_error.textContent = "";
+
+			n = Math.abs(num);
+			var ainu = [];
+
+			if (document.form1.order.value == "1") {
+				if (n < 160000) {
+					var h;
+					if (n == 0) ainu.push(ainu_num[n]);
+					else if (n % 10 > 0) ainu.push(ainu_num[n % 10]);
+					h = (n / 10 | 0) % 2;
+					if (h) ainu.push(ainu_num[10]);
+					n = n / 20 | 0;
+					var d = 0;
+					while (n > 0) {
+						d++;
+						if (n % 10 > 0) {
+							if (h) {
+								if (document.form1.type.value == "2") {
+									ainu[ainu.length - 1] += "aeiou".indexOf(ainu[ainu.length - 1][ainu[ainu.length - 1].length - 1]) !== -1 ? "p" : "pe";
+								}
+								else if (document.form1.type.value == "3") {
+									ainu[ainu.length - 1] += "aeiou".indexOf(ainu[ainu.length - 1][ainu[ainu.length - 1].length - 1]) !== -1 ? "n" : "iw";
+								}
+								var s = `-e${ainu_num[n % 10 + 1]}`;
+								var ad = ainu_digit[d];
+								if ("aeiou".indexOf(s[s.length - 1]) === -1 &&
+									"aeiou".indexOf(ad[0]) !== -1) s += "ʼ";
+								s += ad;
+								ainu[ainu.length - 1] += s;
+							}
+							else {
+								var s = "";
+								if (n % 10 > 1) {
+									var ad = ainu_digit[d];
+									s += ainu_num[n % 10];
+									if ("aeiou".indexOf(s[s.length - 1]) === -1 &&
+										"aeiou".indexOf(ad[0]) !== -1) s += "ʼ";
+								}
+								s += ainu_digit[d];
+								ainu.push(s);
+							}
+						}
+						h = (n / 10 | 0) % 2;
+						if (h) {
+							var s = ainu_num[10];
+							var ad = ainu_digit[d];
+							if ("aeiou".indexOf(s[s.length - 1]) === -1 &&
+								"aeiou".indexOf(ad[0]) !== -1) s += "ʼ";
+							s += ad;
+							ainu.push(s);
+						}
+						n = n / 20 | 0;
+					}
+
+					if (document.form1.type.value == "2") {
+						for (var i = 0; i < ainu.length; i++) {
+							ainu[i] += "aeiou".indexOf(ainu[i][ainu[i].length - 1]) !== -1 ? "p" : "pe";
+						}
+					}
+					else if (document.form1.type.value == "3") {
+						for (var i = 0; i < ainu.length; i++) {
+							ainu[i] += "aeiou".indexOf(ainu[i][ainu[i].length - 1]) !== -1 ? "n" : "iw";
+						}
+					}
+					ainu = ainu.join(" ikasma ");
+					if (num < 0) ainu += " e-isam";
+				}
+				else {
+					ainu = "";
+					e_error.textContent = "伝統数詞は -159999〰︎159999（10進数），-〰︎（20進数）まで 扱えます。";
+				}
+			}
+
+			else {
+				if (document.form1.abbr.checked && n == 0) ainu.push(ainu_num_a[n]);
+				ns = n.toString(20);
+				if (document.form1.order.value == "2") {
+					for (var i = ns.length - 1; i >= 0; i--) {
+						n = parseInt(ns[ns.length - 1 - i], 20);
+						if (!document.form1.abbr.checked || n > 0) {
+							var s = "";
+							if (!document.form1.abbr.checked || i == 0 || n > 1) s += ainu_num_a[n];
+							if (i > 0) {
+								var ad;
+								if (i < ainu_digit.length) ad = ainu_digit[i];
+								else ad = `ho${ainu_num_a[i]}non`;
+								if (s) {
+									if ("aeiou".indexOf(s[s.length - 1]) === -1 &&
+										"aeiou".indexOf(ad[0]) !== -1) s += "ʼ";
+								}
+								s += ad;
+							}
+							ainu.push(s);
+						}
+					}
+				}
+				else if (document.form1.order.value == "3") {
+					for (var i = 0; i < ns.length; i++) {
+						n = parseInt(ns[ns.length - 1 - i], 20);
+						if (!document.form1.abbr.checked || n > 0) {
+							var s = "";
+							if (!document.form1.abbr.checked || i == 0 || n > 1) s += ainu_num_a[n];
+							if (i > 0) {
+								var ad;
+								if (i < ainu_digit.length) ad = ainu_digit[i];
+								else ad = `ho${ainu_num_a[i]}non`;
+								if (s) {
+									if ("aeiou".indexOf(s[s.length - 1]) === -1 &&
+										"aeiou".indexOf(ad[0]) !== -1) s += "ʼ";
+								}
+								s += ad;
+							}
+							ainu.push(s);
+						}
+					}
+					if (document.form1.abbr.checked) {
+						if (ns[ns.length - 1] != "0") {
+							for (var i = 1; i < ns.length; i++) {
+								if (ns[ns.length - 1 - i] == "0") {
+									continue;
+								}
+								else if (ns[ns.length - 1 - i] == "1") {
+									if (document.form1.avoid.value == "1") {
+										ainu[0] += ainu_digit[0];
+									}
+									else {
+										ainu[1] = ainu_num_a[1] + ainu[1];
+									}
+									break;
+								}
+								else {
+									break;
+								}
+							}
+						}
+					}
+				}
+				if (document.form1.hyphen.checked) {
+					ainu = ainu.join("-");
+					if (num < 0) ainu = "minus-" + ainu;
+				}
+				else {
+					for (var i = 0; i < ainu.length - 1; i++) {
+						if ("aeiou".indexOf(ainu[i][ainu[i].length - 1]) === -1 &&
+							"aeiou".indexOf(ainu[i + 1][0]) !== -1) ainu[i] += "ʼ";
+					}
+					ainu = ainu.join("");
+					var minus = "minus";
+					if ("aeiou".indexOf(ainu[0]) !== -1) minus += "ʼ";
+					if (num < 0) ainu = minus + ainu;
+				}
+				if (document.form1.type.value == "2") {
+					ainu += "aeiou".indexOf(ainu[ainu.length - 1]) !== -1 ? "p" : "pe";
+				}
+				else if (document.form1.type.value == "3") {
+					ainu += "aeiou".indexOf(ainu[ainu.length - 1]) !== -1 ? "n" : "iw";
+				}
+			}
+
+			if (document.form1.notation.value == "2") {
+				for (var i = 0; i < c.length; i++) {
+					ainu = ainu.replace(new RegExp(c[i][0], "ig"), c[i][1]);
+				}
+			}
+			document.form1.ainu.value = ainu;
+
+			n = Math.abs(num);
+			var digit = [];
+			digit.push(n % 10);
+			var h = (n / 10 | 0) % 2;
+			n = n / 20 | 0;
+			while(h || n > 0) {
+				if (h) {
+					var nr10p1 = n % 10 + 1;
+					if (nr10p1 == 10) nr10p1 = "↊";
+					digit.push(nr10p1 + "̬");
+				}
+				else {
+					digit.push(n % 10);
+				}
+				h = (n / 10 | 0) % 2;
+				n = n / 20 | 0;
+			}
+			n = "";
+			for (var i = digit.length - 1; i >= 0; i--) {
+				n += digit[i];
+			}
+			if (num < 0) n = "-" + n;
+			document.form1.ainu_numeral.value = n;
+		}
+	</script>
+</body>
+</html>

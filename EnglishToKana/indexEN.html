@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>English and IPA to Kana</title>
+	<link rel="stylesheet" href="../css/toracatman.css">
+	<link rel="stylesheet" href="EnglishToKana.css">
+</head>
+<body>
+	<h3>If you input English and IPA here, it's converted kana.</h3>
+	<p>First, please get both of IPA from this site, <a href="https://tophonetics.com/" target="_blank">IPA Phonetic Transcription of English Text - toPhonetics</a></p>
+	<div class="wrapper">
+		<div>
+			English<br>
+			<textarea id="en"></textarea>
+		</div>
+		<div>
+			IPA (British)<br>
+			<textarea id="ipa_uk"></textarea>
+		</div>
+		<div>
+			IPA (American)<br>
+			<textarea id="ipa_us"></textarea>
+		</div>
+	</div>
+	<input type="button" value="convert" id="convert_btn"><br>
+	<div class="wrapper">
+		<div>
+			IPA (mix)<br>
+			<textarea id="ipa_mix"></textarea>
+		</div>
+		<div>
+			common romanization<br>
+			<textarea id="common"></textarea>
+		</div>
+		<div>
+			katakana<br>
+			<textarea id="katakana"></textarea>
+		</div>
+		<div>
+			hiragana<br>
+			<textarea id="hiragana"></textarea>
+		</div>
+	</div>
+	<div id="error"></div>
+	<p><a href="index.html">日本語</a></p>
+	<script src="EnglishToKana.js"></script>
+</body>
+</html>

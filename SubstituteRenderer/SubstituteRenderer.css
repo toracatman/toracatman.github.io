@@ -1,0 +1,573 @@
+input,
+button,
+select,
+textarea {
+	font-family: inherit;
+	border-width: 0.1rem;
+}
+input[type="button"],
+button {
+	background-color: #e0e0e0;
+}
+
+.dark,
+.dark input,
+.dark button,
+.dark select,
+.dark textarea {
+	color: #fff;
+	background-color: #000;
+}
+
+body:has(details.keyboard[open]) details.keyboard:not([open]) {
+	display: none;
+}
+
+.share-button-wrapper {
+	font-size: 0;
+}
+.share-button,
+.share-button:hover,
+.share-button:active {
+	margin: 16px;
+	padding: 6px;
+	font-size: 0;
+	border-width: 0;
+	border-radius: 6px;
+}
+.share-button svg {
+	padding: 0;
+}
+.twitter-button {
+	color: #fff;
+	background-color: #1DA1F2 !important;
+}
+.bluesky-button {
+	color: #fff;
+	background-color: #0285FF !important;
+}
+.threads-button {
+	color: #fff;
+	background-color: #000 !important;
+}
+.mastodon-button {
+	color: #fff;
+	background-color: #6364FF !important;
+}
+.misskey-button {
+	color: #fff;
+	background-color: #A1CA03 !important;
+}
+.facebook-button {
+	color: #fff;
+	background-color: #0866FF !important;
+}
+.line-button {
+	color: #fff;
+	background-color: #06C755 !important;
+}
+.fiicen-button {
+	background: linear-gradient(#00c0ff, #c000ff) !important;
+}
+.fiicen-button img {
+	width: 24px;
+	height: 24px;
+}
+#message {
+	font-size: 1.6rem;
+}
+td {
+	text-align: center;
+	vertical-align: top;
+}
+textarea {
+	width: 100%;
+	height: 9.6rem;
+	font-size: 2rem;
+}
+div {
+	vertical-align: top;
+}
+.nogap {
+	line-height: 1;
+}
+#render {
+	margin: 6.4rem 0;
+	font-size: 3.2rem;
+	white-space: pre-wrap;
+}
+#render.autoexpand:has(rtc) {
+	line-height: 2.5;
+}
+.part,
+.bitmap,
+.bitmap-color {
+	display: inline-block;
+	position: relative;
+	line-height: 1;
+}
+#render.autoexpand:has(rtc)>.part,
+#render.autoexpand:has(rtc)>.bitmap,
+#render.autoexpand:has(rtc)>.bitmap-color {
+	top: 2.4rem;
+}
+.bitmap,
+.bitmap-color {
+	text-align: left;
+}
+.bitmap-color {
+	font-size: 0;
+}
+.bitmap-color div {
+	display: inline-block;
+}
+.part {
+	width: 3.2rem;
+	height: 3.2rem;
+	text-align: center;
+	transform-origin: 0 0;
+}
+.part-inner {
+	position: absolute;
+	width: 3.2rem;
+	height: 3.2rem;
+	transform-origin: top left;
+}
+.part-over {
+	background-color: #fcc;
+}
+
+.part-hencukuri>.part-inner:first-child {
+	transform: scale(0.5, 1);
+}
+.part-hencukuri>.part-inner:last-child {
+	transform-origin: top right;
+	transform: scale(0.5, 1);
+}
+
+.part-kanmuriasxi>.part-inner:first-child {
+	transform: scale(1, 0.5);
+}
+.part-kanmuriasxi>.part-inner:last-child {
+	transform-origin: bottom left;
+	transform: scale(1, 0.5);
+}
+
+.part-tatemiqcu>.part-inner:first-child {
+	transform: scale(0.333, 1);
+}
+.part-tatemiqcu>.part-inner:nth-child(2) {
+	transform-origin: top center;
+	transform: scale(0.333, 1);
+}
+.part-tatemiqcu>.part-inner:last-child {
+	transform-origin: top right;
+	transform: scale(0.333, 1);
+}
+
+.part-yokomiqcu>.part-inner:first-child {
+	transform: scale(1, 0.333);
+}
+.part-yokomiqcu>.part-inner:nth-child(2) {
+	transform-origin: center left;
+	transform: scale(1, 0.333);
+}
+.part-yokomiqcu>.part-inner:last-child {
+	transform-origin: bottom left;
+	transform: scale(1, 0.333);
+}
+
+.part-kunigakomi>.part-inner:last-child {
+	transform-origin: center;
+	transform: scale(0.7, 0.7);
+}
+
+.part-dougakomi>.part-inner:last-child {
+	transform-origin: bottom center;
+	transform: scale(0.7, 0.7);
+}
+
+.part-ukegakomi>.part-inner:last-child {
+	transform-origin: top center;
+	transform: scale(0.7, 0.7);
+}
+
+.part-hakogakomi>.part-inner:last-child {
+	transform-origin: center right;
+	transform: scale(0.7, 0.7);
+}
+
+.part-gangakomi>.part-inner:last-child {
+	transform-origin: bottom right;
+	transform: scale(0.7, 0.7);
+}
+
+.part-cucumigakomi>.part-inner:last-child {
+	transform-origin: bottom left;
+	transform: scale(0.7, 0.7);
+}
+
+.part-nyougakomi>.part-inner:last-child {
+	transform-origin: top right;
+	transform: scale(0.7, 0.7);
+}
+
+.part-konojxigakomi>.part-inner:last-child {
+	transform-origin: center left;
+	transform: scale(0.7, 0.7);
+}
+
+.part-gyakunyou>.part-inner:last-child {
+	transform: scale(0.7, 0.7);
+}
+
+.part-kagamimojxi>.part-inner:first-child {
+	transform-origin: center;
+	transform: scale(-1, 1);
+}
+
+.part-sakasamojxi>.part-inner:first-child {
+	transform-origin: center;
+	transform: scale(-1, -1);
+}
+
+.part-torinozoku>.part-inner:last-child {
+	color: #f00;
+	opacity: 0.5;
+}
+
+.part-migidaosxi>.part-inner:first-child {
+	transform-origin: center;
+	transform: rotate(90deg);
+}
+
+.part-hidaridaosxi>.part-inner:first-child {
+	transform-origin: center;
+	transform: rotate(-90deg);
+}
+
+.part-sugekae>.part-inner:nth-child(2) {
+	transform-origin: center left;
+	transform: scale(0.5, 0.5);
+	color: #f00;
+	opacity: 0.5;
+}
+.part-sugekae>.part-inner:last-child {
+	transform-origin: center right;
+	transform: scale(0.5, 0.5);
+	color: #00f;
+	opacity: 0.5;
+}
+
+.part-hocunarabe>.part-inner:first-child {
+	transform: scale(0.5, 0.5);
+}
+.part-hocunarabe>.part-inner:last-child {
+	transform-origin: bottom right;
+	transform: scale(0.5, 0.5);
+}
+
+.part-hecunarabe>.part-inner:first-child {
+	transform-origin: top right;
+	transform: scale(0.5, 0.5);
+}
+.part-hecunarabe>.part-inner:last-child {
+	transform-origin: bottom left;
+	transform: scale(0.5, 0.5);
+}
+
+.part-mauezoe>.part-inner:first-child {
+	transform-origin: bottom center;
+	transform: scale(1, 0.667);
+}
+.part-mauezoe>.part-inner:last-child {
+	transform-origin: top center;
+	transform: scale(0.667, 0.333);
+}
+
+.part-mamigizoe>.part-inner:first-child {
+	transform-origin: center left;
+	transform: scale(0.667, 1);
+}
+.part-mamigizoe>.part-inner:last-child {
+	transform-origin: center right;
+	transform: scale(0.333, 0.667);
+}
+
+.part-masxitazoe>.part-inner:first-child {
+	transform-origin: top center;
+	transform: scale(1, 0.667);
+}
+.part-masxitazoe>.part-inner:last-child {
+	transform-origin: bottom center;
+	transform: scale(0.667, 0.333);
+}
+
+.part-mahidarizoe>.part-inner:first-child {
+	transform-origin: center right;
+	transform: scale(0.667, 1);
+}
+.part-mahidarizoe>.part-inner:last-child {
+	transform-origin: center left;
+	transform: scale(0.333, 0.667);
+}
+
+.part-migiuezoe>.part-inner:last-child {
+	transform-origin: top right;
+	transform: scale(0.333, 0.333);
+}
+
+.part-migisxitazoe>.part-inner:last-child {
+	transform-origin: bottom right;
+	transform: scale(0.333, 0.333);
+}
+
+.part-hidarisxitazoe>.part-inner:last-child {
+	transform-origin: bottom left;
+	transform: scale(0.333, 0.333);
+}
+
+.part-hidariuezoe>.part-inner:last-child {
+	transform: scale(0.333, 0.333);
+}
+
+.part-hinjxiyou>.part-inner:first-child {
+	transform-origin: top center;
+	transform: scale(0.5, 0.5);
+}
+.part-hinjxiyou>.part-inner:nth-child(2) {
+	transform-origin: bottom left;
+	transform: scale(0.5, 0.5);
+}
+.part-hinjxiyou>.part-inner:last-child {
+	transform-origin: bottom right;
+	transform: scale(0.5, 0.5);
+}
+
+.part-sxikakunarabe>.part-inner:first-child {
+	transform: scale(0.5, 0.5);
+}
+.part-sxikakunarabe>.part-inner:nth-child(2) {
+	transform-origin: bottom left;
+	transform: scale(0.5, 0.5);
+}
+.part-sxikakunarabe>.part-inner:nth-child(3) {
+	transform-origin: top right;
+	transform: scale(0.5, 0.5);
+}
+.part-sxikakunarabe>.part-inner:last-child {
+	transform-origin: bottom right;
+	transform: scale(0.5, 0.5);
+}
+
+.part-tateonajxiyoqcu>.part-inner:first-child {
+	transform: scale(1, 0.25);
+}
+.part-tateonajxiyoqcu>.part-inner:nth-child(2) {
+	transform: translate(0, 25%) scale(1, 0.25);
+}
+.part-tateonajxiyoqcu>.part-inner:nth-child(3) {
+	transform: translate(0, 50%) scale(1, 0.25);
+}
+.part-tateonajxiyoqcu>.part-inner:last-child {
+	transform-origin: bottom left;
+	transform: scale(1, 0.25);
+}
+
+.part-yokoonajxiyoqcu>.part-inner:first-child {
+	transform: scale(0.25, 1);
+}
+.part-yokoonajxiyoqcu>.part-inner:nth-child(2) {
+	transform: translate(25%, 0) scale(0.25, 1);
+}
+.part-yokoonajxiyoqcu>.part-inner:nth-child(3) {
+	transform: translate(50%, 0) scale(0.25, 1);
+}
+.part-yokoonajxiyoqcu>.part-inner:last-child {
+	transform-origin: bottom right;
+	transform: scale(0.25, 1);
+}
+
+.part-youon>.part-inner:last-child {
+	transform-origin: bottom left;
+	transform: scale(0.5, 0.5);
+}
+
+.part-youontop>.part-inner:last-child {
+	transform: scale(0.5, 0.5);
+}
+
+.black { color: #000; }
+.redorange { color: #ff4000; }
+.yelloworange { color: #ffc000; }
+.yellow { color: #ff0; }
+.lime { color: #0f0; }
+.green { color: #008000; }
+.bluegreen { color: #008080; }
+.cyan { color: #0ff; }
+.blue { color: #00f; }
+.bluepurple { color: #8000ff; }
+.purple { color: #800080; }
+.magenta { color: #f0f; }
+.red { color: #f00; }
+.brown { color: #804040; }
+.orange { color: #ff8000; }
+.gold {
+	background: linear-gradient(#ffff80, #ffc000) text;
+	color: transparent;
+}
+.silver {
+	background: linear-gradient(#e0e0e0, #a0a0a0) text;
+	color: transparent;
+}
+.rainbow {
+	background: linear-gradient(90deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00) text;
+	color: transparent;
+}
+.gray { color: #808080; }
+.white { color: #fff; }
+.transparent { color: transparent; }
+.lemon { color: #ffff80; }
+.navy { color: #000080; }
+.ocher { color: #808000; }
+.pink { color: #ff80c0; }
+.skyblue { color: #80c0ff; }
+.skincolor1 { color: #fadcbb; }
+.skincolor2 { color: #dfb993; }
+.skincolor3 { color: #b88b67; }
+.skincolor4 { color: #a36a42; }
+.skincolor5 { color: #6e5148; }
+
+.circle { border-radius: 50%; }
+
+.bg-black { background-color: #000; }
+.bg-redorange { background-color: #ff4000; }
+.bg-yelloworange { background-color: #ffc000; }
+.bg-yellow { background-color: #ff0; }
+.bg-lime { background-color: #0f0; }
+.bg-green { background-color: #008000; }
+.bg-bluegreen { background-color: #008080; }
+.bg-cyan { background-color: #0ff; }
+.bg-blue { background-color: #00f; }
+.bg-bluepurple { background-color: #8000ff; }
+.bg-purple { background-color: #800080; }
+.bg-magenta { background-color: #f0f; }
+.bg-red { background-color: #f00; }
+.bg-brown { background-color: #804040; }
+.bg-orange { background-color: #ff8000; }
+.bg-gold { background: linear-gradient(#ffff80, #ffc000); }
+.bg-silver { background: linear-gradient(#e0e0e0, #a0a0a0); }
+.bg-rainbow { background: linear-gradient(90deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00); }
+.bg-gray { background-color: #808080; }
+.bg-white { background-color: #fff; }
+.bg-transparent { background-color: transparent; }
+.bg-lemon { background-color: #ffff80; }
+.bg-navy { background-color: #000080; }
+.bg-ocher { background-color: #808000; }
+.bg-pink { background-color: #ff80c0; }
+.bg-skyblue { background-color: #80c0ff; }
+.bg-skincolor1 { background-color: #fadcbb; }
+.bg-skincolor2 { background-color: #dfb993; }
+.bg-skincolor3 { background-color: #b88b67; }
+.bg-skincolor4 { background-color: #a36a42; }
+.bg-skincolor5 { background-color: #6e5148; }
+
+.error { color: #f00; }
+
+.width2x {
+	display: inline-block;
+	transform: scale(200%, 100%);
+	transform-origin: top left;
+}
+
+ruby {
+    ruby-align: center;
+	position: relative;
+}
+rtc {
+	text-indent: 0px;
+	line-height: 1;
+	text-emphasis: none;
+}
+ruby > rtc {
+	display: ruby-text;
+	font-size: 50%;
+	text-align: center;
+	width: 100%;
+	position: absolute;
+	top: 100%;
+	left: 0;
+}
+
+#error {
+	color: #f00;
+}
+#bitmap {
+	border-bottom: 0.1rem solid #808080;
+	border-right: 0.1rem solid #808080;
+}
+.bitmap-dot {
+	width: 3.1rem;
+	height: 3.1rem;
+	float: left;
+	border-top: 0.1rem solid #808080;
+	border-left: 0.1rem solid #808080;
+}
+.bitmap-row:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.yoko {
+	float: left;
+	margin-left: 1rem;
+}
+.yoko:first-child {
+	margin-left: 0;
+}
+.yoko-wrapper:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.dwpi {
+	font-family: "DWPIMincho";
+}
+.nishiki {
+	font-family: "Nishiki-teki";
+}
+.jigmo {
+	font-family: "Jigmo", "Jigmo2", "Jigmo3";
+}
+.jigmo2 {
+	font-family: "Jigmo2";
+}
+.jigmo3 {
+	font-family: "Jigmo3";
+}
+.zh-cn {
+	font-family: "Noto Sans SC";
+}
+.zh-tw {
+	font-family: "Noto Sans TC";
+}
+.zh-hk {
+	font-family: "Noto Sans HK";
+}
+.ko {
+	font-family: "Noto Sans KR";
+}
+.em {
+	font-family: "Noto Color Emoji";
+}
+
+@media screen and (min-width: 768px) {
+	textarea {
+		width: 60rem;
+	}
+	#render {
+		width: 96rem;
+	}
+}
