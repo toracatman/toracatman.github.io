@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Convert Ainu Notation Bookmarklet for Wikipedia</title>
+	<link rel="stylesheet" href="../css/toracatman.css">
+	<style>
+		textarea {
+			width: 100%;
+			height: 20rem;
+		}
+		@media screen and (min-width: 768px) {
+			textarea {
+				width: 50rem;
+			}
+		}
+	</style>
+</head>
+<body>
+	<h1>Convert Ainu Notation Bookmarklet for Wikipedia</h1>
+	<form name="form1">
+		<p>
+			<label><input type="radio" name="letter" value="roman" checked>roman</label>
+			<label><input type="radio" name="letter" value="katakana">katakana</label>
+			<label><input type="radio" name="letter" value="cyrillic">cyrillic</label>
+		</p>
+		<textarea name="output"></textarea>
+		<p>
+			<input type="button" value="Copy to clipboard" onclick="copyToClipboard();">
+			<span id="message"></span>
+		</p>
+	</form>
+
+	<h2>How to use the bookmarklet</h2>
+	<ol>
+		<li>Copy the script above.</li>
+		<li>Bookmark any website.</li>
+		<li>Edit the bookmark you just added, and paste the script you copied earlier into the URL field.</li>
+		<li>Opening the bookmark you created earlier on the target website will execute the bookmarklet.</li>
+	</ol>
+
+	<a href="index.html">日本語</a>
+	<a href="../index.html">Back</a>
+	<script src="bookmarklet.js"></script>
+</body>
+</html>
