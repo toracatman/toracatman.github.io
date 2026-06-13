@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Convert Ainu Notation Bookmarklet for Wikimedia Project</title>
+	<link rel="stylesheet" href="../css/toracatman.css">
+	<style>
+		textarea {
+			width: 100%;
+			height: 20rem;
+		}
+		@media screen and (min-width: 768px) {
+			textarea {
+				width: 50rem;
+			}
+		}
+	</style>
+</head>
+<body>
+	<h1>Convert Ainu Notation Bookmarklet for Wikimedia Project</h1>
+	<form name="form1">
+		<p>
+			<label><input type="radio" name="letter" value="ain" checked>latin</label>
+			<label><input type="radio" name="letter" value="ain-Kana">katakana</label>
+			<label><input type="radio" name="letter" value="ain-Cyrl">cyrillic</label>
+		</p>
+		<textarea name="output"></textarea>
+		<p>
+			<input type="button" value="Copy to clipboard" onclick="copyToClipboard();">
+			<span id="message"></span>
+		</p>
+	</form>
+
+	<h2>Supporting sites</h2>
+	<ul>
+		<li><a href="https://en.wikipedia.org/wiki/Ainu_language">Ainu language - Wikipedia</a></li>
+		<li><a href="https://en.wikibooks.org/wiki/Ainu"><del>Ainu - Wikibooks</del></a></li>
+		<li><a href="https://incubator.wikimedia.org/wiki/Wp/ain/Uykipenciya_Mosem">Ainu Wikipedia</a></li>
+		<li><a href="https://wiki.aynu.org">Aynuwiki</a></li>
+		<li><a href="https://wikitravel.org/en/Ainu_phrasebook">Ainu phrasebook - Wikitravel</a></li>
+	</ul>
+
+	<h2>How to use the bookmarklet</h2>
+	<ol>
+		<li>Copy the script above.</li>
+		<li>Bookmark any website.</li>
+		<li>Edit the bookmark you just added, and paste the script you copied earlier into the URL field.</li>
+		<li>Opening the bookmark you created earlier on the target website will execute the bookmarklet.</li>
+	</ol>
+
+	<p>
+		If your browser supports extensions, you can also use this:<br>
+		<a href="https://greasyfork.org/en/scripts/581917-%E3%82%A6%E3%82%A3%E3%82%AD%E3%83%A1%E3%83%87%E3%82%A3%E3%82%A2-%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AE%E3%82%A2%E3%82%A4%E3%83%8C%E8%AA%9E%E3%81%AE%E8%A1%A8%E8%A8%98%E5%A4%89%E6%8F%9B">Convert Ainu Notation for Wikimedia Project</a>
+	</p>
+
+	<a href="index.html">日本語</a>
+	<a href="../index.html">Back</a>
+	<script src="bookmarklet.js"></script>
+</body>
+</html>
