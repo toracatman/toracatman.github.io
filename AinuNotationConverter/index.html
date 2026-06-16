@@ -5,10 +5,72 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>アイヌ語の表記変換器</title>
 	<link rel="stylesheet" href="../css/toracatman.css">
+	<style>
+		input,textarea,select,option {
+			font-family: inherit;
+		}
+		textarea {
+			width: 100%;
+			height: 200px;
+			font-size: 16px;
+		}
+		@media screen and (min-width: 768px) {
+			textarea {
+				width: 500px;
+				height: 200px;
+			}
+		}
+	</style>
 </head>
 <body>
 	<h1>アイヌ語の表記変換器</h1>
 
+	<h2>アイヌ語に関するサイトの表記変換器</h2>
+	
+	<h3>ウィキメディア・プロジェクト（ウィキペディアなど）</h3>
+	<ul>
+		<li><a href="../WikimediaBookmarklet/index.html">ブックマークレット</a></li>
+		<li><a href="https://greasyfork.org/ja/scripts/581917">ユーザースクリプト</a></li>
+	</ul>
+
+	<h3><a href="https://ainugo.nam.go.jp/dic">国立アイヌ民族博物館アイヌ語アーカイブ</a>｜<a href="https://ainugo.nam.go.jp/dic/mobile">スマホ用</a></h3>
+	<ul>
+		<li><a href="https://greasyfork.org/ja/scripts/548569">ユーザースクリプト</a></li>
+	</ul>
+
+	<h3>国語研のアイヌ語のページ（<a href="https://ainu.ninjal.ac.jp/folklore/">アイヌ語口承文芸コーパス</a>｜<a href="https://ainu.ninjal.ac.jp/topic/">トピック別 アイヌ語会話辞典</a>）</h3>
+	<ul>
+		<li><a href="https://greasyfork.org/ja/scripts/557904">ユーザースクリプト</a></li>
+	</ul>
+
+	<h3><a href="http://itelmen.placo.net/Ainu-archives/index.html">アイヌ語鵡川方言 日本語-アイヌ語辞典</a></h3>
+	<ul>
+		<li><a href="https://greasyfork.org/ja/scripts/558243">ユーザースクリプト</a></li>
+	</ul>
+
+	<h3><a href="https://itak.aynu.org">現代アイヌ語翻訳用語集</a></h3>
+	<ul>
+		<li><a href="https://greasyfork.org/ja/scripts/558247">ユーザースクリプト</a></li>
+	</ul>
+
+	<h3><a href="https://ieonnekunnep.aynu.io">和愛辞典 Web版</a></h3>
+	<ul>
+		<li><a href="https://greasyfork.org/ja/scripts/578722">ユーザースクリプト</a></li>
+	</ul>
+
+	<h3>AA研アイヌ語資料公開プロジェクト<a href="https://ainugo.aa-ken.jp">サイト1</a>｜<a href="https://ainugo.mond.jp">サイト2</a></h3>
+	<ul>
+		<li><a href="https://greasyfork.org/ja/scripts/582777">ユーザースクリプト</a></li>
+	</ul>
+
+	<h2>変換ツール（現在はローマ字からの変換のみ）</h2>
+	<textarea id="input"></textarea><br>
+	<label>変換前<select id="notation_before"></select></label>
+	<label>変換後<select id="notation_after"></select></label>
+	<input type="button" value="変換" id="convert_btn"><br>
+	<textarea id="output"></textarea><br>
+
 	<a href="../index.html">戻る</a>
+	<script src="AinuNotationConverter.js"></script>
 </body>
 </html>
