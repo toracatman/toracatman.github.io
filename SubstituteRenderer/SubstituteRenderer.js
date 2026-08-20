@@ -57,16 +57,8 @@ function changeText() {
 	if (c > 280)	count.classList.add("error");
 	else			count.classList.remove("error");
 
-	if (!document.form1.dwpi.checked) {
-		for (i = 0; i < DWPIsubstitute.length; i++) {
-			s = s.replace(new RegExp(`&dw-${DWPIsubstitute[i][0].toString(16)};`, "gi"), DWPIsubstitute[i][2])
-				.replace(new RegExp(`&GJ0*${DWPIsubstitute[i][1]};`, "g"), DWPIsubstitute[i][2]);
-		}
-	}
-	else {
-		for (i = 0; i < DWPIsubstitute.length; i++) {
-			s = s.replace(new RegExp(`&GJ0*${DWPIsubstitute[i][1]};`, "g"), `&dw-${DWPIsubstitute[i][0].toString(16)};`);
-		}
+	for (i = 0; i < DWPIsubstitute.length; i++) {
+		s = s.replace(new RegExp(`&GJ0*${DWPIsubstitute[i][1]};`, "g"), `&dw-${DWPIsubstitute[i][0].toString(16)};`);
 	}
 	for (i = 0; i < tolxyolxkanjxi_converter.length; i++) {
 		s = s.replace(new RegExp(tolxyolxkanjxi_converter[i][0], "gu"), tolxyolxkanjxi_converter[i][1]);
@@ -351,13 +343,7 @@ function textProcess(d) {
 		s.slice(i, i + 4) == "&em-"
 		) {
 		var span = document.createElement("span");
-		if (s.slice(i, i + 4) == "&dw-") {
-			if (document.form1.dwpi.checked) {
-				span.classList.add("dwpi");
-			} else {
-				span.classList.add("jigmo");
-			}
-		}
+		if (s.slice(i, i + 4) == "&dw-") span.classList.add("dwpi");
 		else if (s.slice(i, i + 4) == "&ni-") span.classList.add("nishiki");
 		else if (s.slice(i, i + 4) == "&jg-") span.classList.add("jigmo");
 		else if (s.slice(i, i + 4) == "&j2-") span.classList.add("jigmo2");

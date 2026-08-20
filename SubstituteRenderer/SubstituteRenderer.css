@@ -1,3 +1,10 @@
+@font-face {
+	font-family: "Add Character_GJMincho";
+	src: local("Add Character_GJMincho"),
+	     url("../fonts/acgjm.woff2") format("woff2");
+	font-display: swap;
+}
+
 input,
 button,
 select,
@@ -533,7 +540,7 @@ ruby > rtc {
 }
 
 .dwpi {
-	font-family: "DWPIMincho";
+	font-family: "Add Character_GJMincho";
 }
 .nishiki {
 	font-family: "Nishiki-teki";
